@@ -15,45 +15,44 @@
     --popover: 225 18% 11%;
     --popover-foreground: 40 15% 92%;
 
-    --primary: 38 92% 50%;
-    --primary-foreground: 225 20% 7%;
+    --primary: 210 75% 52%;
+    --primary-foreground: 210 20% 98%;
 
     --secondary: 220 15% 16%;
-    --secondary-foreground: 40 15% 85%;
+    --secondary-foreground: 200 15% 85%;
 
     --muted: 220 12% 14%;
     --muted-foreground: 220 10% 50%;
 
-    --accent: 175 65% 40%;
-    --accent-foreground: 225 20% 7%;
-
+    --accent: 160 60% 42%;
+    --accent-foreground: 160 20% 98%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
     --border: 220 12% 18%;
     --input: 220 12% 18%;
-    --ring: 38 92% 50%;
+    --ring: 210 75% 52%;
 
     --radius: 0.75rem;
 
     --sidebar-background: 225 18% 9%;
     --sidebar-foreground: 40 15% 85%;
-    --sidebar-primary: 38 92% 50%;
-    --sidebar-primary-foreground: 225 20% 7%;
+    --sidebar-primary: 210 75% 52%;
+    --sidebar-primary-foreground: 210 20% 98%;
     --sidebar-accent: 220 15% 16%;
-    --sidebar-accent-foreground: 40 15% 85%;
+    --sidebar-accent-foreground: 200 15% 85%;
     --sidebar-border: 220 12% 18%;
-    --sidebar-ring: 38 92% 50%;
+    --sidebar-ring: 210 75% 52%;
 
     /* Custom tokens */
-    --gradient-gold: linear-gradient(135deg, hsl(38 92% 50%), hsl(28 90% 55%));
+    --gradient-gold: linear-gradient(135deg, hsl(210 75% 52%), hsl(160 60% 42%));
     --gradient-card: linear-gradient(145deg, hsl(225 18% 12%), hsl(225 18% 9%));
-    --gradient-hero: linear-gradient(135deg, hsl(225 20% 7%), hsl(225 25% 12%), hsl(225 20% 7%));
+    --gradient-hero: linear-gradient(135deg, hsl(225 20% 7%), hsl(220 30% 14%), hsl(225 20% 7%));
     --shadow-card: 0 4px 24px -4px hsl(0 0% 0% / 0.4);
-    --shadow-glow: 0 0 30px -5px hsl(38 92% 50% / 0.15);
-    --teal: 175 65% 40%;
-    --teal-foreground: 225 20% 7%;
-    --resource-course: 38 92% 50%;
+    --shadow-glow: 0 0 30px -5px hsl(210 75% 52% / 0.15);
+    --teal: 160 60% 42%;
+    --teal-foreground: 160 20% 98%;
+    --resource-course: 210 75% 52%;
     --resource-github: 142 70% 45%;
     --resource-youtube: 0 84% 60%;
     --resource-website: 210 80% 55%;
