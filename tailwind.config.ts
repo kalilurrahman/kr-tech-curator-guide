@@ -99,8 +99,8 @@ export default {
           to: { transform: "translateX(0)" },
         },
         pulse_glow: {
-          "0%, 100%": { boxShadow: "0 0 20px -5px hsl(38 92% 50% / 0.15)" },
-          "50%": { boxShadow: "0 0 30px -5px hsl(38 92% 50% / 0.3)" },
+          "0%, 100%": { boxShadow: "0 0 20px -5px hsl(210 75% 52% / 0.15)" },
+          "50%": { boxShadow: "0 0 30px -5px hsl(210 75% 52% / 0.3)" },
         },
       },
       animation: {
