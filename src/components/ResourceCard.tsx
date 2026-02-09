@@ -58,7 +58,7 @@ const ResourceCard = ({ resource, index, isBookmarked = false, onToggleBookmark 
         rel="noopener noreferrer"
         className="block"
       >
-        <div className="flex items-start justify-between gap-3 mb-3 pr-6">
+        <div className="flex items-start gap-3 mb-3 pr-8">
           <div className="flex items-center gap-2 flex-wrap">
             <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-medium ${config.className}`}>
               <TypeIcon className="w-3.5 h-3.5" />
@@ -75,7 +75,6 @@ const ResourceCard = ({ resource, index, isBookmarked = false, onToggleBookmark 
               </span>
             )}
           </div>
-          <ExternalLink className="w-4 h-4 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity flex-shrink-0 mt-1" />
         </div>
 
         <h3 className="font-display font-semibold text-foreground mb-2 group-hover:text-primary transition-colors leading-tight">
@@ -90,12 +89,15 @@ const ResourceCard = ({ resource, index, isBookmarked = false, onToggleBookmark 
           <span className="text-xs text-muted-foreground font-medium">
             {resource.provider}
           </span>
-          {resource.rating && (
-            <span className="inline-flex items-center gap-1 text-xs text-primary">
-              <Star className="w-3.5 h-3.5 fill-primary" />
-              {resource.rating}
-            </span>
-          )}
+          <div className="flex items-center gap-2.5">
+            {resource.rating && (
+              <span className="inline-flex items-center gap-1 text-xs text-primary">
+                <Star className="w-3.5 h-3.5 fill-primary" />
+                {resource.rating}
+              </span>
+            )}
+            <ExternalLink className="w-3.5 h-3.5 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
+          </div>
         </div>
 
         {resource.tags.length > 0 && (

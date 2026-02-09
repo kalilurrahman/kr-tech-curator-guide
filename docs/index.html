@@ -4,596 +4,462 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes" />
   <title>TechCurator — Curated Tech Learning Hub</title>
-  <meta name="description" content="Your curated hub for Technology, AI/ML and System Design learning resources. 170+ courses, tutorials, and tools organized by category." />
+  <meta name="description" content="Your curated hub for Technology, AI/ML and System Design learning resources. 200+ courses, tutorials, and tools organized by category." />
   <meta name="author" content="Kalilur Rahman" />
   <meta name="theme-color" content="#2b7bd4" />
   <meta property="og:title" content="TechCurator — Curated Tech Learning Hub" />
-  <meta property="og:description" content="170+ curated learning resources for AI/ML, System Design, Cloud, DevOps and more." />
+  <meta property="og:description" content="200+ curated learning resources for AI/ML, System Design, Cloud, DevOps and more." />
   <meta property="og:type" content="website" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     :root {
-      --bg: hsl(225 20% 7%);
-      --bg-card: hsl(225 18% 11%);
-      --fg: hsl(40 15% 92%);
-      --fg-muted: hsl(220 10% 50%);
-      --fg-secondary: hsl(200 15% 85%);
-      --primary: hsl(210 75% 52%);
-      --primary-fg: hsl(210 20% 98%);
-      --accent: hsl(160 60% 42%);
-      --accent-fg: hsl(160 20% 98%);
-      --border: hsl(220 12% 18%);
-      --secondary: hsl(220 15% 16%);
+      --bg: hsl(225 20% 7%); --bg-card: hsl(225 18% 11%); --fg: hsl(40 15% 92%);
+      --fg-muted: hsl(220 10% 50%); --fg-secondary: hsl(200 15% 85%);
+      --primary: hsl(210 75% 52%); --primary-fg: hsl(210 20% 98%);
+      --accent: hsl(160 60% 42%); --accent-fg: hsl(160 20% 98%);
+      --border: hsl(220 12% 18%); --secondary: hsl(220 15% 16%);
       --muted-bg: hsl(220 12% 14%);
       --gradient-hero: linear-gradient(135deg, hsl(225 20% 7%), hsl(220 30% 14%), hsl(225 20% 7%));
       --gradient-text: linear-gradient(135deg, var(--primary), var(--accent));
-      --shadow-glow: 0 0 30px -5px hsl(210 75% 52% / 0.15);
       --shadow-card: 0 4px 24px -4px hsl(0 0% 0% / 0.4);
       --radius: 0.75rem;
-      --res-course: hsl(210 75% 52%);
-      --res-github: hsl(142 70% 45%);
-      --res-youtube: hsl(0 84% 60%);
-      --res-website: hsl(210 80% 55%);
-      --res-cert: hsl(280 65% 55%);
-      --res-pdf: hsl(15 85% 55%);
-      --res-tweet: hsl(203 89% 53%);
-      --res-free: hsl(160 84% 39%);
+      --res-course: hsl(210 75% 52%); --res-github: hsl(142 70% 45%);
+      --res-youtube: hsl(0 84% 60%); --res-website: hsl(210 80% 55%);
+      --res-cert: hsl(280 65% 55%); --res-pdf: hsl(15 85% 55%);
+      --res-tweet: hsl(203 89% 53%); --res-free: hsl(160 84% 39%);
     }
-
-    body {
-      background: var(--bg);
-      color: var(--fg);
-      font-family: 'Inter', system-ui, sans-serif;
-      line-height: 1.6;
-      -webkit-font-smoothing: antialiased;
-    }
-
-    h1, h2, h3, h4, h5, h6 { font-family: 'Space Grotesk', system-ui, sans-serif; }
-
-    a { color: var(--primary); text-decoration: none; }
-    a:hover { text-decoration: underline; }
-
+    body { background: var(--bg); color: var(--fg); font-family: 'Inter', system-ui, sans-serif; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+    h1, h2, h3, h4 { font-family: 'Space Grotesk', system-ui, sans-serif; }
     .container { max-width: 1280px; margin: 0 auto; padding: 0 1rem; }
+    .text-gradient { background: var(--gradient-text); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
 
     /* Header */
-    .header {
-      position: sticky; top: 0; z-index: 40;
-      background: hsla(225, 20%, 7%, 0.9);
-      backdrop-filter: blur(16px);
-      border-bottom: 1px solid var(--border);
-    }
-    .header-inner {
-      display: flex; align-items: center; justify-content: space-between;
-      height: 64px; max-width: 1280px; margin: 0 auto; padding: 0 1rem;
-    }
-    .logo { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 1.25rem; }
-    .logo span { background: var(--gradient-text); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-    .header-right { display: flex; align-items: center; gap: 0.75rem; font-size: 0.75rem; color: var(--fg-muted); }
-    .header-right a { color: var(--primary); }
-
-    /* Nav tabs */
-    .nav-tabs {
-      display: flex; justify-content: center; gap: 0.5rem; padding: 0.75rem 1rem;
-      border-bottom: 1px solid var(--border); background: var(--bg-card);
-    }
-    .nav-tab {
-      padding: 0.5rem 1.25rem; border-radius: var(--radius); border: 1px solid transparent;
-      background: transparent; color: var(--fg-muted); font-size: 0.875rem; font-weight: 500;
-      cursor: pointer; transition: all 0.2s; font-family: 'Space Grotesk', sans-serif;
-    }
-    .nav-tab:hover { color: var(--fg); background: var(--secondary); }
-    .nav-tab.active { background: var(--primary); color: var(--primary-fg); border-color: var(--primary); }
+    .header { position: sticky; top: 0; z-index: 40; background: hsla(225 20% 7% / 0.9); backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); }
+    .header-inner { display: flex; align-items: center; justify-content: space-between; height: 56px; }
+    .logo { display: flex; align-items: center; gap: 0.5rem; text-decoration: none; font-weight: 700; font-size: 1.1rem; color: var(--fg); font-family: 'Space Grotesk', sans-serif; }
+    .header-links { display: flex; align-items: center; gap: 0.5rem; }
+    .header-links a, .header-links span { color: var(--fg-muted); font-size: 0.8rem; text-decoration: none; }
+    .header-links a:hover { color: var(--fg); }
 
     /* Hero */
-    .hero {
-      background: var(--gradient-hero); padding: 4rem 1rem; text-align: center;
-      position: relative; overflow: hidden;
-    }
-    .hero::before {
-      content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-      width: 600px; height: 400px; background: hsla(210, 75%, 52%, 0.05);
-      border-radius: 50%; filter: blur(80px); pointer-events: none;
-    }
-    .hero h1 { font-size: clamp(2.5rem, 6vw, 4rem); font-weight: 700; margin-bottom: 1rem; position: relative; }
-    .hero h1 span { background: var(--gradient-text); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-    .hero p { color: var(--fg-muted); font-size: 1.125rem; max-width: 640px; margin: 0 auto 2rem; position: relative; }
-
-    /* Search */
-    .search-wrap { position: relative; max-width: 560px; margin: 0 auto; }
-    .search-wrap svg {
-      position: absolute; left: 1rem; top: 50%; transform: translateY(-50%);
-      width: 20px; height: 20px; color: var(--fg-muted); pointer-events: none;
-    }
-    .search-input {
-      width: 100%; padding: 1rem 1rem 1rem 3rem;
-      background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius);
-      color: var(--fg); font-size: 1rem; outline: none; transition: all 0.2s;
-    }
-    .search-input::placeholder { color: var(--fg-muted); }
-    .search-input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px hsla(210, 75%, 52%, 0.15); }
+    .hero { background: var(--gradient-hero); padding: 3rem 0 4rem; text-align: center; position: relative; overflow: hidden; }
+    .hero h1 { font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 700; margin-bottom: 0.75rem; }
+    .hero p { color: var(--fg-muted); max-width: 600px; margin: 0 auto 1.5rem; font-size: 1.05rem; }
+    .search-box { position: relative; max-width: 560px; margin: 0 auto; }
+    .search-box input { width: 100%; padding: 0.9rem 1rem 0.9rem 3rem; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); color: var(--fg); font-size: 1rem; outline: none; transition: border 0.2s; }
+    .search-box input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px hsla(210 75% 52% / 0.15); }
+    .search-box svg { position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: var(--fg-muted); }
 
     /* Stats */
-    .stats-bar {
-      display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem;
-      padding: 1rem; border-bottom: 1px solid var(--border); background: hsla(225, 18%, 11%, 0.5);
-    }
-    .stat { display: flex; align-items: center; gap: 0.75rem; }
-    .stat-icon {
-      padding: 0.5rem; border-radius: 0.5rem;
-      background: hsla(210, 75%, 52%, 0.1); color: var(--primary);
-      display: flex; align-items: center; justify-content: center;
-    }
-    .stat-value { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 1.25rem; }
-    .stat-label { font-size: 0.75rem; color: var(--fg-muted); }
+    .stats { border-bottom: 1px solid var(--border); background: var(--bg-card); padding: 0.75rem 0; }
+    .stats-inner { display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap; }
+    .stat { text-align: center; }
+    .stat-num { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 1.2rem; color: var(--primary); }
+    .stat-label { font-size: 0.7rem; color: var(--fg-muted); text-transform: uppercase; letter-spacing: 0.05em; }
+
+    /* Tabs */
+    .tabs { display: flex; gap: 0; border-bottom: 1px solid var(--border); background: var(--bg-card); }
+    .tab-btn { padding: 0.75rem 1.5rem; background: none; border: none; color: var(--fg-muted); font-size: 0.9rem; font-weight: 500; cursor: pointer; border-bottom: 2px solid transparent; transition: all 0.2s; font-family: 'Space Grotesk', sans-serif; }
+    .tab-btn:hover { color: var(--fg); }
+    .tab-btn.active { color: var(--primary); border-bottom-color: var(--primary); }
 
     /* Filters */
-    .filters {
-      display: flex; flex-wrap: wrap; gap: 0.5rem; padding: 1rem 0;
-      border-bottom: 1px solid var(--border); margin-bottom: 1.5rem;
-    }
-    .filter-chip {
-      padding: 0.375rem 0.875rem; border-radius: 999px; border: 1px solid var(--border);
-      background: transparent; color: var(--fg-muted); font-size: 0.8125rem; cursor: pointer;
-      transition: all 0.2s; white-space: nowrap;
-    }
-    .filter-chip:hover { border-color: var(--primary); color: var(--fg); }
-    .filter-chip.active { background: var(--primary); color: var(--primary-fg); border-color: var(--primary); }
+    .filters { padding: 1rem 0; border-bottom: 1px solid var(--border); }
+    .filter-row { display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; }
+    .filter-pill { padding: 0.35rem 0.75rem; border-radius: var(--radius); font-size: 0.75rem; font-weight: 500; border: 1px solid transparent; cursor: pointer; transition: all 0.2s; background: var(--secondary); color: var(--fg-secondary); }
+    .filter-pill:hover { background: var(--muted-bg); color: var(--fg); }
+    .filter-pill.active { background: hsla(210 75% 52% / 0.1); color: var(--primary); border-color: hsla(210 75% 52% / 0.3); }
+    .sort-select { background: var(--secondary); border: 1px solid var(--border); border-radius: var(--radius); padding: 0.35rem 0.75rem; color: var(--fg); font-size: 0.75rem; outline: none; margin-left: auto; }
 
-    .sort-select {
-      padding: 0.375rem 0.75rem; border-radius: var(--radius); border: 1px solid var(--border);
-      background: var(--bg-card); color: var(--fg); font-size: 0.8125rem; cursor: pointer; outline: none;
-    }
-
-    /* Resource grid */
-    .resource-grid {
-      display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-      gap: 1rem; padding-bottom: 2rem;
-    }
-
-    .resource-card {
-      background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius);
-      padding: 1.25rem; transition: all 0.3s; display: block; color: inherit; text-decoration: none;
-    }
-    .resource-card:hover {
-      border-color: hsla(210, 75%, 52%, 0.3); box-shadow: var(--shadow-glow);
-      text-decoration: none;
-    }
-    .resource-card:hover .card-title { color: var(--primary); }
-
-    .card-badges { display: flex; flex-wrap: wrap; gap: 0.375rem; margin-bottom: 0.75rem; }
-    .badge {
-      display: inline-flex; align-items: center; gap: 0.25rem;
-      padding: 0.25rem 0.5rem; border-radius: 0.375rem; font-size: 0.6875rem; font-weight: 500;
-    }
-    .badge-course { background: hsla(210,75%,52%,0.15); color: var(--res-course); }
-    .badge-github { background: hsla(142,70%,45%,0.15); color: var(--res-github); }
-    .badge-youtube { background: hsla(0,84%,60%,0.15); color: var(--res-youtube); }
-    .badge-website { background: hsla(210,80%,55%,0.15); color: var(--res-website); }
-    .badge-certification { background: hsla(280,65%,55%,0.15); color: var(--res-cert); }
-    .badge-pdf { background: hsla(15,85%,55%,0.15); color: var(--res-pdf); }
-    .badge-tweet { background: hsla(203,89%,53%,0.15); color: var(--res-tweet); }
-    .badge-free { background: hsla(160,84%,39%,0.15); color: var(--res-free); }
-    .badge-difficulty { background: var(--secondary); color: var(--fg-secondary); }
-
-    .card-title {
-      font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 0.9375rem;
-      margin-bottom: 0.5rem; transition: color 0.2s; line-height: 1.4;
-    }
-    .card-desc {
-      font-size: 0.8125rem; color: var(--fg-muted); line-height: 1.5;
-      margin-bottom: 0.75rem; display: -webkit-box; -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical; overflow: hidden;
-    }
-    .card-meta {
-      display: flex; justify-content: space-between; align-items: center;
-      font-size: 0.75rem; color: var(--fg-muted);
-    }
+    /* Cards Grid */
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1rem; padding: 1.5rem 0; }
+    .card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.25rem; transition: all 0.2s; text-decoration: none; display: block; }
+    .card:hover { border-color: hsla(210 75% 52% / 0.3); transform: translateY(-1px); }
+    .card-badges { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 0.75rem; }
+    .badge { display: inline-flex; align-items: center; gap: 0.3rem; padding: 0.25rem 0.6rem; border-radius: 0.375rem; font-size: 0.7rem; font-weight: 500; }
+    .badge-course { background: hsla(210 75% 52% / 0.15); color: var(--res-course); }
+    .badge-github { background: hsla(142 70% 45% / 0.15); color: var(--res-github); }
+    .badge-youtube { background: hsla(0 84% 60% / 0.15); color: var(--res-youtube); }
+    .badge-website { background: hsla(210 80% 55% / 0.15); color: var(--res-website); }
+    .badge-certification { background: hsla(280 65% 55% / 0.15); color: var(--res-cert); }
+    .badge-pdf { background: hsla(15 85% 55% / 0.15); color: var(--res-pdf); }
+    .badge-tweet { background: hsla(203 89% 53% / 0.15); color: var(--res-tweet); }
+    .badge-free { background: hsla(160 84% 39% / 0.15); color: var(--res-free); }
+    .badge-diff { background: var(--secondary); color: var(--fg-secondary); }
+    .card h3 { font-size: 0.95rem; font-weight: 600; color: var(--fg); margin-bottom: 0.4rem; line-height: 1.3; }
+    .card:hover h3 { color: var(--primary); }
+    .card p { font-size: 0.82rem; color: var(--fg-muted); line-height: 1.5; margin-bottom: 0.6rem; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+    .card-footer { display: flex; justify-content: space-between; align-items: center; font-size: 0.75rem; }
+    .card-provider { color: var(--fg-muted); }
     .card-rating { color: var(--primary); display: flex; align-items: center; gap: 0.25rem; }
-    .card-tags {
-      display: flex; flex-wrap: wrap; gap: 0.375rem; margin-top: 0.75rem;
-      padding-top: 0.75rem; border-top: 1px solid var(--border);
-    }
-    .tag {
-      font-size: 0.6875rem; color: var(--fg-muted); background: var(--muted-bg);
-      padding: 0.125rem 0.5rem; border-radius: 999px;
-    }
+    .card-tags { display: flex; flex-wrap: wrap; gap: 0.3rem; margin-top: 0.6rem; padding-top: 0.6rem; border-top: 1px solid var(--border); }
+    .tag { font-size: 0.65rem; color: var(--fg-muted); background: var(--muted-bg); padding: 0.15rem 0.5rem; border-radius: 999px; }
 
     /* Glossary */
-    .glossary-section { display: none; }
-    .glossary-section.active { display: block; }
-    .resources-section { display: block; }
-    .resources-section.hidden { display: none; }
+    .glossary-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 0.75rem; padding: 1.5rem 0; }
+    .glossary-item { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 1rem; cursor: pointer; transition: all 0.2s; text-align: left; width: 100%; }
+    .glossary-item:hover { border-color: hsla(210 75% 52% / 0.3); }
+    .glossary-term { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 0.85rem; color: var(--fg); }
+    .glossary-item:hover .glossary-term { color: var(--primary); }
+    .glossary-cat { font-size: 0.6rem; color: var(--fg-muted); text-transform: uppercase; letter-spacing: 0.08em; }
+    .glossary-def { font-size: 0.82rem; color: var(--fg-muted); line-height: 1.5; margin-top: 0.5rem; display: none; }
+    .glossary-item.expanded .glossary-def { display: block; }
+    .glossary-header { display: flex; justify-content: space-between; align-items: flex-start; }
+    .chevron { color: var(--fg-muted); transition: transform 0.2s; flex-shrink: 0; }
+    .glossary-item.expanded .chevron { transform: rotate(180deg); }
 
-    .glossary-grid {
-      display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-      gap: 0.75rem; padding-bottom: 2rem;
-    }
-    .glossary-card {
-      background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius);
-      padding: 1rem;
-    }
-    .glossary-term {
-      font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 0.875rem;
-      color: var(--primary); margin-bottom: 0.375rem;
-    }
-    .glossary-def { font-size: 0.8125rem; color: var(--fg-muted); line-height: 1.5; }
-    .glossary-cat { font-size: 0.6875rem; color: var(--fg-muted); margin-top: 0.5rem; opacity: 0.7; }
-
-    .results-count {
-      font-size: 0.875rem; color: var(--fg-muted); margin-bottom: 1rem;
-      font-family: 'Space Grotesk', sans-serif;
-    }
-
-    /* Social section */
-    .social-section {
-      padding: 4rem 1rem; border-top: 1px solid var(--border); text-align: center;
-      background: linear-gradient(to bottom, var(--bg), hsla(225, 18%, 11%, 0.5));
-    }
-    .social-section h2 { font-size: 2rem; font-weight: 700; margin-bottom: 0.75rem; }
-    .social-section h2 span { background: var(--gradient-text); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-    .social-section p { color: var(--fg-muted); max-width: 560px; margin: 0 auto 2rem; }
-    .social-links { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
-    .social-link {
-      display: inline-flex; align-items: center; gap: 0.5rem;
-      padding: 0.625rem 1.25rem; border-radius: var(--radius); border: 1px solid var(--border);
-      background: var(--bg-card); color: var(--fg); font-size: 0.875rem; font-weight: 500;
-      transition: all 0.3s; text-decoration: none;
-    }
-    .social-link:hover { border-color: hsla(210, 75%, 52%, 0.4); box-shadow: var(--shadow-glow); color: var(--primary); text-decoration: none; }
-    .social-link svg { width: 20px; height: 20px; }
+    /* Count */
+    .count { font-size: 0.85rem; color: var(--fg-muted); padding: 0.5rem 0; }
 
     /* Footer */
-    .footer {
-      border-top: 1px solid var(--border); padding: 2rem 1rem; text-align: center;
-    }
-    .footer p { font-size: 0.8125rem; color: var(--fg-muted); }
-    .footer a { color: var(--primary); }
+    .footer { border-top: 1px solid var(--border); padding: 2rem 0; text-align: center; }
+    .footer p { font-size: 0.85rem; color: var(--fg-muted); }
+    .footer a { color: var(--primary); text-decoration: none; }
+    .footer a:hover { text-decoration: underline; }
+    .social-links { display: flex; justify-content: center; gap: 1rem; margin-bottom: 1rem; }
+    .social-links a { color: var(--fg-muted); text-decoration: none; font-size: 0.8rem; padding: 0.4rem 0.8rem; background: var(--secondary); border-radius: var(--radius); transition: all 0.2s; }
+    .social-links a:hover { color: var(--primary); background: hsla(210 75% 52% / 0.1); }
 
-    /* Responsive */
+    /* Hidden */
+    .hidden { display: none !important; }
+
     @media (max-width: 768px) {
-      .stats-bar { grid-template-columns: repeat(2, 1fr); }
-      .resource-grid, .glossary-grid { grid-template-columns: 1fr; }
-      .header-right .curated-by { display: none; }
+      .grid { grid-template-columns: 1fr; }
+      .glossary-grid { grid-template-columns: 1fr; }
+      .stats-inner { gap: 1rem; }
+      .hero { padding: 2rem 0 2.5rem; }
+      .hero h1 { font-size: 1.8rem; }
+      .filter-row { gap: 0.35rem; }
     }
     @media (max-width: 480px) {
-      .hero { padding: 2.5rem 1rem; }
-      .hero h1 { font-size: 2rem; }
-      .nav-tabs { flex-wrap: wrap; }
+      .header-inner { padding: 0 0.5rem; }
+      .tab-btn { padding: 0.6rem 0.8rem; font-size: 0.8rem; }
     }
-
-    .empty-state { text-align: center; padding: 4rem 1rem; color: var(--fg-muted); }
-    .clear-btn {
-      margin-top: 1rem; background: none; border: none; color: var(--primary);
-      cursor: pointer; font-size: 0.875rem;
-    }
-    .clear-btn:hover { text-decoration: underline; }
-
-    .section-header {
-      display: flex; justify-content: space-between; align-items: center;
-      flex-wrap: wrap; gap: 1rem; margin-bottom: 1rem;
-    }
-    .section-title { font-size: 1.25rem; font-weight: 700; }
   </style>
 </head>
 <body>
+  <header class="header"><div class="container header-inner">
+    <a href="#" class="logo">📑 Tech<span class="text-gradient">Curator</span></a>
+    <div class="header-links"><span>Curated by <a href="https://linktr.ee/kalilur.rahman" target="_blank" rel="noopener">Kalilur Rahman</a></span></div>
+  </div></header>
 
-  <!-- Header -->
-  <header class="header">
-    <div class="header-inner">
-      <div class="logo">Tech<span>Curator</span></div>
-      <div class="header-right">
-        <span class="curated-by">Curated by <a href="https://linktr.ee/kalilur.rahman" target="_blank" rel="noopener noreferrer">Kalilur Rahman</a></span>
-      </div>
+  <section class="hero"><div class="container">
+    <h1><span>Tech</span><span class="text-gradient">Curator</span></h1>
+    <p id="heroSubtitle">200+ curated training resources, courses, and tools — organized by technology, provider, and type.</p>
+    <div class="search-box">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+      <input type="text" id="searchInput" placeholder="Search courses, tools, GitHub repos..." />
     </div>
-  </header>
+  </div></section>
 
-  <!-- Nav -->
-  <nav class="nav-tabs" id="nav">
-    <button class="nav-tab active" data-view="resources">📚 Resources</button>
-    <button class="nav-tab" data-view="glossary">📖 Glossary</button>
-  </nav>
+  <div class="stats"><div class="container stats-inner" id="statsBar"></div></div>
 
-  <!-- Hero -->
-  <section class="hero">
-    <h1>Tech<span>Curator</span></h1>
-    <p id="hero-subtitle">170+ curated training resources, courses, and tools — organized by technology, provider, and type. Your one-stop learning hub.</p>
-    <div class="search-wrap">
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" /></svg>
-      <input type="text" class="search-input" id="searchInput" placeholder="Search courses, tools, GitHub repos, YouTube channels..." />
-    </div>
-  </section>
-
-  <!-- Stats -->
   <div class="container">
-    <div class="stats-bar" id="statsBar"></div>
-  </div>
-
-  <!-- Resources view -->
-  <div class="resources-section" id="resourcesView">
-    <div class="container">
-      <!-- Category filters -->
-      <div class="filters" id="categoryFilters"></div>
-
-      <!-- Type filters + sort -->
-      <div style="display:flex; flex-wrap:wrap; align-items:center; gap:0.5rem; margin-bottom:1.5rem;">
-        <div id="typeFilters" style="display:flex; flex-wrap:wrap; gap:0.375rem;"></div>
-        <div style="margin-left:auto; display:flex; gap:0.5rem; align-items:center;">
-          <label style="font-size:0.75rem; color:var(--fg-muted);">Sort:</label>
-          <select class="sort-select" id="sortSelect">
-            <option value="default">Default</option>
-            <option value="rating">Rating</option>
-            <option value="difficulty">Difficulty</option>
-            <option value="provider">Provider</option>
-            <option value="alphabetical">A → Z</option>
-          </select>
-          <label style="display:flex; align-items:center; gap:0.375rem; font-size:0.8125rem; color:var(--fg-muted); cursor:pointer;">
-            <input type="checkbox" id="freeOnly" /> Free only
-          </label>
-        </div>
-      </div>
-
-      <div class="section-header">
-        <div>
-          <h2 class="section-title" id="sectionTitle">All Resources</h2>
-          <p class="results-count" id="resultsCount"></p>
-        </div>
-      </div>
-      <div class="resource-grid" id="resourceGrid"></div>
-      <div class="empty-state" id="emptyState" style="display:none;">
-        <p>No resources found matching your filters.</p>
-        <button class="clear-btn" onclick="clearAllFilters()">Clear all filters</button>
-      </div>
+    <div class="tabs">
+      <button class="tab-btn active" data-tab="resources">📚 Resources</button>
+      <button class="tab-btn" data-tab="glossary">📖 Glossary</button>
     </div>
   </div>
 
-  <!-- Glossary view -->
-  <div class="glossary-section" id="glossaryView">
-    <div class="container" style="padding-top:1rem;">
-      <div class="filters" id="glossaryCategoryFilters"></div>
-      <p class="results-count" id="glossaryCount"></p>
+  <!-- Resources Tab -->
+  <div id="resources-tab">
+    <div class="container filters">
+      <div class="filter-row" id="categoryFilters"></div>
+      <div class="filter-row" id="typeFilters" style="margin-top:0.5rem"></div>
+    </div>
+    <div class="container">
+      <div class="count" id="resourceCount"></div>
+      <div class="grid" id="resourceGrid"></div>
+    </div>
+  </div>
+
+  <!-- Glossary Tab -->
+  <div id="glossary-tab" class="hidden">
+    <div class="container filters">
+      <div class="filter-row" id="glossaryCatFilters"></div>
+      <div class="filter-row" style="margin-top:0.5rem">
+        <select class="sort-select" id="glossarySort">
+          <option value="a-z">A → Z</option>
+          <option value="z-a">Z → A</option>
+          <option value="category">By Category</option>
+        </select>
+      </div>
+    </div>
+    <div class="container">
+      <div class="count" id="glossaryCount"></div>
       <div class="glossary-grid" id="glossaryGrid"></div>
     </div>
   </div>
 
-  <!-- Social section -->
-  <section class="social-section">
-    <h2>Tech<span>Curator</span></h2>
-    <p>Your curated hub for Technology, AI/ML and System Design learning resources. Discover top courses, tutorials, and tools.</p>
+  <footer class="footer"><div class="container">
     <div class="social-links">
-      <a href="https://github.com/kalilurrahman" target="_blank" rel="noopener noreferrer" class="social-link">
-        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
-        GitHub
-      </a>
-      <a href="https://www.linkedin.com/in/kalilurrahman" target="_blank" rel="noopener noreferrer" class="social-link">
-        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-        LinkedIn
-      </a>
-      <a href="https://linktr.ee/kalilur.rahman" target="_blank" rel="noopener noreferrer" class="social-link">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-        Linktree
-      </a>
+      <a href="https://github.com/kalilurrahman" target="_blank">GitHub</a>
+      <a href="https://linkedin.com/in/kalilurrahman" target="_blank">LinkedIn</a>
+      <a href="https://linktr.ee/kalilur.rahman" target="_blank">Linktree</a>
     </div>
-  </section>
-
-  <!-- Footer -->
-  <footer class="footer">
-    <p>TechCurator — Your curated tech training hub. All resources are linked to their original sources.</p>
-    <p style="margin-top:0.5rem; font-size:0.75rem;">Curated by <a href="https://linktr.ee/kalilur.rahman" target="_blank" rel="noopener noreferrer">Kalilur Rahman</a></p>
+    <p>TechCurator — Curated by <a href="https://linktr.ee/kalilur.rahman" target="_blank">Kalilur Rahman</a></p>
   </footer>
 
 <script>
-// ========== DATA ==========
-const resources=[{id:"ai-1",title:"Machine Learning Specialization",description:"Andrew Ng's foundational ML course covering supervised/unsupervised learning, neural networks, and best practices.",url:"https://www.coursera.org/specializations/machine-learning-introduction",type:"course",category:"AI & Machine Learning",provider:"DeepLearning.AI",tags:["machine learning","neural networks","andrew ng"],isFree:false,difficulty:"Beginner",rating:4.9,featured:true},{id:"ai-2",title:"Fast.ai - Practical Deep Learning",description:"Top-down approach to deep learning. Build models before theory. Free, world-class course by Jeremy Howard.",url:"https://course.fast.ai/",type:"free",category:"AI & Machine Learning",provider:"Fast.ai",tags:["deep learning","pytorch","practical"],isFree:true,difficulty:"Intermediate",rating:4.9,featured:true},{id:"ai-3",title:"Hugging Face Transformers Course",description:"Learn to use transformers for NLP, computer vision, and audio processing with the Hugging Face ecosystem.",url:"https://huggingface.co/learn/nlp-course",type:"free",category:"AI & Machine Learning",provider:"Hugging Face",tags:["transformers","NLP","hugging face"],isFree:true,difficulty:"Intermediate",rating:4.8},{id:"ai-4",title:"Stanford CS229 - Machine Learning",description:"Stanford's legendary ML course. Full lecture videos, notes, and problem sets available free online.",url:"https://www.youtube.com/playlist?list=PLoROMvodv4rMiGQp3WXShtMGgzqpfVfbU",type:"youtube",category:"AI & Machine Learning",provider:"Stanford",tags:["stanford","machine learning","theory"],isFree:true,difficulty:"Advanced",rating:4.9},{id:"ai-5",title:"OpenAI Cookbook",description:"Example code and guides for building with the OpenAI API. Covers embeddings, GPT, fine-tuning, and more.",url:"https://github.com/openai/openai-cookbook",type:"github",category:"AI & Machine Learning",provider:"OpenAI",tags:["openai","gpt","api","cookbook"],isFree:true,difficulty:"Intermediate",rating:4.7},{id:"ai-6",title:"Google AI/ML Crash Course",description:"Google's fast-paced introduction to machine learning with TensorFlow APIs and practical exercises.",url:"https://developers.google.com/machine-learning/crash-course",type:"free",category:"AI & Machine Learning",provider:"Google",tags:["tensorflow","google","crash course"],isFree:true,difficulty:"Beginner",rating:4.6,featured:true},{id:"ai-7",title:"Anthropic Prompt Engineering Guide",description:"Comprehensive guide to prompt engineering with Claude. Best practices, techniques, and real-world examples.",url:"https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering",type:"website",category:"AI & Machine Learning",provider:"Anthropic",tags:["prompt engineering","claude","anthropic","LLM"],isFree:true,difficulty:"Beginner",rating:4.8},{id:"ai-8",title:"LangChain Documentation & Tutorials",description:"Build LLM-powered applications with LangChain. Chains, agents, RAG, memory, and tool use patterns.",url:"https://python.langchain.com/docs/get_started/introduction",type:"website",category:"AI & Machine Learning",provider:"LangChain",tags:["langchain","LLM","RAG","agents"],isFree:true,difficulty:"Intermediate",rating:4.5},{id:"ai-9",title:"Kaggle Learn - Intro to Machine Learning",description:"Hands-on micro-courses with coding exercises. Perfect for beginners wanting practical ML experience.",url:"https://www.kaggle.com/learn/intro-to-machine-learning",type:"free",category:"AI & Machine Learning",provider:"Kaggle",tags:["kaggle","hands-on","beginner"],isFree:true,difficulty:"Beginner",rating:4.5},{id:"ai-10",title:"Nvidia Deep Learning Institute",description:"GPU-accelerated computing courses. Covers deep learning, computer vision, NLP, and accelerated data science.",url:"https://www.nvidia.com/en-us/training/",type:"course",category:"AI & Machine Learning",provider:"Nvidia",tags:["nvidia","GPU","deep learning","CUDA"],isFree:false,difficulty:"Intermediate",rating:4.6},{id:"ai-11",title:"Awesome Machine Learning",description:"Curated list of awesome ML frameworks, libraries, and software organized by programming language.",url:"https://github.com/josephmisiti/awesome-machine-learning",type:"github",category:"AI & Machine Learning",provider:"Community",tags:["awesome list","frameworks","libraries"],isFree:true,difficulty:"Intermediate",rating:4.7},{id:"ai-12",title:"3Blue1Brown - Neural Networks",description:"Visually stunning series explaining neural networks, backpropagation, and gradient descent intuitively.",url:"https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi",type:"youtube",category:"AI & Machine Learning",provider:"YouTube",tags:["neural networks","visual","intuition","3blue1brown"],isFree:true,difficulty:"Beginner",rating:4.9,featured:true},{id:"cloud-1",title:"AWS Cloud Practitioner Essentials",description:"Official AWS foundational course. Understand cloud concepts, AWS services, security, and pricing.",url:"https://aws.amazon.com/training/learn-about/cloud-practitioner/",type:"free",category:"Cloud Computing",provider:"AWS",tags:["aws","cloud practitioner","fundamentals"],isFree:true,difficulty:"Beginner",rating:4.6,featured:true},{id:"cloud-2",title:"Google Cloud Skills Boost",description:"Free hands-on labs and learning paths for Google Cloud Platform. Earn badges and credentials.",url:"https://www.cloudskillsboost.google/",type:"free",category:"Cloud Computing",provider:"Google",tags:["gcp","google cloud","hands-on labs"],isFree:true,difficulty:"Beginner",rating:4.7},{id:"cloud-3",title:"Microsoft Azure Fundamentals (AZ-900)",description:"Official Microsoft learning path for Azure fundamentals certification. Cloud concepts and core services.",url:"https://learn.microsoft.com/en-us/training/paths/az-900-describe-cloud-concepts/",type:"free",category:"Cloud Computing",provider:"Microsoft",tags:["azure","az-900","fundamentals"],isFree:true,difficulty:"Beginner",rating:4.6},{id:"cloud-4",title:"AWS Well-Architected Framework",description:"Best practices for designing and operating reliable, secure, efficient, and cost-effective systems.",url:"https://aws.amazon.com/architecture/well-architected/",type:"website",category:"Cloud Computing",provider:"AWS",tags:["architecture","best practices","well-architected"],isFree:true,difficulty:"Advanced",rating:4.8},{id:"cloud-5",title:"Cloud Computing Concepts (Illinois/Coursera)",description:"University of Illinois course on distributed systems, cloud computing paradigms, and key technologies.",url:"https://www.coursera.org/learn/cloud-computing",type:"course",category:"Cloud Computing",provider:"Coursera",tags:["distributed systems","theory","university"],isFree:false,difficulty:"Intermediate",rating:4.5},{id:"cloud-6",title:"Awesome AWS",description:"Curated list of AWS libraries, open source repos, guides, blogs, and other resources.",url:"https://github.com/donnemartin/awesome-aws",type:"github",category:"Cloud Computing",provider:"Community",tags:["aws","awesome list","tools"],isFree:true,difficulty:"Intermediate",rating:4.6},{id:"devops-1",title:"Docker Getting Started Tutorial",description:"Official Docker tutorial. Learn containerization from scratch — images, containers, compose, and networking.",url:"https://docs.docker.com/get-started/",type:"free",category:"DevOps & Infrastructure",provider:"Docker",tags:["docker","containers","tutorial"],isFree:true,difficulty:"Beginner",rating:4.6,featured:true},{id:"devops-2",title:"Kubernetes the Hard Way",description:"Kelsey Hightower's legendary guide to bootstrapping Kubernetes the hard way. Deep understanding of K8s.",url:"https://github.com/kelseyhightower/kubernetes-the-hard-way",type:"github",category:"DevOps & Infrastructure",provider:"Community",tags:["kubernetes","hard way","deep dive"],isFree:true,difficulty:"Advanced",rating:4.9,featured:true},{id:"devops-3",title:"HashiCorp Terraform Tutorials",description:"Learn Infrastructure as Code with Terraform. Official tutorials covering AWS, Azure, GCP providers.",url:"https://developer.hashicorp.com/terraform/tutorials",type:"free",category:"DevOps & Infrastructure",provider:"HashiCorp",tags:["terraform","IaC","infrastructure"],isFree:true,difficulty:"Intermediate",rating:4.7},{id:"devops-4",title:"GitHub Actions Documentation",description:"Automate your software workflows with GitHub Actions. CI/CD, testing, deployment pipelines.",url:"https://docs.github.com/en/actions",type:"website",category:"DevOps & Infrastructure",provider:"GitHub",tags:["github actions","CI/CD","automation"],isFree:true,difficulty:"Intermediate",rating:4.6},{id:"devops-5",title:"Linux Foundation - Intro to Kubernetes",description:"Free edX course on Kubernetes fundamentals. Container orchestration concepts and hands-on exercises.",url:"https://www.edx.org/learn/kubernetes/the-linux-foundation-introduction-to-kubernetes",type:"free",category:"DevOps & Infrastructure",provider:"Linux Foundation",tags:["kubernetes","edx","containers"],isFree:true,difficulty:"Beginner",rating:4.5},{id:"devops-6",title:"The DevOps Handbook",description:"Key principles from the DevOps Handbook — flow, feedback, continuous learning, and experimentation.",url:"https://itrevolution.com/product/the-devops-handbook-second-edition/",type:"website",category:"DevOps & Infrastructure",provider:"Other",tags:["devops","book","culture","practices"],isFree:false,difficulty:"Intermediate",rating:4.8},{id:"devops-7",title:"TechWorld with Nana - DevOps Bootcamp",description:"Complete DevOps bootcamp covering Linux, networking, Docker, K8s, CI/CD, IaC, and monitoring.",url:"https://www.youtube.com/c/TechWorldwithNana",type:"youtube",category:"DevOps & Infrastructure",provider:"YouTube",tags:["devops","bootcamp","nana","complete"],isFree:true,difficulty:"Beginner",rating:4.8},{id:"web-1",title:"The Odin Project",description:"Full-stack web development curriculum. HTML, CSS, JavaScript, React, Node.js — completely free.",url:"https://www.theodinproject.com/",type:"free",category:"Web Development",provider:"Community",tags:["full-stack","curriculum","free"],isFree:true,difficulty:"Beginner",rating:4.8,featured:true},{id:"web-2",title:"freeCodeCamp Full Curriculum",description:"Thousands of hours of free coding challenges and projects. Earn certifications in web dev, data science, and more.",url:"https://www.freecodecamp.org/",type:"free",category:"Web Development",provider:"freeCodeCamp",tags:["freecodecamp","certifications","projects"],isFree:true,difficulty:"Beginner",rating:4.7,featured:true},{id:"web-3",title:"MDN Web Docs",description:"The definitive reference for web technologies. HTML, CSS, JavaScript, Web APIs documentation.",url:"https://developer.mozilla.org/",type:"website",category:"Web Development",provider:"Mozilla",tags:["documentation","reference","web standards"],isFree:true,difficulty:"Beginner",rating:4.9},{id:"web-4",title:"React Official Documentation",description:"Learn React from the official docs. Interactive tutorials, thinking in React, hooks, and advanced patterns.",url:"https://react.dev/",type:"website",category:"Web Development",provider:"Meta",tags:["react","official docs","hooks"],isFree:true,difficulty:"Beginner",rating:4.8},{id:"web-5",title:"JavaScript.info",description:"From fundamentals to advanced topics. Thorough, well-structured JavaScript reference and tutorial.",url:"https://javascript.info/",type:"free",category:"Web Development",provider:"Community",tags:["javascript","tutorial","comprehensive"],isFree:true,difficulty:"Beginner",rating:4.8},{id:"web-6",title:"Vercel Next.js Learn",description:"Official Next.js tutorial by Vercel. Build a full-stack web app with React, routing, data fetching.",url:"https://nextjs.org/learn",type:"free",category:"Web Development",provider:"Vercel",tags:["nextjs","react","full-stack","vercel"],isFree:true,difficulty:"Intermediate",rating:4.7},{id:"web-7",title:"CSS Tricks / Smashing Magazine",description:"In-depth articles on CSS, front-end development, UX design, and modern web development techniques.",url:"https://css-tricks.com/",type:"website",category:"Web Development",provider:"Community",tags:["CSS","front-end","design","articles"],isFree:true,difficulty:"Intermediate",rating:4.6},{id:"web-8",title:"Full Stack Open (Helsinki University)",description:"Modern web development with React, Redux, Node.js, MongoDB, GraphQL, and TypeScript.",url:"https://fullstackopen.com/en/",type:"free",category:"Web Development",provider:"Other",tags:["full-stack","react","node","university"],isFree:true,difficulty:"Intermediate",rating:4.8},{id:"web-9",title:"Awesome React",description:"Curated list of React ecosystem — libraries, tools, tutorials, videos, and community resources.",url:"https://github.com/enaqx/awesome-react",type:"github",category:"Web Development",provider:"Community",tags:["react","awesome list","ecosystem"],isFree:true,difficulty:"Intermediate",rating:4.6},{id:"web-10",title:"Fireship - 100 Seconds of Code",description:"Fast-paced, entertaining tech explainers. Frameworks, languages, and concepts in bite-sized videos.",url:"https://www.youtube.com/c/Fireship",type:"youtube",category:"Web Development",provider:"YouTube",tags:["fireship","quick","entertaining","overview"],isFree:true,difficulty:"Beginner",rating:4.9},{id:"sec-1",title:"OWASP Top 10",description:"The most critical web application security risks. Essential reading for every developer.",url:"https://owasp.org/www-project-top-ten/",type:"website",category:"Cybersecurity",provider:"OWASP",tags:["owasp","web security","top 10"],isFree:true,difficulty:"Intermediate",rating:4.9,featured:true},{id:"sec-2",title:"Google Cybersecurity Professional Certificate",description:"Entry-level cybersecurity certificate by Google. Covers security concepts, tools, incident response.",url:"https://www.coursera.org/professional-certificates/google-cybersecurity",type:"certification",category:"Cybersecurity",provider:"Google",tags:["google","certificate","entry-level"],isFree:false,difficulty:"Beginner",rating:4.7},{id:"sec-3",title:"Hack The Box Academy",description:"Interactive cybersecurity training platform. Learn pentesting, web exploitation, and defensive security.",url:"https://academy.hackthebox.com/",type:"course",category:"Cybersecurity",provider:"Other",tags:["pentesting","hands-on","CTF"],isFree:true,difficulty:"Intermediate",rating:4.8},{id:"sec-4",title:"TryHackMe",description:"Gamified cybersecurity training. Beginner-friendly rooms and learning paths.",url:"https://tryhackme.com/",type:"free",category:"Cybersecurity",provider:"Other",tags:["tryhackme","gamified","beginner-friendly"],isFree:true,difficulty:"Beginner",rating:4.7},{id:"sec-5",title:"Awesome Security",description:"Comprehensive collection of security tools, resources, books, and techniques.",url:"https://github.com/sbilly/awesome-security",type:"github",category:"Cybersecurity",provider:"Community",tags:["awesome list","tools","comprehensive"],isFree:true,difficulty:"Intermediate",rating:4.5},{id:"sec-6",title:"Professor Messer - Security+ Training",description:"Free CompTIA Security+ certification training videos. Complete exam preparation series.",url:"https://www.youtube.com/c/professormesser",type:"youtube",category:"Cybersecurity",provider:"YouTube",tags:["security+","comptia","certification","free"],isFree:true,difficulty:"Beginner",rating:4.7},{id:"data-1",title:"IBM Data Science Professional Certificate",description:"9-course series covering data science methodology, Python, SQL, data visualization, and ML.",url:"https://www.coursera.org/professional-certificates/ibm-data-science",type:"certification",category:"Data Science & Analytics",provider:"IBM",tags:["ibm","data science","certificate"],isFree:false,difficulty:"Beginner",rating:4.6},{id:"data-2",title:"Kaggle Competitions & Datasets",description:"World's largest data science competition platform. Real datasets, competitions, and notebooks.",url:"https://www.kaggle.com/",type:"website",category:"Data Science & Analytics",provider:"Kaggle",tags:["kaggle","competitions","datasets","notebooks"],isFree:true,difficulty:"Intermediate",rating:4.8,featured:true},{id:"data-3",title:"Python for Data Analysis (Wes McKinney)",description:"The definitive guide to data analysis with Python, pandas, NumPy, and Jupyter.",url:"https://wesmckinney.com/book/",type:"free",category:"Data Science & Analytics",provider:"Community",tags:["python","pandas","data analysis","book"],isFree:true,difficulty:"Intermediate",rating:4.7},{id:"data-4",title:"Google Data Analytics Professional Certificate",description:"Learn data analytics skills — spreadsheets, SQL, Tableau, R.",url:"https://www.coursera.org/professional-certificates/google-data-analytics",type:"certification",category:"Data Science & Analytics",provider:"Google",tags:["google","data analytics","SQL","tableau"],isFree:false,difficulty:"Beginner",rating:4.7},{id:"data-5",title:"DataCamp - Data Scientist Track",description:"Interactive data science courses in Python and R. Hands-on exercises and real-world projects.",url:"https://www.datacamp.com/tracks/data-scientist-with-python",type:"course",category:"Data Science & Analytics",provider:"DataCamp",tags:["datacamp","python","interactive"],isFree:false,difficulty:"Beginner",rating:4.5},{id:"data-6",title:"Statistics and Probability (Khan Academy)",description:"Free comprehensive statistics course. Probability, distributions, regression, and hypothesis testing.",url:"https://www.khanacademy.org/math/statistics-probability",type:"free",category:"Data Science & Analytics",provider:"Other",tags:["statistics","khan academy","math","free"],isFree:true,difficulty:"Beginner",rating:4.7},{id:"web3-1",title:"CryptoZombies",description:"Learn Solidity by building a zombie game. Interactive smart contract development tutorial.",url:"https://cryptozombies.io/",type:"free",category:"Blockchain & Web3",provider:"Community",tags:["solidity","ethereum","smart contracts","gamified"],isFree:true,difficulty:"Beginner",rating:4.7},{id:"web3-2",title:"Ethereum Development Documentation",description:"Official Ethereum developer docs. Smart contracts, dApps, EVM, and development frameworks.",url:"https://ethereum.org/en/developers/docs/",type:"website",category:"Blockchain & Web3",provider:"Community",tags:["ethereum","docs","smart contracts","dApps"],isFree:true,difficulty:"Intermediate",rating:4.6},{id:"web3-3",title:"Buildspace",description:"Project-based Web3 learning. Build NFTs, DAOs, and dApps in weekend-long cohort sessions.",url:"https://buildspace.so/",type:"free",category:"Blockchain & Web3",provider:"Community",tags:["buildspace","projects","NFT","DAO"],isFree:true,difficulty:"Beginner",rating:4.5},{id:"web3-4",title:"Awesome Blockchain",description:"Curated list of blockchain resources — papers, courses, tools, and development frameworks.",url:"https://github.com/yjjnls/awesome-blockchain",type:"github",category:"Blockchain & Web3",provider:"Community",tags:["awesome list","blockchain","resources"],isFree:true,difficulty:"Intermediate",rating:4.4},{id:"lang-1",title:"Rust Book",description:"The official Rust book. Learn systems programming with safety, concurrency, and speed.",url:"https://doc.rust-lang.org/book/",type:"free",category:"Programming Languages",provider:"Community",tags:["rust","systems","book","official"],isFree:true,difficulty:"Intermediate",rating:4.9,featured:true},{id:"lang-2",title:"Go by Example",description:"Hands-on introduction to Go using annotated example programs. Clean, idiomatic Go code.",url:"https://gobyexample.com/",type:"free",category:"Programming Languages",provider:"Community",tags:["go","golang","examples","practical"],isFree:true,difficulty:"Beginner",rating:4.7},{id:"lang-3",title:"Python Official Tutorial",description:"Official Python tutorial covering fundamentals, data structures, modules, I/O, and standard library.",url:"https://docs.python.org/3/tutorial/",type:"free",category:"Programming Languages",provider:"Community",tags:["python","official","fundamentals"],isFree:true,difficulty:"Beginner",rating:4.6},{id:"lang-4",title:"TypeScript Deep Dive",description:"Comprehensive, free TypeScript guide. Types, generics, advanced patterns, and best practices.",url:"https://basarat.gitbook.io/typescript",type:"free",category:"Programming Languages",provider:"Community",tags:["typescript","deep dive","advanced"],isFree:true,difficulty:"Intermediate",rating:4.7},{id:"lang-5",title:"Exercism - Practice Coding Challenges",description:"Free coding challenges in 50+ languages with mentoring. Level up through practice and feedback.",url:"https://exercism.org/",type:"free",category:"Programming Languages",provider:"Community",tags:["exercism","practice","mentoring","multi-language"],isFree:true,difficulty:"Beginner",rating:4.7},{id:"mobile-1",title:"React Native - Official Documentation",description:"Build native mobile apps with React. Official getting started guide, components, and API reference.",url:"https://reactnative.dev/docs/getting-started",type:"website",category:"Mobile Development",provider:"Meta",tags:["react native","mobile","cross-platform"],isFree:true,difficulty:"Intermediate",rating:4.6},{id:"mobile-2",title:"Flutter Codelabs",description:"Google's Flutter tutorials. Build beautiful, natively compiled multiplatform apps.",url:"https://docs.flutter.dev/codelabs",type:"free",category:"Mobile Development",provider:"Google",tags:["flutter","dart","google","cross-platform"],isFree:true,difficulty:"Beginner",rating:4.7},{id:"mobile-3",title:"Apple Swift Playgrounds & Tutorials",description:"Learn Swift and iOS development with Apple's official interactive tutorials.",url:"https://developer.apple.com/tutorials/swiftui",type:"free",category:"Mobile Development",provider:"Apple",tags:["swift","iOS","apple","swiftui"],isFree:true,difficulty:"Beginner",rating:4.7},{id:"mobile-4",title:"Android Developers - Training Courses",description:"Official Android training by Google. Kotlin, Jetpack Compose, app architecture.",url:"https://developer.android.com/courses",type:"free",category:"Mobile Development",provider:"Google",tags:["android","kotlin","jetpack compose","google"],isFree:true,difficulty:"Beginner",rating:4.6},{id:"sys-1",title:"System Design Primer",description:"Learn how to design large-scale systems. Prep for the system design interview.",url:"https://github.com/donnemartin/system-design-primer",type:"github",category:"System Design",provider:"Community",tags:["system design","interview","architecture","scalability"],isFree:true,difficulty:"Advanced",rating:4.9,featured:true},{id:"sys-2",title:"Designing Data-Intensive Applications",description:"Martin Kleppmann's essential book on distributed systems, databases, and data pipelines architecture.",url:"https://dataintensive.net/",type:"website",category:"System Design",provider:"Other",tags:["DDIA","distributed systems","databases","book"],isFree:false,difficulty:"Advanced",rating:4.9},{id:"sys-3",title:"ByteByteGo - System Design",description:"Alex Xu's system design content. Visual explanations of real-world system architectures.",url:"https://www.youtube.com/@ByteByteGo",type:"youtube",category:"System Design",provider:"YouTube",tags:["system design","visual","architecture","bytebytego"],isFree:true,difficulty:"Intermediate",rating:4.8},{id:"sys-4",title:"High Scalability Blog",description:"Real-world architecture case studies. How tech companies scale their systems.",url:"http://highscalability.com/",type:"website",category:"System Design",provider:"Community",tags:["scalability","case studies","architecture"],isFree:true,difficulty:"Advanced",rating:4.5},{id:"sys-5",title:"MIT 6.824 - Distributed Systems",description:"MIT's graduate course on distributed systems. MapReduce, Raft, transactions, and fault tolerance.",url:"https://www.youtube.com/playlist?list=PLrw6a1wE39_tb2fErI4-WkMbsvGQk9_UB",type:"youtube",category:"System Design",provider:"MIT",tags:["MIT","distributed systems","raft","graduate"],isFree:true,difficulty:"Advanced",rating:4.9},{id:"cert-1",title:"AWS Solutions Architect Associate",description:"Design available, cost-efficient, fault-tolerant systems on AWS.",url:"https://aws.amazon.com/certification/certified-solutions-architect-associate/",type:"certification",category:"Cloud Computing",provider:"AWS",tags:["aws","solutions architect","SAA-C03"],isFree:false,difficulty:"Intermediate",rating:4.8},{id:"cert-6",title:"Certified Kubernetes Administrator (CKA)",description:"CNCF certification for Kubernetes administration, cluster architecture, and troubleshooting.",url:"https://www.cncf.io/certification/cka/",type:"certification",category:"DevOps & Infrastructure",provider:"CNCF",tags:["kubernetes","CKA","CNCF"],isFree:false,difficulty:"Advanced",rating:4.8,featured:true},{id:"cert-8",title:"CompTIA Security+ (SY0-701)",description:"Globally recognized cybersecurity certification covering threats, attacks, and vulnerabilities.",url:"https://www.comptia.org/certifications/security",type:"certification",category:"Cybersecurity",provider:"CompTIA",tags:["comptia","security+","cybersecurity"],isFree:false,difficulty:"Beginner",rating:4.7},{id:"cert-13",title:"Google TensorFlow Developer Certificate",description:"Demonstrate proficiency in building TensorFlow models for CV, NLP, and time series.",url:"https://www.tensorflow.org/certificate",type:"certification",category:"AI & Machine Learning",provider:"Google",tags:["tensorflow","deep learning","certificate"],isFree:false,difficulty:"Intermediate",rating:4.6},{id:"pdf-1",title:"Attention Is All You Need (Transformer Paper)",description:"The foundational paper that introduced the Transformer architecture, revolutionizing NLP and AI.",url:"https://arxiv.org/abs/1706.03762",type:"pdf",category:"AI & Machine Learning",provider:"Community",tags:["transformer","attention","seminal paper"],isFree:true,difficulty:"Advanced",rating:5.0},{id:"pdf-2",title:"The Illustrated Transformer (Jay Alammar)",description:"Visual, intuitive walkthrough of the Transformer architecture.",url:"https://jalammar.github.io/illustrated-transformer/",type:"pdf",category:"AI & Machine Learning",provider:"Community",tags:["transformer","visual","illustrated"],isFree:true,difficulty:"Intermediate",rating:4.9},{id:"pdf-4",title:"Google SRE Book",description:"How Google runs production systems. SLIs, SLOs, incident management, and reliability.",url:"https://sre.google/sre-book/table-of-contents/",type:"pdf",category:"DevOps & Infrastructure",provider:"Google",tags:["SRE","reliability","google","production"],isFree:true,difficulty:"Advanced",rating:4.9,featured:true},{id:"pdf-6",title:"Bitcoin Whitepaper",description:"The original Bitcoin whitepaper by Satoshi Nakamoto. Peer-to-peer electronic cash system.",url:"https://bitcoin.org/bitcoin.pdf",type:"pdf",category:"Blockchain & Web3",provider:"Community",tags:["bitcoin","whitepaper","cryptocurrency"],isFree:true,difficulty:"Intermediate",rating:4.9},{id:"pdf-8",title:"MapReduce: Simplified Data Processing (Google)",description:"Google's seminal paper on MapReduce. Foundation for distributed data processing.",url:"https://research.google/pubs/pub62/",type:"pdf",category:"System Design",provider:"Google",tags:["mapreduce","distributed","google"],isFree:true,difficulty:"Advanced",rating:4.8},{id:"pdf-10",title:"The Twelve-Factor App",description:"Methodology for building modern, scalable SaaS apps.",url:"https://12factor.net/",type:"pdf",category:"DevOps & Infrastructure",provider:"Community",tags:["twelve-factor","SaaS","methodology"],isFree:true,difficulty:"Intermediate",rating:4.7},{id:"tweet-1",title:"Andrej Karpathy — Intro to LLMs",description:"Karpathy's legendary threads explaining LLMs from first principles.",url:"https://x.com/karpathy",type:"tweet",category:"AI & Machine Learning",provider:"Community",tags:["karpathy","LLM","fundamentals"],isFree:true,difficulty:"Intermediate",rating:4.9,featured:true},{id:"tweet-3",title:"Kelsey Hightower — Cloud Native Insights",description:"Invaluable takes on Kubernetes, cloud native, and developer experience.",url:"https://x.com/kelaboratory",type:"tweet",category:"DevOps & Infrastructure",provider:"Community",tags:["kelsey hightower","kubernetes","cloud native"],isFree:true,difficulty:"Intermediate",rating:4.8},{id:"tweet-5",title:"Swyx — AI Engineering Threads",description:"Prolific threads on AI engineering, prompt engineering patterns.",url:"https://x.com/swyx",type:"tweet",category:"AI & Machine Learning",provider:"Community",tags:["swyx","AI engineering","prompts"],isFree:true,difficulty:"Intermediate",rating:4.7},{id:"tweet-7",title:"Simon Willison — LLMs & Data Tools",description:"Deep dives into LLM capabilities, prompt injection, and open source AI tooling.",url:"https://x.com/simonw",type:"tweet",category:"AI & Machine Learning",provider:"Community",tags:["simon willison","LLM","datasette"],isFree:true,difficulty:"Intermediate",rating:4.8},{id:"tweet-10",title:"Dan Abramov — React Internals",description:"Former React core team member sharing deep insights on React architecture.",url:"https://x.com/dan_abramov2",type:"tweet",category:"Web Development",provider:"Meta",tags:["dan abramov","react","internals"],isFree:true,difficulty:"Advanced",rating:4.8},{id:"tweet-11",title:"Alex Xu — System Design Visuals",description:"ByteByteGo founder sharing visual system design explanations.",url:"https://x.com/aleaborov",type:"tweet",category:"System Design",provider:"Community",tags:["alex xu","system design","visual"],isFree:true,difficulty:"Intermediate",rating:4.7},{id:"ext-1",title:"Deep Learning Specialization",description:"Andrew Ng's 5-course deep learning series. Neural networks, CNNs, RNNs, sequence models.",url:"https://www.deeplearning.ai/courses/deep-learning-specialization/",type:"course",category:"AI & Machine Learning",provider:"DeepLearning.AI",tags:["deep learning","andrew ng","CNN","RNN"],isFree:false,difficulty:"Intermediate",rating:4.9,featured:true},{id:"ext-2",title:"Stanford CS229 — Course Site",description:"Stanford's official CS229 course page with syllabus, lecture notes, and problem sets.",url:"https://cs229.stanford.edu/",type:"course",category:"AI & Machine Learning",provider:"Stanford",tags:["stanford","CS229","lecture notes"],isFree:true,difficulty:"Advanced",rating:4.9},{id:"ext-3",title:"MIT 6.036 — Intro to Machine Learning",description:"MIT OpenCourseWare intro to ML covering classification, regression, neural networks.",url:"https://openlearninglibrary.mit.edu/courses/course-v1:MITx+6.036+1T2019/about",type:"free",category:"AI & Machine Learning",provider:"MIT",tags:["MIT","classification","reinforcement learning"],isFree:true,difficulty:"Intermediate",rating:4.7},{id:"ext-5",title:"Elements of AI",description:"Free online course by University of Helsinki. AI fundamentals for everyone.",url:"https://www.elementsofai.com/",type:"free",category:"AI & Machine Learning",provider:"University of Helsinki",tags:["elements of AI","non-technical","fundamentals"],isFree:true,difficulty:"Beginner",rating:4.7},{id:"ext-6",title:"Dive into Deep Learning (d2l.ai)",description:"Interactive deep learning textbook with code, math, and discussions.",url:"https://d2l.ai/",type:"free",category:"AI & Machine Learning",provider:"Community",tags:["d2l","deep learning","textbook","interactive"],isFree:true,difficulty:"Intermediate",rating:4.8,featured:true},{id:"ext-7",title:"Deep Learning Book (Goodfellow et al.)",description:"The definitive deep learning textbook. Linear algebra, probability, optimization, CNNs, RNNs.",url:"https://www.deeplearningbook.org/",type:"pdf",category:"AI & Machine Learning",provider:"Community",tags:["deep learning","textbook","goodfellow"],isFree:true,difficulty:"Advanced",rating:4.9},{id:"ext-12",title:"nanoGPT — Andrej Karpathy",description:"Simplest, fastest repository for training/fine-tuning medium-sized GPTs. ~300 lines of PyTorch.",url:"https://github.com/karpathy/nanoGPT",type:"github",category:"AI & Machine Learning",provider:"Community",tags:["karpathy","GPT","training","pytorch"],isFree:true,difficulty:"Intermediate",rating:4.9,featured:true},{id:"ext-14",title:"LLM Course — Maxime Labonne",description:"Comprehensive course on LLMs: fundamentals, fine-tuning, RAG, and deployment.",url:"https://github.com/mlabonne/llm-course",type:"github",category:"AI & Machine Learning",provider:"Community",tags:["LLM","fine-tuning","RAG","comprehensive"],isFree:true,difficulty:"Intermediate",rating:4.8,featured:true},{id:"ext-15",title:"ML From Scratch",description:"Python implementations of ML models from scratch. Decision trees, SVMs, neural nets.",url:"https://github.com/eriklindernoren/ML-From-Scratch",type:"github",category:"AI & Machine Learning",provider:"Community",tags:["from scratch","implementations","python"],isFree:true,difficulty:"Intermediate",rating:4.7},{id:"ext-18",title:"Made With ML — Goku Mohandas",description:"Design, develop, deploy, and iterate on production ML applications. MLOps best practices.",url:"https://github.com/GokuMohandas/Made-With-ML",type:"github",category:"AI & Machine Learning",provider:"Community",tags:["MLOps","production ML","deployment"],isFree:true,difficulty:"Intermediate",rating:4.8},{id:"ext-20",title:"Microsoft AI for Beginners",description:"Microsoft's 12-week AI curriculum covering symbolic AI, neural networks, NLP, computer vision.",url:"https://github.com/microsoft/AI-For-Beginners",type:"github",category:"AI & Machine Learning",provider:"Microsoft",tags:["microsoft","curriculum","beginner"],isFree:true,difficulty:"Beginner",rating:4.7},{id:"ext-21",title:"Microsoft ML for Beginners",description:"Classic ML techniques with Scikit-learn. 26 lessons covering regression, classification, clustering.",url:"https://github.com/microsoft/ML-For-Beginners",type:"github",category:"AI & Machine Learning",provider:"Microsoft",tags:["microsoft","scikit-learn","curriculum"],isFree:true,difficulty:"Beginner",rating:4.7},{id:"ext-22",title:"Microsoft Data Science for Beginners",description:"20-lesson curriculum on data science fundamentals. Data ethics, statistics, visualization.",url:"https://github.com/microsoft/Data-Science-For-Beginners",type:"github",category:"Data Science & Analytics",provider:"Microsoft",tags:["microsoft","data science","curriculum"],isFree:true,difficulty:"Beginner",rating:4.6},{id:"ext-27",title:"500 AI/ML/DL Projects with Code",description:"Massive collection of 500+ AI projects with source code.",url:"https://github.com/ashishpatel26/500-AI-Machine-learning-Deep-learning-Computer-vision-NLP-Projects-with-code",type:"github",category:"AI & Machine Learning",provider:"Community",tags:["projects","code examples","500+"],isFree:true,difficulty:"Intermediate",rating:4.6},{id:"ext-31",title:"100 Days of ML Code",description:"Visual day-by-day guide through 100 days of learning ML with infographics.",url:"https://github.com/Avik-Jain/100-Days-Of-ML-Code",type:"github",category:"AI & Machine Learning",provider:"Community",tags:["100 days","challenge","infographics"],isFree:true,difficulty:"Beginner",rating:4.6},{id:"ext-34",title:"Stanford CS229 — ML Cheatsheets",description:"Super VIP cheatsheets for Stanford CS229 Machine Learning.",url:"https://github.com/afshinea/stanford-cs-229-machine-learning",type:"pdf",category:"AI & Machine Learning",provider:"Stanford",tags:["cheatsheets","CS229","reference"],isFree:true,difficulty:"Intermediate",rating:4.8},{id:"ext-35",title:"Awesome Production Machine Learning",description:"Curated list of open-source tools for deploying, monitoring, and scaling ML in production.",url:"https://github.com/EthicalML/awesome-production-machine-learning",type:"github",category:"AI & Machine Learning",provider:"Community",tags:["production ML","MLOps","deployment"],isFree:true,difficulty:"Advanced",rating:4.7},{id:"ext-36",title:"Andrew Ng (@AndrewYNg)",description:"DeepLearning.AI founder. Threads on AI education, industry trends, and learning advice.",url:"https://x.com/AndrewYNg",type:"tweet",category:"AI & Machine Learning",provider:"DeepLearning.AI",tags:["andrew ng","AI education","industry"],isFree:true,difficulty:"Beginner",rating:4.9},{id:"ext-37",title:"ByteByteGo — System Design Platform",description:"Alex Xu's system design platform. Visual explanations, weekly newsletter, and interview prep.",url:"https://bytebytego.com/",type:"website",category:"System Design",provider:"Community",tags:["bytebytego","alex xu","visual","newsletter"],isFree:false,difficulty:"Intermediate",rating:4.8},{id:"ext-38",title:"Grokking the System Design Interview",description:"DesignGurus' flagship course. Step-by-step system design patterns.",url:"https://www.designgurus.io/course/grokking-the-system-design-interview",type:"course",category:"System Design",provider:"Other",tags:["grokking","interview prep","patterns"],isFree:false,difficulty:"Intermediate",rating:4.8,featured:true},{id:"ext-39",title:"MIT 6.824 — Distributed Systems (Course Site)",description:"MIT's legendary distributed systems course. Labs on MapReduce, Raft, sharded key-value stores.",url:"https://pdos.csail.mit.edu/6.824/",type:"course",category:"System Design",provider:"MIT",tags:["MIT","distributed systems","raft","labs"],isFree:true,difficulty:"Advanced",rating:4.9},{id:"ext-40",title:"Google Cloud Infrastructure Training",description:"Official Google Cloud training for infrastructure engineers.",url:"https://cloud.google.com/learn/training/cloud-infrastructure",type:"course",category:"Cloud Computing",provider:"Google",tags:["gcp","infrastructure","networking"],isFree:false,difficulty:"Intermediate",rating:4.6},{id:"ext-41",title:"Awesome System Design",description:"Curated list of system design resources — articles, videos, papers.",url:"https://github.com/madd86/awesome-system-design",type:"github",category:"System Design",provider:"Community",tags:["awesome list","system design","curated"],isFree:true,difficulty:"Intermediate",rating:4.5},{id:"ext-42",title:"System Design Interview Collection",description:"Comprehensive collection of system design interview questions and solutions.",url:"https://github.com/checkcheckzz/system-design-interview",type:"github",category:"System Design",provider:"Community",tags:["interview","questions","solutions"],isFree:true,difficulty:"Intermediate",rating:4.6},{id:"ext-43",title:"Awesome Distributed Systems",description:"Curated list of distributed systems papers, courses, talks.",url:"https://github.com/theanalyst/awesome-distributed-systems",type:"github",category:"System Design",provider:"Community",tags:["distributed systems","papers","awesome list"],isFree:true,difficulty:"Advanced",rating:4.5},{id:"ext-44",title:"Engineering Blogs Collection",description:"Curated list of engineering blogs from top tech companies.",url:"https://github.com/kilimchoi/engineering-blogs",type:"github",category:"System Design",provider:"Community",tags:["engineering blogs","tech companies","architecture"],isFree:true,difficulty:"Intermediate",rating:4.7},{id:"ext-45",title:"System Design Interview (Alex Xu Book)",description:"Bestselling system design book. Step-by-step framework for designing scalable systems.",url:"https://www.amazon.com/System-Design-Interview-insiders-Second/dp/B08CMF2CQF",type:"website",category:"System Design",provider:"Community",tags:["alex xu","book","interview prep"],isFree:false,difficulty:"Intermediate",rating:4.9},{id:"ext-46",title:"InfoQ — Architecture & Design",description:"Enterprise architecture articles, presentations, and case studies.",url:"https://www.infoq.com/architecture-design/",type:"website",category:"System Design",provider:"Community",tags:["infoq","enterprise","architecture"],isFree:true,difficulty:"Advanced",rating:4.6},{id:"ext-47",title:"Building Microservices (Sam Newman)",description:"Definitive guide to microservices architecture. O'Reilly.",url:"https://www.oreilly.com/library/view/building-microservices-2nd/9781492034018/",type:"website",category:"System Design",provider:"Other",tags:["microservices","O'Reilly","architecture"],isFree:false,difficulty:"Intermediate",rating:4.8},{id:"ext-48",title:"Gábor Szántó — System Design",description:"System design insights, architecture discussions.",url:"https://x.com/gaborsenyt",type:"tweet",category:"System Design",provider:"Community",tags:["system design","architecture"],isFree:true,difficulty:"Intermediate",rating:4.4},{id:"ext-49",title:"Alex Borsen — Software Architecture",description:"Threads on software architecture patterns and trade-offs.",url:"https://x.com/aleaborsen",type:"tweet",category:"System Design",provider:"Community",tags:["architecture","design patterns"],isFree:true,difficulty:"Intermediate",rating:4.4},{id:"ext-50",title:"LeetCode System Design Discussion",description:"Community-driven system design discussions and solutions.",url:"https://leetcode.com/discuss/post/system-design/",type:"website",category:"System Design",provider:"Other",tags:["leetcode","discussion","interview"],isFree:true,difficulty:"Intermediate",rating:4.5}];
+// ===== DATA =====
+const resources=[{id:"ai-1",title:"Machine Learning Specialization",description:"Andrew Ng's foundational ML course covering supervised/unsupervised learning, neural networks, and best practices.",url:"https://www.coursera.org/specializations/machine-learning-introduction",type:"course",category:"AI & Machine Learning",provider:"DeepLearning.AI",tags:["machine learning","neural networks","andrew ng"],isFree:false,difficulty:"Beginner",rating:4.9,featured:true},{id:"ai-2",title:"Fast.ai - Practical Deep Learning",description:"Top-down approach to deep learning. Build models before theory. Free, world-class course by Jeremy Howard.",url:"https://course.fast.ai/",type:"free",category:"AI & Machine Learning",provider:"Fast.ai",tags:["deep learning","pytorch","practical"],isFree:true,difficulty:"Intermediate",rating:4.9,featured:true},{id:"ai-3",title:"Hugging Face Transformers Course",description:"Learn to use transformers for NLP, computer vision, and audio processing with the Hugging Face ecosystem.",url:"https://huggingface.co/learn/nlp-course",type:"free",category:"AI & Machine Learning",provider:"Hugging Face",tags:["transformers","NLP","hugging face"],isFree:true,difficulty:"Intermediate",rating:4.8},{id:"ai-4",title:"Stanford CS229 - Machine Learning",description:"Stanford's legendary ML course. Full lecture videos, notes, and problem sets available free online.",url:"https://www.youtube.com/playlist?list=PLoROMvodv4rMiGQp3WXShtMGgzqpfVfbU",type:"youtube",category:"AI & Machine Learning",provider:"Stanford",tags:["stanford","machine learning","theory"],isFree:true,difficulty:"Advanced",rating:4.9},{id:"ai-5",title:"OpenAI Cookbook",description:"Example code and guides for building with the OpenAI API. Covers embeddings, GPT, fine-tuning, and more.",url:"https://github.com/openai/openai-cookbook",type:"github",category:"AI & Machine Learning",provider:"OpenAI",tags:["openai","gpt","api","cookbook"],isFree:true,difficulty:"Intermediate",rating:4.7},{id:"ai-6",title:"Google AI/ML Crash Course",description:"Google's fast-paced introduction to machine learning with TensorFlow APIs and practical exercises.",url:"https://developers.google.com/machine-learning/crash-course",type:"free",category:"AI & Machine Learning",provider:"Google",tags:["tensorflow","google","crash course"],isFree:true,difficulty:"Beginner",rating:4.6,featured:true},{id:"ai-7",title:"Anthropic Prompt Engineering Guide",description:"Comprehensive guide to prompt engineering with Claude. Best practices, techniques, and real-world examples.",url:"https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering",type:"website",category:"AI & Machine Learning",provider:"Anthropic",tags:["prompt engineering","claude","LLM"],isFree:true,difficulty:"Beginner",rating:4.8},{id:"ai-8",title:"LangChain Documentation & Tutorials",description:"Build LLM-powered applications with LangChain. Chains, agents, RAG, memory, and tool use patterns.",url:"https://python.langchain.com/docs/get_started/introduction",type:"website",category:"AI & Machine Learning",provider:"LangChain",tags:["langchain","LLM","RAG","agents"],isFree:true,difficulty:"Intermediate",rating:4.5},{id:"ai-9",title:"Kaggle Learn - Intro to Machine Learning",description:"Hands-on micro-courses with coding exercises. Perfect for beginners wanting practical ML experience.",url:"https://www.kaggle.com/learn/intro-to-machine-learning",type:"free",category:"AI & Machine Learning",provider:"Kaggle",tags:["kaggle","hands-on","beginner"],isFree:true,difficulty:"Beginner",rating:4.5},{id:"ai-12",title:"3Blue1Brown - Neural Networks",description:"Visually stunning series explaining neural networks, backpropagation, and gradient descent intuitively.",url:"https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi",type:"youtube",category:"AI & Machine Learning",provider:"YouTube",tags:["neural networks","visual","3blue1brown"],isFree:true,difficulty:"Beginner",rating:4.9,featured:true},{id:"cloud-1",title:"AWS Cloud Practitioner Essentials",description:"Official AWS foundational course. Understand cloud concepts, AWS services, security, and pricing.",url:"https://aws.amazon.com/training/learn-about/cloud-practitioner/",type:"free",category:"Cloud Computing",provider:"AWS",tags:["aws","cloud practitioner","fundamentals"],isFree:true,difficulty:"Beginner",rating:4.6,featured:true},{id:"cloud-2",title:"Google Cloud Skills Boost",description:"Free hands-on labs and learning paths for Google Cloud Platform. Earn badges and credentials.",url:"https://www.cloudskillsboost.google/",type:"free",category:"Cloud Computing",provider:"Google",tags:["gcp","google cloud","hands-on labs"],isFree:true,difficulty:"Beginner",rating:4.7},{id:"cloud-3",title:"Microsoft Azure Fundamentals (AZ-900)",description:"Official Microsoft learning path for Azure fundamentals certification.",url:"https://learn.microsoft.com/en-us/training/paths/az-900-describe-cloud-concepts/",type:"free",category:"Cloud Computing",provider:"Microsoft",tags:["azure","az-900","fundamentals"],isFree:true,difficulty:"Beginner",rating:4.6},{id:"cloud-4",title:"AWS Well-Architected Framework",description:"Best practices for designing and operating reliable, secure, efficient, and cost-effective systems.",url:"https://aws.amazon.com/architecture/well-architected/",type:"website",category:"Cloud Computing",provider:"AWS",tags:["architecture","best practices"],isFree:true,difficulty:"Advanced",rating:4.8},{id:"cloud-7",title:"DigitalOcean Community Tutorials",description:"Thousands of free tutorials on Linux, databases, Docker, Kubernetes, and cloud infrastructure.",url:"https://www.digitalocean.com/community/tutorials",type:"free",category:"Cloud Computing",provider:"Other",tags:["digitalocean","tutorials","linux"],isFree:true,difficulty:"Beginner",rating:4.7},{id:"devops-1",title:"Docker Getting Started Tutorial",description:"Official Docker tutorial. Learn containerization from scratch — images, containers, compose, and networking.",url:"https://docs.docker.com/get-started/",type:"free",category:"DevOps & Infrastructure",provider:"Docker",tags:["docker","containers","tutorial"],isFree:true,difficulty:"Beginner",rating:4.6,featured:true},{id:"devops-2",title:"Kubernetes the Hard Way",description:"Kelsey Hightower's legendary guide to bootstrapping Kubernetes the hard way.",url:"https://github.com/kelseyhightower/kubernetes-the-hard-way",type:"github",category:"DevOps & Infrastructure",provider:"Community",tags:["kubernetes","hard way","deep dive"],isFree:true,difficulty:"Advanced",rating:4.9,featured:true},{id:"devops-3",title:"HashiCorp Terraform Tutorials",description:"Learn Infrastructure as Code with Terraform. Official tutorials covering AWS, Azure, GCP providers.",url:"https://developer.hashicorp.com/terraform/tutorials",type:"free",category:"DevOps & Infrastructure",provider:"HashiCorp",tags:["terraform","IaC","infrastructure"],isFree:true,difficulty:"Intermediate",rating:4.7},{id:"devops-4",title:"GitHub Actions Documentation",description:"Automate your software workflows with GitHub Actions. CI/CD, testing, deployment pipelines.",url:"https://docs.github.com/en/actions",type:"website",category:"DevOps & Infrastructure",provider:"GitHub",tags:["github actions","CI/CD","automation"],isFree:true,difficulty:"Intermediate",rating:4.6},{id:"devops-7",title:"TechWorld with Nana - DevOps Bootcamp",description:"Complete DevOps bootcamp covering Linux, networking, Docker, K8s, CI/CD, IaC, and monitoring.",url:"https://www.youtube.com/c/TechWorldwithNana",type:"youtube",category:"DevOps & Infrastructure",provider:"YouTube",tags:["devops","bootcamp","nana"],isFree:true,difficulty:"Beginner",rating:4.8},{id:"devops-8",title:"Prometheus & Grafana Monitoring Stack",description:"Open-source monitoring and alerting toolkit with beautiful dashboards for cloud-native observability.",url:"https://prometheus.io/docs/introduction/overview/",type:"website",category:"DevOps & Infrastructure",provider:"CNCF",tags:["prometheus","grafana","monitoring"],isFree:true,difficulty:"Intermediate",rating:4.7},{id:"devops-9",title:"ArgoCD — GitOps Continuous Delivery",description:"Declarative GitOps continuous delivery tool for Kubernetes.",url:"https://argo-cd.readthedocs.io/",type:"website",category:"DevOps & Infrastructure",provider:"CNCF",tags:["argocd","gitops","kubernetes"],isFree:true,difficulty:"Intermediate",rating:4.6},{id:"web-1",title:"The Odin Project",description:"Full-stack web development curriculum. HTML, CSS, JavaScript, React, Node.js — completely free.",url:"https://www.theodinproject.com/",type:"free",category:"Web Development",provider:"Community",tags:["full-stack","curriculum","free"],isFree:true,difficulty:"Beginner",rating:4.8,featured:true},{id:"web-2",title:"freeCodeCamp Full Curriculum",description:"Thousands of hours of free coding challenges and projects. Earn certifications in web dev, data science.",url:"https://www.freecodecamp.org/",type:"free",category:"Web Development",provider:"freeCodeCamp",tags:["freecodecamp","certifications","projects"],isFree:true,difficulty:"Beginner",rating:4.7,featured:true},{id:"web-3",title:"MDN Web Docs",description:"The definitive reference for web technologies. HTML, CSS, JavaScript, Web APIs documentation.",url:"https://developer.mozilla.org/",type:"website",category:"Web Development",provider:"Mozilla",tags:["documentation","reference","web standards"],isFree:true,difficulty:"Beginner",rating:4.9},{id:"web-4",title:"React Official Documentation",description:"Learn React from the official docs. Interactive tutorials, thinking in React, hooks, and advanced patterns.",url:"https://react.dev/",type:"website",category:"Web Development",provider:"Meta",tags:["react","official docs","hooks"],isFree:true,difficulty:"Beginner",rating:4.8},{id:"web-5",title:"JavaScript.info",description:"From fundamentals to advanced topics. Thorough, well-structured JavaScript reference and tutorial.",url:"https://javascript.info/",type:"free",category:"Web Development",provider:"Community",tags:["javascript","tutorial","comprehensive"],isFree:true,difficulty:"Beginner",rating:4.8},{id:"web-10",title:"Fireship - 100 Seconds of Code",description:"Fast-paced, entertaining tech explainers. Frameworks, languages, and concepts in bite-sized videos.",url:"https://www.youtube.com/c/Fireship",type:"youtube",category:"Web Development",provider:"YouTube",tags:["fireship","quick","entertaining"],isFree:true,difficulty:"Beginner",rating:4.9},{id:"web-11",title:"Tailwind CSS Documentation",description:"Official Tailwind CSS docs. Utility-first CSS framework with comprehensive examples.",url:"https://tailwindcss.com/docs",type:"website",category:"Web Development",provider:"Community",tags:["tailwind","CSS","utility-first"],isFree:true,difficulty:"Beginner",rating:4.8},{id:"web-12",title:"Web.dev by Google",description:"Google's resource for modern web development best practices. Performance, accessibility, SEO, and PWAs.",url:"https://web.dev/",type:"free",category:"Web Development",provider:"Google",tags:["google","performance","best practices"],isFree:true,difficulty:"Intermediate",rating:4.7},{id:"web-14",title:"Traversy Media — Web Dev Crash Courses",description:"High-quality web development tutorials and crash courses. React, Node, Python in digestible formats.",url:"https://www.youtube.com/@TraversyMedia",type:"youtube",category:"Web Development",provider:"YouTube",tags:["traversy","crash course","tutorials"],isFree:true,difficulty:"Beginner",rating:4.8},{id:"web-15",title:"Frontend Masters",description:"Expert-led video courses on frontend engineering. React, TypeScript, CSS, Node.js, and performance.",url:"https://frontendmasters.com/",type:"course",category:"Web Development",provider:"Other",tags:["frontend masters","expert","video courses"],isFree:false,difficulty:"Intermediate",rating:4.8},{id:"sec-1",title:"OWASP Top 10",description:"The most critical web application security risks. Essential reading for every developer.",url:"https://owasp.org/www-project-top-ten/",type:"website",category:"Cybersecurity",provider:"OWASP",tags:["owasp","web security","top 10"],isFree:true,difficulty:"Intermediate",rating:4.9,featured:true},{id:"sec-2",title:"Google Cybersecurity Professional Certificate",description:"Entry-level cybersecurity certificate by Google. Covers security concepts, tools, incident response.",url:"https://www.coursera.org/professional-certificates/google-cybersecurity",type:"certification",category:"Cybersecurity",provider:"Google",tags:["google","certificate","entry-level"],isFree:false,difficulty:"Beginner",rating:4.7},{id:"sec-3",title:"Hack The Box Academy",description:"Interactive cybersecurity training platform. Learn pentesting, web exploitation, and defensive security.",url:"https://academy.hackthebox.com/",type:"course",category:"Cybersecurity",provider:"Other",tags:["pentesting","hands-on","CTF"],isFree:true,difficulty:"Intermediate",rating:4.8},{id:"sec-4",title:"TryHackMe",description:"Gamified cybersecurity training. Beginner-friendly rooms and learning paths for offensive/defensive security.",url:"https://tryhackme.com/",type:"free",category:"Cybersecurity",provider:"Other",tags:["tryhackme","gamified","beginner-friendly"],isFree:true,difficulty:"Beginner",rating:4.7},{id:"sec-7",title:"PortSwigger Web Security Academy",description:"Free, comprehensive web security training. SQL injection, XSS, CSRF with interactive labs.",url:"https://portswigger.net/web-security",type:"free",category:"Cybersecurity",provider:"Other",tags:["portswigger","web security","labs"],isFree:true,difficulty:"Intermediate",rating:4.9,featured:true},{id:"sec-10",title:"Kali Linux Documentation",description:"Official Kali Linux docs and tutorials. Industry standard for penetration testing and security auditing.",url:"https://www.kali.org/docs/",type:"website",category:"Cybersecurity",provider:"Other",tags:["kali linux","penetration testing","tools"],isFree:true,difficulty:"Intermediate",rating:4.7},{id:"data-1",title:"IBM Data Science Professional Certificate",description:"9-course series covering data science methodology, Python, SQL, data visualization, and ML.",url:"https://www.coursera.org/professional-certificates/ibm-data-science",type:"certification",category:"Data Science & Analytics",provider:"IBM",tags:["ibm","data science","certificate"],isFree:false,difficulty:"Beginner",rating:4.6},{id:"data-2",title:"Kaggle Competitions & Datasets",description:"World's largest data science competition platform. Real datasets, competitions, and community notebooks.",url:"https://www.kaggle.com/",type:"website",category:"Data Science & Analytics",provider:"Kaggle",tags:["kaggle","competitions","datasets"],isFree:true,difficulty:"Intermediate",rating:4.8,featured:true},{id:"data-3",title:"Python for Data Analysis",description:"The definitive guide to data analysis with Python, pandas, NumPy, and Jupyter.",url:"https://wesmckinney.com/book/",type:"free",category:"Data Science & Analytics",provider:"Community",tags:["python","pandas","data analysis"],isFree:true,difficulty:"Intermediate",rating:4.7},{id:"data-7",title:"Pandas Documentation",description:"Official pandas docs. Essential Python library for data manipulation and analysis.",url:"https://pandas.pydata.org/docs/",type:"website",category:"Data Science & Analytics",provider:"Community",tags:["pandas","python","data manipulation"],isFree:true,difficulty:"Beginner",rating:4.7},{id:"data-8",title:"Streamlit Documentation",description:"Build and share data apps in minutes with Python. Create dashboards and ML demos effortlessly.",url:"https://docs.streamlit.io/",type:"website",category:"Data Science & Analytics",provider:"Community",tags:["streamlit","dashboards","python"],isFree:true,difficulty:"Beginner",rating:4.6},{id:"web3-1",title:"CryptoZombies",description:"Learn Solidity by building a zombie game. Interactive, gamified smart contract development tutorial.",url:"https://cryptozombies.io/",type:"free",category:"Blockchain & Web3",provider:"Community",tags:["solidity","ethereum","smart contracts"],isFree:true,difficulty:"Beginner",rating:4.7},{id:"web3-2",title:"Ethereum Development Documentation",description:"Official Ethereum developer docs. Smart contracts, dApps, EVM, and development frameworks.",url:"https://ethereum.org/en/developers/docs/",type:"website",category:"Blockchain & Web3",provider:"Community",tags:["ethereum","docs","smart contracts"],isFree:true,difficulty:"Intermediate",rating:4.6},{id:"web3-5",title:"Alchemy University",description:"Free Web3 development bootcamp. Learn Solidity, smart contracts, and dApp development.",url:"https://www.alchemy.com/university",type:"free",category:"Blockchain & Web3",provider:"Other",tags:["alchemy","solidity","bootcamp"],isFree:true,difficulty:"Beginner",rating:4.7},{id:"web3-8",title:"Patrick Collins — Blockchain & Solidity Course",description:"32-hour free Solidity & smart contract development course on YouTube.",url:"https://www.youtube.com/@PatrickAlphaC",type:"youtube",category:"Blockchain & Web3",provider:"YouTube",tags:["patrick collins","solidity","comprehensive"],isFree:true,difficulty:"Beginner",rating:4.8},{id:"lang-1",title:"Rust Book",description:"The official Rust book. Learn systems programming with safety, concurrency, and speed.",url:"https://doc.rust-lang.org/book/",type:"free",category:"Programming Languages",provider:"Community",tags:["rust","systems","book"],isFree:true,difficulty:"Intermediate",rating:4.9,featured:true},{id:"lang-2",title:"Go by Example",description:"Hands-on introduction to Go using annotated example programs. Clean, idiomatic Go code.",url:"https://gobyexample.com/",type:"free",category:"Programming Languages",provider:"Community",tags:["go","golang","examples"],isFree:true,difficulty:"Beginner",rating:4.7},{id:"lang-3",title:"Python Official Tutorial",description:"Official Python tutorial covering fundamentals, data structures, modules, I/O, and standard library.",url:"https://docs.python.org/3/tutorial/",type:"free",category:"Programming Languages",provider:"Community",tags:["python","official","fundamentals"],isFree:true,difficulty:"Beginner",rating:4.6},{id:"lang-4",title:"TypeScript Deep Dive",description:"Comprehensive, free TypeScript guide by Basarat. Types, generics, advanced patterns, and best practices.",url:"https://basarat.gitbook.io/typescript",type:"free",category:"Programming Languages",provider:"Community",tags:["typescript","deep dive","advanced"],isFree:true,difficulty:"Intermediate",rating:4.7},{id:"lang-5",title:"Exercism - Practice Coding Challenges",description:"Free coding challenges in 50+ languages with mentoring. Level up through practice and feedback.",url:"https://exercism.org/",type:"free",category:"Programming Languages",provider:"Community",tags:["exercism","practice","multi-language"],isFree:true,difficulty:"Beginner",rating:4.7},{id:"lang-9",title:"C++ Reference (cppreference.com)",description:"The definitive C++ reference. Complete documentation of the C++ standard library.",url:"https://en.cppreference.com/",type:"website",category:"Programming Languages",provider:"Community",tags:["c++","reference","standard library"],isFree:true,difficulty:"Intermediate",rating:4.8},{id:"mobile-1",title:"React Native Documentation",description:"Build native mobile apps with React. Official getting started guide, components, and API reference.",url:"https://reactnative.dev/docs/getting-started",type:"website",category:"Mobile Development",provider:"Meta",tags:["react native","mobile","cross-platform"],isFree:true,difficulty:"Intermediate",rating:4.6},{id:"mobile-2",title:"Flutter Codelabs",description:"Google's Flutter tutorials. Build beautiful, natively compiled multiplatform apps from a single codebase.",url:"https://docs.flutter.dev/codelabs",type:"free",category:"Mobile Development",provider:"Google",tags:["flutter","dart","cross-platform"],isFree:true,difficulty:"Beginner",rating:4.7},{id:"mobile-3",title:"Apple Swift Playgrounds & Tutorials",description:"Learn Swift and iOS development with Apple's official interactive tutorials.",url:"https://developer.apple.com/tutorials/swiftui",type:"free",category:"Mobile Development",provider:"Apple",tags:["swift","iOS","swiftui"],isFree:true,difficulty:"Beginner",rating:4.7},{id:"mobile-4",title:"Android Developers Training",description:"Official Android training by Google. Kotlin, Jetpack Compose, app architecture, and best practices.",url:"https://developer.android.com/courses",type:"free",category:"Mobile Development",provider:"Google",tags:["android","kotlin","jetpack compose"],isFree:true,difficulty:"Beginner",rating:4.6},{id:"mobile-5",title:"Expo Documentation",description:"Build universal React Native apps with Expo. Simplified development and managed workflow.",url:"https://docs.expo.dev/",type:"website",category:"Mobile Development",provider:"Community",tags:["expo","react native","universal"],isFree:true,difficulty:"Beginner",rating:4.7},{id:"sys-1",title:"System Design Primer",description:"Learn how to design large-scale systems. Prep for the system design interview. Incredible free resource.",url:"https://github.com/donnemartin/system-design-primer",type:"github",category:"System Design",provider:"Community",tags:["system design","interview","architecture"],isFree:true,difficulty:"Advanced",rating:4.9,featured:true},{id:"sys-2",title:"Designing Data-Intensive Applications",description:"Martin Kleppmann's essential book on distributed systems, databases, and data pipelines architecture.",url:"https://dataintensive.net/",type:"website",category:"System Design",provider:"Other",tags:["DDIA","distributed systems","databases"],isFree:false,difficulty:"Advanced",rating:4.9},{id:"sys-3",title:"ByteByteGo - System Design",description:"Alex Xu's system design content. Visual explanations of real-world system architectures.",url:"https://www.youtube.com/@ByteByteGo",type:"youtube",category:"System Design",provider:"YouTube",tags:["system design","visual","bytebytego"],isFree:true,difficulty:"Intermediate",rating:4.8},{id:"sys-5",title:"MIT 6.824 - Distributed Systems",description:"MIT's graduate course on distributed systems. MapReduce, Raft, transactions, and fault tolerance.",url:"https://www.youtube.com/playlist?list=PLrw6a1wE39_tb2fErI4-WkMbsvGQk9_UB",type:"youtube",category:"System Design",provider:"MIT",tags:["MIT","distributed systems","raft"],isFree:true,difficulty:"Advanced",rating:4.9},{id:"sys-7",title:"Martin Fowler's Architecture Blog",description:"Seminal articles on software architecture, microservices, event-driven systems, and refactoring patterns.",url:"https://martinfowler.com/architecture/",type:"website",category:"System Design",provider:"Community",tags:["martin fowler","architecture","patterns"],isFree:true,difficulty:"Advanced",rating:4.8},{id:"pdf-1",title:"Attention Is All You Need",description:"The foundational paper that introduced the Transformer architecture, revolutionizing NLP and AI.",url:"https://arxiv.org/abs/1706.03762",type:"pdf",category:"AI & Machine Learning",provider:"Community",tags:["transformer","attention","seminal paper"],isFree:true,difficulty:"Advanced",rating:5.0},{id:"pdf-4",title:"Google SRE Book",description:"How Google runs production systems. SLIs, SLOs, incident management, and reliability best practices.",url:"https://sre.google/sre-book/table-of-contents/",type:"pdf",category:"DevOps & Infrastructure",provider:"Google",tags:["SRE","reliability","google"],isFree:true,difficulty:"Advanced",rating:4.9,featured:true},{id:"cert-1",title:"AWS Solutions Architect Associate",description:"Design available, cost-efficient, fault-tolerant systems on AWS. Most in-demand cloud certification.",url:"https://aws.amazon.com/certification/certified-solutions-architect-associate/",type:"certification",category:"Cloud Computing",provider:"AWS",tags:["aws","solutions architect","SAA-C03"],isFree:false,difficulty:"Intermediate",rating:4.8},{id:"cert-6",title:"Certified Kubernetes Administrator (CKA)",description:"CNCF certification proving competency in Kubernetes administration and troubleshooting.",url:"https://www.cncf.io/certification/cka/",type:"certification",category:"DevOps & Infrastructure",provider:"CNCF",tags:["kubernetes","CKA","CNCF"],isFree:false,difficulty:"Advanced",rating:4.8,featured:true},{id:"cert-8",title:"CompTIA Security+ (SY0-701)",description:"Globally recognized cybersecurity certification. Covers threats, attacks, vulnerabilities, and security operations.",url:"https://www.comptia.org/certifications/security",type:"certification",category:"Cybersecurity",provider:"CompTIA",tags:["comptia","security+","cybersecurity"],isFree:false,difficulty:"Beginner",rating:4.7},{id:"ext-1",title:"Deep Learning Specialization",description:"Andrew Ng's 5-course deep learning series. Neural networks, CNNs, RNNs, and sequence models.",url:"https://www.deeplearning.ai/courses/deep-learning-specialization/",type:"course",category:"AI & Machine Learning",provider:"DeepLearning.AI",tags:["deep learning","andrew ng","CNN","RNN"],isFree:false,difficulty:"Intermediate",rating:4.9,featured:true},{id:"ext-5",title:"Elements of AI",description:"Free online course by University of Helsinki. AI fundamentals for everyone — no programming required.",url:"https://www.elementsofai.com/",type:"free",category:"AI & Machine Learning",provider:"Other",tags:["elements of AI","non-technical","fundamentals"],isFree:true,difficulty:"Beginner",rating:4.7},{id:"ext-6",title:"Dive into Deep Learning (d2l.ai)",description:"Interactive deep learning textbook with code, math, and discussions. Multi-framework support.",url:"https://d2l.ai/",type:"free",category:"AI & Machine Learning",provider:"Community",tags:["d2l","deep learning","textbook"],isFree:true,difficulty:"Intermediate",rating:4.8,featured:true},{id:"ext-12",title:"nanoGPT — Andrej Karpathy",description:"Simplest repository for training/fine-tuning GPTs. ~300 lines of PyTorch for a full GPT.",url:"https://github.com/karpathy/nanoGPT",type:"github",category:"AI & Machine Learning",provider:"Community",tags:["karpathy","GPT","training","pytorch"],isFree:true,difficulty:"Intermediate",rating:4.9,featured:true},{id:"ext-14",title:"LLM Course — Maxime Labonne",description:"Comprehensive course on LLMs covering fundamentals, fine-tuning, RAG, and deployment.",url:"https://github.com/mlabonne/llm-course",type:"github",category:"AI & Machine Learning",provider:"Community",tags:["LLM","fine-tuning","RAG"],isFree:true,difficulty:"Intermediate",rating:4.8,featured:true},{id:"ext-38",title:"Grokking the System Design Interview",description:"Step-by-step system design patterns for URL shortener, Instagram, Uber, and more.",url:"https://www.designgurus.io/course/grokking-the-system-design-interview",type:"course",category:"System Design",provider:"Other",tags:["grokking","interview prep","patterns"],isFree:false,difficulty:"Intermediate",rating:4.8,featured:true}];
 
 const categories=["AI & Machine Learning","Cloud Computing","DevOps & Infrastructure","Web Development","Cybersecurity","Data Science & Analytics","Blockchain & Web3","Programming Languages","Mobile Development","System Design"];
-const categoryIcons={"AI & Machine Learning":"🧠","Cloud Computing":"☁️","DevOps & Infrastructure":"⚙️","Web Development":"🌐","Cybersecurity":"🔒","Data Science & Analytics":"📊","Blockchain & Web3":"⛓️","Programming Languages":"💻","Mobile Development":"📱","System Design":"🏗️"};
+const catIcons={"AI & Machine Learning":"🧠","Cloud Computing":"☁️","DevOps & Infrastructure":"⚙️","Web Development":"🌐","Cybersecurity":"🔒","Data Science & Analytics":"📊","Blockchain & Web3":"⛓️","Programming Languages":"💻","Mobile Development":"📱","System Design":"🏗️"};
 const typeLabels={course:"Course",github:"GitHub",youtube:"YouTube",website:"Website",certification:"Cert",pdf:"PDF",tweet:"Tweet",free:"Free"};
-const difficultyOrder={Beginner:1,Intermediate:2,Advanced:3};
-
-// Glossary (abbreviated for size — full data inline)
-const glossaryCategories=["All","Programming Fundamentals","Web Development","AI & Machine Learning","Cloud Computing","DevOps & CI/CD","Cybersecurity","Data Science","System Design","Databases","Networking","Mobile Development","Blockchain & Web3","Software Engineering","Operating Systems","Hardware & Architecture"];
 
 const glossaryTerms=[
-{term:"Algorithm",definition:"A step-by-step procedure for solving a problem or performing a computation.",category:"Programming Fundamentals"},{term:"Data Structure",definition:"A way of organizing and storing data for efficient access and modification.",category:"Programming Fundamentals"},{term:"Variable",definition:"A named storage location in memory that holds a value which can change during program execution.",category:"Programming Fundamentals"},{term:"Function",definition:"A reusable block of code that performs a specific task and can accept inputs and return outputs.",category:"Programming Fundamentals"},{term:"Class",definition:"A blueprint for creating objects that defines properties and behaviors.",category:"Programming Fundamentals"},{term:"Recursion",definition:"A technique where a function calls itself to solve smaller instances of the same problem.",category:"Programming Fundamentals"},{term:"Big O Notation",definition:"Mathematical notation describing the upper bound of an algorithm's time or space complexity.",category:"Programming Fundamentals"},{term:"Dynamic Programming",definition:"An optimization technique solving complex problems by breaking them into overlapping subproblems.",category:"Programming Fundamentals"},{term:"Hash Table",definition:"A data structure mapping keys to values using a hash function for O(1) average lookups.",category:"Programming Fundamentals"},{term:"Binary Search",definition:"An efficient O(log n) search algorithm for sorted arrays that repeatedly halves the search space.",category:"Programming Fundamentals"},{term:"Stack",definition:"A LIFO (Last In, First Out) data structure supporting push and pop operations.",category:"Programming Fundamentals"},{term:"Queue",definition:"A FIFO (First In, First Out) data structure supporting enqueue and dequeue operations.",category:"Programming Fundamentals"},{term:"Graph",definition:"A data structure consisting of vertices connected by edges, representing relationships.",category:"Programming Fundamentals"},{term:"Design Pattern",definition:"A reusable solution template for common software design problems.",category:"Programming Fundamentals"},{term:"SOLID Principles",definition:"Five design principles for maintainable OOP: Single Responsibility, Open-Closed, Liskov, Interface Segregation, Dependency Inversion.",category:"Programming Fundamentals"},{term:"Closure",definition:"A function that captures and retains access to variables from its enclosing scope.",category:"Programming Fundamentals"},{term:"Concurrency",definition:"The ability to handle multiple tasks at the same time, not necessarily in parallel.",category:"Programming Fundamentals"},{term:"Deadlock",definition:"A situation where processes are blocked, each waiting for the other to release a resource.",category:"Programming Fundamentals"},
-{term:"React",definition:"A JavaScript library by Meta for building user interfaces using a component-based architecture.",category:"Web Development"},{term:"TypeScript",definition:"A typed superset of JavaScript that compiles to plain JavaScript, adding static type checking.",category:"Web Development"},{term:"DOM",definition:"A programming interface representing HTML/XML documents as a tree structure.",category:"Web Development"},{term:"REST",definition:"An architectural style for APIs using HTTP methods on resources.",category:"Web Development"},{term:"GraphQL",definition:"A query language for APIs allowing clients to request exactly the data they need.",category:"Web Development"},{term:"WebSocket",definition:"A protocol providing full-duplex communication channels over a single TCP connection.",category:"Web Development"},{term:"JWT",definition:"A compact, URL-safe token format for securely transmitting information between parties.",category:"Web Development"},{term:"SSR",definition:"Generating HTML on the server for each request, improving initial load time and SEO.",category:"Web Development"},{term:"PWA",definition:"A web application using modern APIs to deliver native app-like experiences including offline support.",category:"Web Development"},{term:"Webpack",definition:"A popular module bundler that transforms and bundles JavaScript, CSS, and assets.",category:"Web Development"},{term:"Vite",definition:"A fast build tool using native ES modules for instant dev server startup.",category:"Web Development"},{term:"Tailwind CSS",definition:"A utility-first CSS framework providing low-level classes for building custom designs rapidly.",category:"Web Development"},{term:"Node.js",definition:"A JavaScript runtime built on Chrome's V8 engine for building server-side applications.",category:"Web Development"},{term:"CDN",definition:"A distributed network of servers delivering content from the nearest geographic location.",category:"Web Development"},{term:"CORS",definition:"A security mechanism allowing controlled access to resources from different domains.",category:"Web Development"},{term:"Web Assembly (WASM)",definition:"A binary instruction format enabling near-native performance in web browsers.",category:"Web Development"},
-{term:"Large Language Model (LLM)",definition:"AI models trained on massive text data to understand and generate human language.",category:"AI & Machine Learning"},{term:"Transformer",definition:"A neural network architecture using self-attention mechanisms, foundation of modern NLP.",category:"AI & Machine Learning"},{term:"RAG",definition:"Retrieval-Augmented Generation — combining LLMs with external knowledge retrieval.",category:"AI & Machine Learning"},{term:"Fine-Tuning",definition:"Further training a pre-trained model on a specific dataset to specialize its capabilities.",category:"AI & Machine Learning"},{term:"Prompt Engineering",definition:"The art of crafting effective inputs to AI models to get desired outputs.",category:"AI & Machine Learning"},{term:"Neural Network",definition:"A computing system inspired by biological neurons, consisting of interconnected layers.",category:"AI & Machine Learning"},{term:"Deep Learning",definition:"A subset of ML using multi-layered neural networks to learn complex patterns.",category:"AI & Machine Learning"},{term:"CNN",definition:"A deep learning architecture specialized for processing grid-like data such as images.",category:"AI & Machine Learning"},{term:"RNN",definition:"A neural network with loops allowing information to persist, designed for sequential data.",category:"AI & Machine Learning"},{term:"GAN",definition:"Two neural networks competing to generate realistic synthetic data.",category:"AI & Machine Learning"},{term:"Transfer Learning",definition:"Applying knowledge gained from one task to improve learning on a different but related task.",category:"AI & Machine Learning"},{term:"Supervised Learning",definition:"Training a model on labeled data where the correct output is known.",category:"AI & Machine Learning"},{term:"Reinforcement Learning",definition:"Training agents to make decisions by rewarding desired behaviors.",category:"AI & Machine Learning"},{term:"Embedding",definition:"A dense vector representation of data in a continuous vector space.",category:"AI & Machine Learning"},{term:"Vector Database",definition:"A database optimized for storing and querying high-dimensional vectors.",category:"AI & Machine Learning"},{term:"MLOps",definition:"Practices for deploying and maintaining ML models in production.",category:"AI & Machine Learning"},{term:"Diffusion Model",definition:"A generative model learning to create data by reversing a gradual noise-adding process.",category:"AI & Machine Learning"},{term:"LoRA",definition:"Low-Rank Adaptation — an efficient fine-tuning method for frozen model weights.",category:"AI & Machine Learning"},{term:"AI Agent",definition:"An autonomous AI system that can plan, use tools, and take actions to accomplish goals.",category:"AI & Machine Learning"},{term:"Hallucination (AI)",definition:"When an AI model generates plausible but factually incorrect information.",category:"AI & Machine Learning"},
-{term:"Cloud Computing",definition:"Delivering computing services over the internet.",category:"Cloud Computing"},{term:"IaaS",definition:"Infrastructure as a Service — cloud providing virtualized computing resources on demand.",category:"Cloud Computing"},{term:"PaaS",definition:"Platform as a Service — cloud providing a platform for developing applications.",category:"Cloud Computing"},{term:"SaaS",definition:"Software as a Service — delivering complete applications over the internet.",category:"Cloud Computing"},{term:"Serverless",definition:"A cloud execution model where the provider manages all server infrastructure.",category:"Cloud Computing"},{term:"AWS",definition:"Amazon Web Services — Amazon's comprehensive cloud platform.",category:"Cloud Computing"},{term:"Azure",definition:"Microsoft's cloud computing platform.",category:"Cloud Computing"},{term:"GCP",definition:"Google Cloud Platform — Google's suite of cloud computing services.",category:"Cloud Computing"},{term:"Lambda",definition:"AWS's serverless compute service running code in response to events.",category:"Cloud Computing"},{term:"S3",definition:"AWS's object storage service for storing and retrieving any amount of data.",category:"Cloud Computing"},{term:"VPC",definition:"Virtual Private Cloud — an isolated virtual network in the cloud.",category:"Cloud Computing"},{term:"IAM",definition:"Identity and Access Management — managing user permissions to access resources.",category:"Cloud Computing"},{term:"Auto Scaling",definition:"Automatically adjusting compute resources based on demand.",category:"Cloud Computing"},{term:"Load Balancer",definition:"A service distributing network traffic across multiple servers.",category:"Cloud Computing"},{term:"Edge Computing",definition:"Processing data closer to the source rather than in centralized data centers.",category:"Cloud Computing"},
-{term:"Docker",definition:"A platform for building, shipping, and running applications in containers.",category:"DevOps & CI/CD"},{term:"Kubernetes",definition:"An open-source container orchestration platform for automating deployment and scaling.",category:"DevOps & CI/CD"},{term:"CI/CD",definition:"Continuous Integration/Continuous Delivery — automating the build, test, and deploy pipeline.",category:"DevOps & CI/CD"},{term:"Terraform",definition:"An Infrastructure as Code tool for provisioning cloud resources declaratively.",category:"DevOps & CI/CD"},{term:"GitHub Actions",definition:"GitHub's CI/CD platform for automating software workflows.",category:"DevOps & CI/CD"},{term:"Helm",definition:"A package manager for Kubernetes simplifying application deployment.",category:"DevOps & CI/CD"},{term:"Prometheus",definition:"An open-source monitoring and alerting toolkit for cloud-native environments.",category:"DevOps & CI/CD"},{term:"Grafana",definition:"An open-source platform for monitoring and observability with dashboards.",category:"DevOps & CI/CD"},{term:"Ansible",definition:"An open-source automation tool for configuration management and app deployment.",category:"DevOps & CI/CD"},{term:"SRE",definition:"Site Reliability Engineering — applying software engineering to infrastructure and operations.",category:"DevOps & CI/CD"},
-{term:"Encryption",definition:"Converting data into a coded form to prevent unauthorized access.",category:"Cybersecurity"},{term:"Firewall",definition:"A network security system monitoring and controlling incoming/outgoing traffic.",category:"Cybersecurity"},{term:"Zero Trust",definition:"A security model assuming no implicit trust. Every request is verified.",category:"Cybersecurity"},{term:"Phishing",definition:"A social engineering attack tricking users into revealing sensitive information.",category:"Cybersecurity"},{term:"Malware",definition:"Malicious software designed to damage, disrupt, or gain unauthorized access.",category:"Cybersecurity"},{term:"Penetration Testing",definition:"Authorized simulated attacks to evaluate the security of a system.",category:"Cybersecurity"},{term:"OWASP Top 10",definition:"The most critical web application security risks.",category:"Cybersecurity"},{term:"MFA",definition:"Multi-Factor Authentication — requiring multiple verification methods for access.",category:"Cybersecurity"},
-{term:"Pandas",definition:"A Python library for data manipulation and analysis with DataFrames.",category:"Data Science"},{term:"NumPy",definition:"A Python library for numerical computing with support for arrays and matrices.",category:"Data Science"},{term:"Scikit-learn",definition:"A Python library for machine learning with simple and efficient tools.",category:"Data Science"},{term:"Jupyter Notebook",definition:"An interactive computing environment for creating and sharing documents with live code.",category:"Data Science"},{term:"Feature Engineering",definition:"Selecting, transforming, and creating input variables to improve model performance.",category:"Data Science"},{term:"A/B Testing",definition:"Comparing two versions of something to determine which performs better.",category:"Data Science"},
-{term:"Microservices",definition:"Architecture pattern where applications are composed of small, independent services.",category:"System Design"},{term:"CAP Theorem",definition:"A distributed system can guarantee only two of: Consistency, Availability, Partition Tolerance.",category:"System Design"},{term:"Sharding",definition:"Partitioning data across multiple databases to distribute load.",category:"System Design"},{term:"Load Balancing",definition:"Distributing network traffic across multiple servers.",category:"System Design"},{term:"Caching",definition:"Storing frequently accessed data in a fast storage layer.",category:"System Design"},{term:"Message Queue",definition:"A communication mechanism where messages are stored until processed.",category:"System Design"},{term:"Event-Driven Architecture",definition:"A pattern where components communicate through events.",category:"System Design"},{term:"Rate Limiting",definition:"Controlling the number of requests a user can make in a given time.",category:"System Design"},{term:"Consistent Hashing",definition:"A hashing technique that minimizes remapping when nodes are added or removed.",category:"System Design"},{term:"Circuit Breaker",definition:"A pattern preventing cascading failures by stopping requests to a failing service.",category:"System Design"},{term:"CQRS",definition:"Command Query Responsibility Segregation — separating read and write models.",category:"System Design"},{term:"Saga Pattern",definition:"Managing distributed transactions across microservices.",category:"System Design"},{term:"Domain-Driven Design",definition:"A software design approach focusing on modeling the domain.",category:"System Design"},{term:"Eventual Consistency",definition:"All replicas will eventually converge to the same state.",category:"System Design"},{term:"Raft",definition:"A consensus algorithm designed to be understandable, used in distributed systems.",category:"System Design"},
-{term:"PostgreSQL",definition:"A powerful, open-source relational database known for extensibility.",category:"Databases"},{term:"MongoDB",definition:"A popular document-oriented NoSQL database using flexible JSON-like documents.",category:"Databases"},{term:"Redis",definition:"An in-memory data structure store used as cache, message broker, and database.",category:"Databases"},{term:"Elasticsearch",definition:"A distributed search and analytics engine for full-text search.",category:"Databases"},{term:"SQL",definition:"Structured Query Language — the standard language for querying relational databases.",category:"Databases"},{term:"ORM",definition:"Object-Relational Mapping — mapping database tables to programming language objects.",category:"Databases"},{term:"Index",definition:"A data structure improving the speed of data retrieval operations.",category:"Databases"},{term:"ACID",definition:"Properties ensuring reliable database transactions: Atomicity, Consistency, Isolation, Durability.",category:"Databases"},{term:"Normalization",definition:"Organizing database tables to minimize redundancy.",category:"Databases"},{term:"Replication",definition:"Copying data across multiple servers for fault tolerance.",category:"Databases"},
-{term:"TCP",definition:"Transmission Control Protocol — ensuring reliable, ordered delivery of data.",category:"Networking"},{term:"UDP",definition:"User Datagram Protocol — fast, unreliable data transmission.",category:"Networking"},{term:"DNS",definition:"Domain Name System — translating human-readable domain names into IP addresses.",category:"Networking"},{term:"HTTP",definition:"HyperText Transfer Protocol — the application-layer protocol for the web.",category:"Networking"},{term:"HTTPS",definition:"HTTP over TLS/SSL, providing encrypted communication.",category:"Networking"},{term:"IP Address",definition:"A numerical label assigned to each device on a network.",category:"Networking"},{term:"Subnet",definition:"A logical subdivision of an IP network.",category:"Networking"},{term:"Proxy Server",definition:"An intermediary server forwarding requests between clients and servers.",category:"Networking"},{term:"QUIC",definition:"A transport protocol by Google providing multiplexed connections over UDP.",category:"Networking"},
-{term:"React Native",definition:"A framework by Meta for building native mobile apps using React.",category:"Mobile Development"},{term:"Flutter",definition:"Google's UI toolkit for building natively compiled mobile apps.",category:"Mobile Development"},{term:"Swift",definition:"Apple's programming language for building iOS/macOS applications.",category:"Mobile Development"},{term:"Kotlin",definition:"A modern programming language for Android development.",category:"Mobile Development"},{term:"SwiftUI",definition:"Apple's declarative UI framework for building native interfaces.",category:"Mobile Development"},{term:"Jetpack Compose",definition:"Android's modern declarative UI toolkit in Kotlin.",category:"Mobile Development"},{term:"Deep Linking",definition:"Linking to specific content within a mobile application.",category:"Mobile Development"},
-{term:"Blockchain",definition:"A decentralized, immutable digital ledger recording transactions.",category:"Blockchain & Web3"},{term:"Smart Contract",definition:"Self-executing code on a blockchain that enforces agreement terms.",category:"Blockchain & Web3"},{term:"Ethereum",definition:"A decentralized platform enabling smart contracts and dApps.",category:"Blockchain & Web3"},{term:"DeFi",definition:"Decentralized Finance — financial services built on blockchain.",category:"Blockchain & Web3"},{term:"NFT",definition:"Non-Fungible Token — a unique digital token representing ownership.",category:"Blockchain & Web3"},{term:"DAO",definition:"Decentralized Autonomous Organization — governed by smart contracts.",category:"Blockchain & Web3"},{term:"Solidity",definition:"The primary programming language for Ethereum smart contracts.",category:"Blockchain & Web3"},
-{term:"Agile",definition:"An iterative approach to software development emphasizing flexibility.",category:"Software Engineering"},{term:"Scrum",definition:"An agile framework using sprints with defined roles and ceremonies.",category:"Software Engineering"},{term:"Git",definition:"A distributed version control system tracking changes in source code.",category:"Software Engineering"},{term:"TDD",definition:"Test-Driven Development — writing tests before writing code.",category:"Software Engineering"},{term:"Code Review",definition:"Systematic examination of source code by peers.",category:"Software Engineering"},{term:"Refactoring",definition:"Restructuring existing code without changing its external behavior.",category:"Software Engineering"},{term:"Technical Debt",definition:"The cost of additional rework from choosing quick solutions over proper ones.",category:"Software Engineering"},{term:"MVP",definition:"Minimum Viable Product — the simplest version to validate an idea.",category:"Software Engineering"},
-{term:"Kernel",definition:"The core component of an OS managing system resources.",category:"Operating Systems"},{term:"Process",definition:"An instance of a running program with its own memory space.",category:"Operating Systems"},{term:"Virtual Memory",definition:"A memory management technique providing an idealized abstraction of storage.",category:"Operating Systems"},{term:"File System",definition:"A method of organizing and storing files on a storage device.",category:"Operating Systems"},{term:"Linux",definition:"An open-source, Unix-like operating system kernel powering servers and cloud.",category:"Operating Systems"},{term:"Containerization",definition:"OS-level virtualization running isolated applications.",category:"Operating Systems"},
-{term:"CPU",definition:"Central Processing Unit — the primary component performing calculations.",category:"Hardware & Architecture"},{term:"GPU",definition:"Graphics Processing Unit — specialized processor for parallel computations and AI/ML.",category:"Hardware & Architecture"},{term:"TPU",definition:"Tensor Processing Unit — Google's custom chip for ML workloads.",category:"Hardware & Architecture"},{term:"RAM",definition:"Random Access Memory — volatile memory for fast read/write access.",category:"Hardware & Architecture"},{term:"ARM Architecture",definition:"A RISC-based processor architecture dominant in mobile and increasingly in servers.",category:"Hardware & Architecture"},{term:"Cache Hierarchy",definition:"Multiple levels of CPU cache (L1/L2/L3) with increasing size and latency.",category:"Hardware & Architecture"}
+{t:"Algorithm",d:"A step-by-step procedure for solving a problem or performing a computation.",c:"Programming Fundamentals"},
+{t:"Data Structure",d:"A way of organizing and storing data for efficient access and modification.",c:"Programming Fundamentals"},
+{t:"Big O Notation",d:"Mathematical notation describing the upper bound of an algorithm's time or space complexity.",c:"Programming Fundamentals"},
+{t:"Dynamic Programming",d:"An optimization technique solving complex problems by breaking them into overlapping subproblems.",c:"Programming Fundamentals"},
+{t:"Recursion",d:"A technique where a function calls itself to solve smaller instances of the same problem.",c:"Programming Fundamentals"},
+{t:"Design Pattern",d:"A reusable solution template for common software design problems (e.g., Singleton, Observer).",c:"Programming Fundamentals"},
+{t:"SOLID Principles",d:"Five design principles for maintainable OOP: Single Responsibility, Open-Closed, Liskov, Interface Segregation, Dependency Inversion.",c:"Programming Fundamentals"},
+{t:"Closure",d:"A function that captures and retains access to variables from its enclosing scope.",c:"Programming Fundamentals"},
+{t:"Concurrency",d:"The ability to handle multiple tasks at the same time, not necessarily in parallel.",c:"Programming Fundamentals"},
+{t:"Functional Programming",d:"A paradigm treating computation as evaluation of mathematical functions, emphasizing immutability.",c:"Programming Fundamentals"},
+{t:"HTML",d:"The standard markup language for creating web page structure and content.",c:"Web Development"},
+{t:"CSS",d:"A stylesheet language for describing the presentation and layout of HTML documents.",c:"Web Development"},
+{t:"JavaScript",d:"A dynamic programming language that is the core technology of the web.",c:"Web Development"},
+{t:"TypeScript",d:"A typed superset of JavaScript that compiles to plain JavaScript, adding static type checking.",c:"Web Development"},
+{t:"React",d:"A JavaScript library by Meta for building user interfaces using a component-based architecture.",c:"Web Development"},
+{t:"DOM",d:"A programming interface representing HTML/XML documents as a tree structure.",c:"Web Development"},
+{t:"REST",d:"An architectural style for APIs using HTTP methods on resources.",c:"Web Development"},
+{t:"GraphQL",d:"A query language for APIs allowing clients to request exactly the data they need.",c:"Web Development"},
+{t:"Webpack",d:"A popular module bundler that transforms and bundles JavaScript, CSS, and assets.",c:"Web Development"},
+{t:"Vite",d:"A fast build tool using native ES modules for instant dev server startup.",c:"Web Development"},
+{t:"Tailwind CSS",d:"A utility-first CSS framework providing low-level classes for building custom designs rapidly.",c:"Web Development"},
+{t:"Node.js",d:"A JavaScript runtime built on Chrome's V8 engine for building server-side applications.",c:"Web Development"},
+{t:"PWA",d:"A web application that uses modern APIs to deliver native app-like experiences including offline support.",c:"Web Development"},
+{t:"Artificial Intelligence",d:"The simulation of human intelligence in machines programmed to think and learn.",c:"AI & Machine Learning"},
+{t:"Machine Learning",d:"A subset of AI where systems learn patterns from data without being explicitly programmed.",c:"AI & Machine Learning"},
+{t:"Deep Learning",d:"A subset of ML using multi-layered neural networks to learn complex patterns from large datasets.",c:"AI & Machine Learning"},
+{t:"Large Language Model (LLM)",d:"AI models trained on massive text data to understand and generate human language.",c:"AI & Machine Learning"},
+{t:"Transformer",d:"A neural network architecture using self-attention mechanisms, foundation of modern NLP models.",c:"AI & Machine Learning"},
+{t:"Fine-Tuning",d:"Further training a pre-trained model on a specific dataset to specialize its capabilities.",c:"AI & Machine Learning"},
+{t:"RAG",d:"Retrieval-Augmented Generation — combining LLMs with external knowledge retrieval for accuracy.",c:"AI & Machine Learning"},
+{t:"Prompt Engineering",d:"The art of crafting effective inputs to AI models to get desired outputs.",c:"AI & Machine Learning"},
+{t:"Embedding",d:"A dense vector representation of data in a continuous vector space.",c:"AI & Machine Learning"},
+{t:"Gradient Descent",d:"An optimization algorithm iteratively adjusting parameters to minimize a loss function.",c:"AI & Machine Learning"},
+{t:"CNN",d:"Convolutional Neural Network — specialized for processing grid-like data such as images.",c:"AI & Machine Learning"},
+{t:"GAN",d:"Generative Adversarial Network — two networks competing to generate realistic synthetic data.",c:"AI & Machine Learning"},
+{t:"MLOps",d:"Practices for deploying and maintaining ML models in production.",c:"AI & Machine Learning"},
+{t:"Docker",d:"A platform for building, shipping, and running applications in containers.",c:"DevOps & CI/CD"},
+{t:"Kubernetes",d:"An open-source platform for automating deployment, scaling, and management of containerized apps.",c:"DevOps & CI/CD"},
+{t:"CI/CD",d:"Continuous Integration/Continuous Delivery — automating the build, test, and deployment pipeline.",c:"DevOps & CI/CD"},
+{t:"Terraform",d:"An Infrastructure as Code tool for provisioning cloud resources declaratively.",c:"DevOps & CI/CD"},
+{t:"GitOps",d:"An operational framework using Git repositories as the single source of truth for infrastructure.",c:"DevOps & CI/CD"},
+{t:"Observability",d:"The ability to understand a system's internal state from its external outputs.",c:"DevOps & CI/CD"},
+{t:"Feature Flag",d:"A technique enabling or disabling features at runtime without deploying new code.",c:"DevOps & CI/CD"},
+{t:"Chaos Engineering",d:"Intentionally introducing failures to build confidence in system resilience.",c:"DevOps & CI/CD"},
+{t:"Microservices",d:"Architecture pattern where applications are composed of small, independent services.",c:"System Design"},
+{t:"Load Balancer",d:"A device distributing network traffic across multiple servers for availability and performance.",c:"System Design"},
+{t:"API Gateway",d:"A server acting as a single entry point for a group of microservices.",c:"System Design"},
+{t:"CAP Theorem",d:"A distributed system can only guarantee two of three: Consistency, Availability, Partition Tolerance.",c:"System Design"},
+{t:"Sharding",d:"Partitioning data across multiple databases to distribute load and improve performance.",c:"System Design"},
+{t:"Consistent Hashing",d:"A hashing technique minimizing remapping when nodes are added or removed.",c:"System Design"},
+{t:"Event-Driven Architecture",d:"A pattern where components communicate through events, enabling loose coupling.",c:"System Design"},
+{t:"CQRS",d:"Command Query Responsibility Segregation — separating read and write operations.",c:"System Design"},
+{t:"Domain-Driven Design",d:"A software design approach focusing on modeling the domain and aligning code with business concepts.",c:"System Design"},
+{t:"PostgreSQL",d:"A powerful, open-source relational database known for extensibility.",c:"Databases"},
+{t:"MongoDB",d:"A popular document-oriented NoSQL database using flexible JSON-like documents.",c:"Databases"},
+{t:"Redis",d:"An in-memory key-value data store used for caching, message brokering, and sessions.",c:"Databases"},
+{t:"Elasticsearch",d:"A distributed search and analytics engine for full-text search and real-time analytics.",c:"Databases"},
+{t:"ORM",d:"Object-Relational Mapping — a technique mapping database tables to programming language objects.",c:"Databases"},
+{t:"SQL Injection",d:"A code injection technique exploiting vulnerabilities in SQL queries.",c:"Cybersecurity"},
+{t:"XSS",d:"Cross-Site Scripting — injecting malicious scripts into web pages viewed by others.",c:"Cybersecurity"},
+{t:"Zero Trust",d:"Security model assuming no implicit trust, verifying every request regardless of origin.",c:"Cybersecurity"},
+{t:"Encryption",d:"The process of converting data into a coded format to prevent unauthorized access.",c:"Cybersecurity"},
+{t:"Penetration Testing",d:"Authorized simulated cyberattack to evaluate the security of a system.",c:"Cybersecurity"},
+{t:"Firewall",d:"A network security device monitoring and controlling traffic based on security rules.",c:"Cybersecurity"},
+{t:"TCP",d:"Transmission Control Protocol — ensures reliable, ordered delivery of data.",c:"Networking"},
+{t:"DNS",d:"Domain Name System — translates human-readable domain names into IP addresses.",c:"Networking"},
+{t:"HTTP/HTTPS",d:"The application-layer protocol for transmitting web content, HTTPS adds encryption.",c:"Networking"},
+{t:"OSI Model",d:"A seven-layer conceptual model describing how network protocols interact.",c:"Networking"},
+{t:"CDN",d:"Content Delivery Network — delivers content from the nearest geographic location.",c:"Networking"},
+{t:"React Native",d:"A framework by Meta for building native mobile apps using React and JavaScript.",c:"Mobile Development"},
+{t:"Flutter",d:"Google's UI toolkit for building natively compiled mobile apps from a single codebase.",c:"Mobile Development"},
+{t:"Swift",d:"Apple's programming language for building iOS and macOS applications.",c:"Mobile Development"},
+{t:"Kotlin",d:"A modern programming language for Android development, officially supported by Google.",c:"Mobile Development"},
+{t:"Blockchain",d:"A decentralized, immutable digital ledger recording transactions across many computers.",c:"Blockchain & Web3"},
+{t:"Smart Contract",d:"Self-executing code stored on a blockchain that automatically enforces agreement terms.",c:"Blockchain & Web3"},
+{t:"DeFi",d:"Decentralized Finance — financial services built on blockchain without traditional intermediaries.",c:"Blockchain & Web3"},
+{t:"NFT",d:"Non-Fungible Token — a unique digital token representing ownership of a specific asset.",c:"Blockchain & Web3"},
+{t:"Agile",d:"An iterative approach to software development emphasizing flexibility and collaboration.",c:"Software Engineering"},
+{t:"Git",d:"A distributed version control system tracking changes in source code.",c:"Software Engineering"},
+{t:"TDD",d:"Test-Driven Development — writing tests before writing code.",c:"Software Engineering"},
+{t:"Code Review",d:"Systematic examination of source code by peers to find bugs and improve quality.",c:"Software Engineering"},
+{t:"Technical Debt",d:"The cost of additional rework caused by choosing quick solutions over proper implementations.",c:"Software Engineering"},
+{t:"CPU",d:"Central Processing Unit — the primary component performing calculations in a computer.",c:"Hardware & Architecture"},
+{t:"GPU",d:"Graphics Processing Unit — specialized for parallel computations, essential for AI/ML.",c:"Hardware & Architecture"},
+{t:"RAM",d:"Random Access Memory — volatile memory for fast read/write access.",c:"Hardware & Architecture"},
+{t:"Linux",d:"An open-source, Unix-like operating system kernel powering servers and cloud.",c:"Operating Systems"},
+{t:"Kernel",d:"The core component of an OS managing system resources and hardware-software communication.",c:"Operating Systems"},
+{t:"Containerization",d:"OS-level virtualization running isolated applications with their own filesystem.",c:"Operating Systems"}
 ];
+const glossaryCategories=["All","Programming Fundamentals","Web Development","AI & Machine Learning","Cloud Computing","DevOps & CI/CD","Cybersecurity","Data Science","System Design","Databases","Networking","Mobile Development","Blockchain & Web3","Software Engineering","Operating Systems","Hardware & Architecture"];
 
-// ========== STATE ==========
-let currentView = 'resources';
-let searchQuery = '';
-let selectedCategory = 'all';
-let selectedType = 'all';
-let sortBy = 'default';
-let freeOnly = false;
-let glossaryCategory = 'All';
+// ===== APP STATE =====
+let state = { tab: 'resources', search: '', category: 'all', type: 'all', sort: 'default', freeOnly: false, gCat: 'All', gSort: 'a-z', expanded: null };
 
-// ========== INIT ==========
-document.addEventListener('DOMContentLoaded', () => {
+function init() {
   renderStats();
   renderCategoryFilters();
   renderTypeFilters();
-  renderGlossaryCategoryFilters();
+  renderGlossaryCatFilters();
   renderResources();
   renderGlossary();
-  setupListeners();
-  document.getElementById('hero-subtitle').textContent =
-    resources.length + '+ curated training resources, courses, and tools — organized by technology, provider, and type. Your one-stop learning hub.';
-});
-
-function setupListeners() {
-  document.getElementById('searchInput').addEventListener('input', e => {
-    searchQuery = e.target.value;
-    if (currentView === 'resources') renderResources();
-    else renderGlossary();
-  });
-  document.getElementById('sortSelect').addEventListener('change', e => {
-    sortBy = e.target.value; renderResources();
-  });
-  document.getElementById('freeOnly').addEventListener('change', e => {
-    freeOnly = e.target.checked; renderResources();
-  });
-  document.querySelectorAll('.nav-tab').forEach(tab => {
-    tab.addEventListener('click', () => {
-      document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
-      tab.classList.add('active');
-      currentView = tab.dataset.view;
-      document.getElementById('resourcesView').classList.toggle('hidden', currentView !== 'resources');
-      document.getElementById('glossaryView').classList.toggle('active', currentView === 'glossary');
-      searchQuery = ''; document.getElementById('searchInput').value = '';
-      document.getElementById('searchInput').placeholder = currentView === 'glossary'
-        ? 'Search tech terms...' : 'Search courses, tools, GitHub repos, YouTube channels...';
-      if (currentView === 'glossary') renderGlossary(); else renderResources();
-    });
-  });
+  document.getElementById('searchInput').addEventListener('input', e => { state.search = e.target.value; renderResources(); renderGlossary(); });
+  document.querySelectorAll('.tab-btn').forEach(btn => btn.addEventListener('click', () => switchTab(btn.dataset.tab)));
+  document.getElementById('glossarySort').addEventListener('change', e => { state.gSort = e.target.value; renderGlossary(); });
 }
 
-// ========== RENDER ==========
+function switchTab(tab) {
+  state.tab = tab;
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.toggle('active', b.dataset.tab === tab));
+  document.getElementById('resources-tab').classList.toggle('hidden', tab !== 'resources');
+  document.getElementById('glossary-tab').classList.toggle('hidden', tab !== 'glossary');
+}
+
 function renderStats() {
-  const total = resources.length;
+  const cats = {};
+  resources.forEach(r => cats[r.category] = (cats[r.category] || 0) + 1);
   const free = resources.filter(r => r.isFree).length;
-  const cats = categories.length;
-  const provs = new Set(resources.map(r => r.provider)).size;
-  document.getElementById('statsBar').innerHTML = [
-    {icon:'📚',label:'Resources',value:total},{icon:'🎁',label:'Free',value:free},
-    {icon:'📂',label:'Categories',value:cats},{icon:'👥',label:'Providers',value:provs}
-  ].map(s => `<div class="stat"><div class="stat-icon">${s.icon}</div><div><div class="stat-value">${s.value}</div><div class="stat-label">${s.label}</div></div></div>`).join('');
+  const html = `<div class="stat"><div class="stat-num">${resources.length}+</div><div class="stat-label">Resources</div></div>` +
+    `<div class="stat"><div class="stat-num">${categories.length}</div><div class="stat-label">Categories</div></div>` +
+    `<div class="stat"><div class="stat-num">${free}</div><div class="stat-label">Free</div></div>` +
+    `<div class="stat"><div class="stat-num">${glossaryTerms.length}+</div><div class="stat-label">Glossary Terms</div></div>`;
+  document.getElementById('statsBar').innerHTML = html;
+  document.getElementById('heroSubtitle').textContent = `${resources.length}+ curated training resources, courses, and tools — organized by technology, provider, and type.`;
 }
 
 function renderCategoryFilters() {
-  const counts = {all: resources.length};
-  resources.forEach(r => counts[r.category] = (counts[r.category]||0)+1);
-  const html = [`<button class="filter-chip active" data-cat="all">All (${resources.length})</button>`];
+  let html = `<button class="filter-pill active" onclick="setCategory('all')">All (${resources.length})</button>`;
   categories.forEach(c => {
-    html.push(`<button class="filter-chip" data-cat="${c}">${categoryIcons[c]} ${c} (${counts[c]||0})</button>`);
+    const count = resources.filter(r => r.category === c).length;
+    html += `<button class="filter-pill" onclick="setCategory('${c}')">${catIcons[c]} ${c} (${count})</button>`;
   });
-  document.getElementById('categoryFilters').innerHTML = html.join('');
-  document.querySelectorAll('#categoryFilters .filter-chip').forEach(btn => {
-    btn.addEventListener('click', () => {
-      document.querySelectorAll('#categoryFilters .filter-chip').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      selectedCategory = btn.dataset.cat;
-      renderResources();
-    });
-  });
+  html += `<select class="sort-select" onchange="setSort(this.value)"><option value="default">Default</option><option value="rating">By Rating</option><option value="difficulty">By Difficulty</option><option value="provider">By Provider</option><option value="alphabetical">A-Z</option></select>`;
+  html += `<button class="filter-pill" onclick="toggleFree()" id="freeBtn">🆓 Free Only</button>`;
+  document.getElementById('categoryFilters').innerHTML = html;
 }
 
 function renderTypeFilters() {
-  const types = ['all','course','github','youtube','website','certification','pdf','tweet','free'];
-  const labels = {all:'All Types',...typeLabels};
-  document.getElementById('typeFilters').innerHTML = types.map(t =>
-    `<button class="filter-chip${t==='all'?' active':''}" data-type="${t}">${labels[t]}</button>`
-  ).join('');
-  document.querySelectorAll('#typeFilters .filter-chip').forEach(btn => {
-    btn.addEventListener('click', () => {
-      document.querySelectorAll('#typeFilters .filter-chip').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      selectedType = btn.dataset.type;
-      renderResources();
-    });
+  let html = `<button class="filter-pill active" onclick="setType('all')">All Types</button>`;
+  Object.entries(typeLabels).forEach(([val, label]) => {
+    html += `<button class="filter-pill" onclick="setType('${val}')">${label}</button>`;
   });
+  document.getElementById('typeFilters').innerHTML = html;
 }
 
-function renderGlossaryCategoryFilters() {
-  document.getElementById('glossaryCategoryFilters').innerHTML = glossaryCategories.map(c =>
-    `<button class="filter-chip${c==='All'?' active':''}" data-gcat="${c}">${c}</button>`
-  ).join('');
-  document.querySelectorAll('#glossaryCategoryFilters .filter-chip').forEach(btn => {
-    btn.addEventListener('click', () => {
-      document.querySelectorAll('#glossaryCategoryFilters .filter-chip').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      glossaryCategory = btn.dataset.gcat;
-      renderGlossary();
-    });
+function setCategory(cat) { state.category = cat; updateFilterUI(); renderResources(); }
+function setType(type) { state.type = type; updateFilterUI(); renderResources(); }
+function setSort(sort) { state.sort = sort; renderResources(); }
+function toggleFree() { state.freeOnly = !state.freeOnly; updateFilterUI(); renderResources(); }
+
+function updateFilterUI() {
+  document.querySelectorAll('#categoryFilters .filter-pill').forEach((btn, i) => {
+    if (i === 0) btn.classList.toggle('active', state.category === 'all');
+    else { const cat = categories[i - 1]; btn.classList.toggle('active', state.category === cat); }
   });
+  document.querySelectorAll('#typeFilters .filter-pill').forEach((btn, i) => {
+    if (i === 0) btn.classList.toggle('active', state.type === 'all');
+    else { const types = Object.keys(typeLabels); btn.classList.toggle('active', state.type === types[i - 1]); }
+  });
+  const freeBtn = document.getElementById('freeBtn');
+  if (freeBtn) freeBtn.classList.toggle('active', state.freeOnly);
 }
 
 function renderResources() {
   let filtered = resources.filter(r => {
-    const q = searchQuery.toLowerCase();
-    const matchSearch = !q || r.title.toLowerCase().includes(q) || r.description.toLowerCase().includes(q) ||
-      r.tags.some(t => t.toLowerCase().includes(q)) || r.provider.toLowerCase().includes(q);
-    const matchCat = selectedCategory === 'all' || r.category === selectedCategory;
-    const matchType = selectedType === 'all' || r.type === selectedType;
-    const matchFree = !freeOnly || r.isFree;
+    const s = state.search.toLowerCase();
+    const matchSearch = !s || r.title.toLowerCase().includes(s) || r.description.toLowerCase().includes(s) || r.tags.some(t => t.toLowerCase().includes(s)) || r.provider.toLowerCase().includes(s);
+    const matchCat = state.category === 'all' || r.category === state.category;
+    const matchType = state.type === 'all' || r.type === state.type;
+    const matchFree = !state.freeOnly || r.isFree;
     return matchSearch && matchCat && matchType && matchFree;
   });
 
-  if (sortBy === 'rating') filtered.sort((a,b) => (b.rating||0)-(a.rating||0));
-  else if (sortBy === 'difficulty') filtered.sort((a,b) => (difficultyOrder[a.difficulty]||99)-(difficultyOrder[b.difficulty]||99));
-  else if (sortBy === 'provider') filtered.sort((a,b) => a.provider.localeCompare(b.provider));
-  else if (sortBy === 'alphabetical') filtered.sort((a,b) => a.title.localeCompare(b.title));
-
-  document.getElementById('sectionTitle').textContent = selectedCategory === 'all' ? 'All Resources' : selectedCategory;
-  document.getElementById('resultsCount').textContent = filtered.length + ' resource' + (filtered.length!==1?'s':'') + ' found';
-
-  if (filtered.length === 0) {
-    document.getElementById('resourceGrid').innerHTML = '';
-    document.getElementById('emptyState').style.display = '';
-    return;
+  if (state.sort !== 'default') {
+    const diffOrder = { Beginner: 1, Intermediate: 2, Advanced: 3 };
+    filtered.sort((a, b) => {
+      switch (state.sort) {
+        case 'rating': return (b.rating || 0) - (a.rating || 0);
+        case 'difficulty': return (diffOrder[a.difficulty] || 99) - (diffOrder[b.difficulty] || 99);
+        case 'provider': return a.provider.localeCompare(b.provider);
+        case 'alphabetical': return a.title.localeCompare(b.title);
+        default: return 0;
+      }
+    });
   }
-  document.getElementById('emptyState').style.display = 'none';
 
-  document.getElementById('resourceGrid').innerHTML = filtered.map(r => {
-    const tags = r.tags.slice(0,4).map(t => `<span class="tag">${t}</span>`).join('');
-    const freeBadge = r.isFree && r.type !== 'free' ? '<span class="badge badge-free">Free</span>' : '';
-    const diffBadge = r.difficulty ? `<span class="badge badge-difficulty">${r.difficulty}</span>` : '';
-    const rating = r.rating ? `<span class="card-rating">⭐ ${r.rating}</span>` : '';
-    return `<a href="${r.url}" target="_blank" rel="noopener noreferrer" class="resource-card">
+  document.getElementById('resourceCount').textContent = `${filtered.length} resource${filtered.length !== 1 ? 's' : ''} found`;
+  document.getElementById('resourceGrid').innerHTML = filtered.map(r => `
+    <a href="${r.url}" target="_blank" rel="noopener" class="card">
       <div class="card-badges">
-        <span class="badge badge-${r.type}">${typeLabels[r.type]||r.type}</span>
-        ${freeBadge}${diffBadge}
+        <span class="badge badge-${r.type}">${typeLabels[r.type]}</span>
+        ${r.isFree && r.type !== 'free' ? '<span class="badge badge-free">Free</span>' : ''}
+        ${r.difficulty ? `<span class="badge badge-diff">${r.difficulty}</span>` : ''}
       </div>
-      <div class="card-title">${r.title}</div>
-      <div class="card-desc">${r.description}</div>
-      <div class="card-meta"><span>${r.provider}</span>${rating}</div>
-      ${tags ? `<div class="card-tags">${tags}</div>` : ''}
-    </a>`;
-  }).join('');
+      <h3>${r.title}</h3>
+      <p>${r.description}</p>
+      <div class="card-footer">
+        <span class="card-provider">${r.provider}</span>
+        ${r.rating ? `<span class="card-rating">⭐ ${r.rating}</span>` : ''}
+      </div>
+      ${r.tags.length ? `<div class="card-tags">${r.tags.slice(0, 4).map(t => `<span class="tag">${t}</span>`).join('')}</div>` : ''}
+    </a>
+  `).join('');
+}
+
+function renderGlossaryCatFilters() {
+  let html = '';
+  glossaryCategories.forEach(cat => {
+    const count = cat === 'All' ? glossaryTerms.length : glossaryTerms.filter(t => t.c === cat).length;
+    html += `<button class="filter-pill${cat === 'All' ? ' active' : ''}" onclick="setGlossaryCat('${cat}')">${cat} (${count})</button>`;
+  });
+  document.getElementById('glossaryCatFilters').innerHTML = html;
+}
+
+function setGlossaryCat(cat) {
+  state.gCat = cat;
+  document.querySelectorAll('#glossaryCatFilters .filter-pill').forEach(btn => {
+    btn.classList.toggle('active', btn.textContent.startsWith(cat));
+  });
+  renderGlossary();
 }
 
 function renderGlossary() {
-  const q = searchQuery.toLowerCase();
-  const filtered = glossaryTerms.filter(t => {
-    const matchSearch = !q || t.term.toLowerCase().includes(q) || t.definition.toLowerCase().includes(q);
-    const matchCat = glossaryCategory === 'All' || t.category === glossaryCategory;
+  const s = state.search.toLowerCase();
+  let terms = glossaryTerms.filter(t => {
+    const matchSearch = !s || t.t.toLowerCase().includes(s) || t.d.toLowerCase().includes(s);
+    const matchCat = state.gCat === 'All' || t.c === state.gCat;
     return matchSearch && matchCat;
   });
-  document.getElementById('glossaryCount').textContent = filtered.length + ' term' + (filtered.length!==1?'s':'') + ' found';
-  document.getElementById('glossaryGrid').innerHTML = filtered.map(t =>
-    `<div class="glossary-card">
-      <div class="glossary-term">${t.term}</div>
-      <div class="glossary-def">${t.definition}</div>
-      <div class="glossary-cat">${t.category}</div>
-    </div>`
-  ).join('');
+  switch (state.gSort) {
+    case 'a-z': terms.sort((a, b) => a.t.localeCompare(b.t)); break;
+    case 'z-a': terms.sort((a, b) => b.t.localeCompare(a.t)); break;
+    case 'category': terms.sort((a, b) => a.c.localeCompare(b.c) || a.t.localeCompare(b.t)); break;
+  }
+  document.getElementById('glossaryCount').textContent = `${terms.length} term${terms.length !== 1 ? 's' : ''} found`;
+  document.getElementById('glossaryGrid').innerHTML = terms.map((t, i) => `
+    <button class="glossary-item" onclick="toggleGlossary(this)">
+      <div class="glossary-header">
+        <div><div class="glossary-term">${t.t}</div><div class="glossary-cat">${t.c}</div></div>
+        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+      </div>
+      <div class="glossary-def">${t.d}</div>
+    </button>
+  `).join('');
 }
 
-function clearAllFilters() {
-  searchQuery = ''; selectedCategory = 'all'; selectedType = 'all'; freeOnly = false; sortBy = 'default';
-  document.getElementById('searchInput').value = '';
-  document.getElementById('sortSelect').value = 'default';
-  document.getElementById('freeOnly').checked = false;
-  document.querySelectorAll('#categoryFilters .filter-chip').forEach((b,i) => b.classList.toggle('active', i===0));
-  document.querySelectorAll('#typeFilters .filter-chip').forEach((b,i) => b.classList.toggle('active', i===0));
-  renderResources();
-}
+function toggleGlossary(el) { el.classList.toggle('expanded'); }
+
+document.addEventListener('DOMContentLoaded', init);
 </script>
 </body>
 </html>

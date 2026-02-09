@@ -1,16 +1,19 @@
 import { useState, useMemo } from "react";
-import { Search, BookOpen, ChevronDown, ArrowLeft } from "lucide-react";
+import { Search, BookOpen, ChevronDown, ArrowLeft, ArrowUpDown } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
 import { glossaryTerms, glossaryCategories } from "@/data/glossary";
+
+type SortOption = "a-z" | "z-a" | "category";
 
 const GlossaryPage = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [expandedTerm, setExpandedTerm] = useState<string | null>(null);
+  const [sortBy, setSortBy] = useState<SortOption>("a-z");
 
   const filteredTerms = useMemo(() => {
-    return glossaryTerms.filter((item) => {
+    let terms = glossaryTerms.filter((item) => {
       const matchesSearch =
         searchQuery === "" ||
         item.term.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -19,7 +22,20 @@ const GlossaryPage = () => {
         selectedCategory === "All" || item.category === selectedCategory;
       return matchesSearch && matchesCategory;
     });
-  }, [searchQuery, selectedCategory]);
+
+    switch (sortBy) {
+      case "a-z":
+        return [...terms].sort((a, b) => a.term.localeCompare(b.term));
+      case "z-a":
+        return [...terms].sort((a, b) => b.term.localeCompare(a.term));
+      case "category":
+        return [...terms].sort((a, b) =>
+          a.category.localeCompare(b.category) || a.term.localeCompare(b.term)
+        );
+      default:
+        return terms;
+    }
+  }, [searchQuery, selectedCategory, sortBy]);
 
   const categoryCounts = useMemo(() => {
     const counts: Record<string, number> = { All: glossaryTerms.length };
@@ -33,7 +49,7 @@ const GlossaryPage = () => {
     <div className="min-h-screen bg-background">
       {/* Header */}
       <header className="sticky top-0 z-40 bg-background/90 backdrop-blur-xl border-b border-border">
-        <div className="container max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
+        <div className="container max-w-7xl mx-auto px-4 h-14 sm:h-16 flex items-center justify-between">
           <Link
             to="/"
             className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors"
@@ -76,26 +92,42 @@ const GlossaryPage = () => {
         </div>
       </section>
 
-      {/* Category pills */}
+      {/* Category pills + Sort */}
       <div className="border-b border-border bg-card/50">
         <div className="container max-w-7xl mx-auto px-4 py-3">
-          <div className="flex flex-wrap gap-2">
-            {glossaryCategories.map((cat) => (
-              <button
-                key={cat}
-                onClick={() => setSelectedCategory(cat)}
-                className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
-                  selectedCategory === cat
-                    ? "bg-primary/10 text-primary border border-primary/30"
-                    : "bg-secondary text-secondary-foreground hover:bg-secondary/80 border border-transparent"
-                }`}
+          <div className="flex flex-col sm:flex-row sm:items-center gap-3">
+            <div className="flex flex-wrap gap-2 flex-1">
+              {glossaryCategories.map((cat) => (
+                <button
+                  key={cat}
+                  onClick={() => setSelectedCategory(cat)}
+                  className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
+                    selectedCategory === cat
+                      ? "bg-primary/10 text-primary border border-primary/30"
+                      : "bg-secondary text-secondary-foreground hover:bg-secondary/80 border border-transparent"
+                  }`}
+                >
+                  {cat}
+                  <span className="ml-1.5 opacity-60">
+                    {categoryCounts[cat] || 0}
+                  </span>
+                </button>
+              ))}
+            </div>
+
+            {/* Sort dropdown */}
+            <div className="flex items-center gap-2 flex-shrink-0">
+              <ArrowUpDown className="w-3.5 h-3.5 text-muted-foreground" />
+              <select
+                value={sortBy}
+                onChange={(e) => setSortBy(e.target.value as SortOption)}
+                className="bg-secondary border border-border rounded-lg px-3 py-1.5 text-xs font-medium text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50"
               >
-                {cat}
-                <span className="ml-1.5 opacity-60">
-                  {categoryCounts[cat] || 0}
-                </span>
-              </button>
-            ))}
+                <option value="a-z">A → Z</option>
+                <option value="z-a">Z → A</option>
+                <option value="category">By Category</option>
+              </select>
+            </div>
           </div>
         </div>
       </div>
