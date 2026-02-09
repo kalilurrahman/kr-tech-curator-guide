@@ -139,21 +139,22 @@ const AppHeader = ({ bookmarkCount = 0, showBookmarksOnly = false, onToggleBookm
 
       {/* iOS Install Banner */}
       {showIOSBanner && (
-        <div className="fixed bottom-0 left-0 right-0 z-50 bg-card border-t border-border p-4 shadow-card animate-fade-in">
+        <div className="fixed bottom-0 left-0 right-0 z-50 bg-card border-t-2 border-primary/30 p-4 shadow-lg animate-fade-in safe-bottom">
           <div className="container max-w-lg mx-auto">
             <div className="flex items-start gap-3">
-              <div className="p-2 rounded-lg bg-primary/10 flex-shrink-0">
-                <Share className="w-5 h-5 text-primary" />
+              <div className="p-2.5 rounded-xl bg-primary/10 flex-shrink-0">
+                <Download className="w-5 h-5 text-primary" />
               </div>
               <div className="flex-1 min-w-0">
-                <p className="text-sm font-semibold text-foreground mb-1">Install TechCurator</p>
+                <p className="text-sm font-bold text-foreground mb-1">Install TechCurator</p>
                 <p className="text-xs text-muted-foreground leading-relaxed">
-                  Tap the <strong>Share</strong> button in Safari, then select <strong>"Add to Home Screen"</strong> for quick access.
+                  Tap <Share className="w-3.5 h-3.5 inline-block text-primary mx-0.5 -mt-0.5" /> <strong>Share</strong> in Safari, then select <strong>"Add to Home Screen"</strong> for quick offline access.
                 </p>
               </div>
               <button
                 onClick={dismissIOSBanner}
-                className="p-1.5 hover:bg-secondary rounded-lg transition-colors flex-shrink-0"
+                className="p-1.5 hover:bg-secondary rounded-lg transition-colors flex-shrink-0 -mt-0.5"
+                aria-label="Dismiss install banner"
               >
                 <X className="w-4 h-4 text-muted-foreground" />
               </button>
