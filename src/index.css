@@ -173,3 +173,10 @@
     border-radius: 3px;
   }
 }
+
+/* Hide Lovable badge */
+#lovable-badge,
+a[href*="lovable.dev"][style],
+body > a[target="_blank"][style*="fixed"] {
+  display: none !important;
+}
