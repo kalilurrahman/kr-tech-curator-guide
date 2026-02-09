@@ -1,11 +1,15 @@
 import { Download, Bookmark, BookOpen, Share, X } from "lucide-react";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import ThemeToggle from "@/components/ThemeToggle";
+import type { Theme } from "@/hooks/useTheme";
 
 interface AppHeaderProps {
   bookmarkCount?: number;
   showBookmarksOnly?: boolean;
   onToggleBookmarksView?: () => void;
+  theme?: Theme;
+  onToggleTheme?: () => void;
 }
 
 const isIOS = () => {
@@ -18,7 +22,7 @@ const isInStandaloneMode = () => {
   return (window.matchMedia("(display-mode: standalone)").matches) || (window.navigator as any).standalone === true;
 };
 
-const AppHeader = ({ bookmarkCount = 0, showBookmarksOnly = false, onToggleBookmarksView }: AppHeaderProps) => {
+const AppHeader = ({ bookmarkCount = 0, showBookmarksOnly = false, onToggleBookmarksView, theme, onToggleTheme }: AppHeaderProps) => {
   const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
   const [isScrolled, setIsScrolled] = useState(false);
   const [showIOSBanner, setShowIOSBanner] = useState(false);
@@ -114,6 +118,10 @@ const AppHeader = ({ bookmarkCount = 0, showBookmarksOnly = false, onToggleBookm
                   <span className="text-xs">{bookmarkCount}</span>
                 )}
               </button>
+            )}
+
+            {theme && onToggleTheme && (
+              <ThemeToggle theme={theme} onToggle={onToggleTheme} />
             )}
 
             {deferredPrompt && (

@@ -1,6 +1,7 @@
-import { ExternalLink, Star, Github, Youtube, Globe, BookOpen, Award, FileText, MessageCircle, Gift, Heart } from "lucide-react";
+import { ExternalLink, Star, Github, Youtube, Globe, BookOpen, Award, FileText, MessageCircle, Gift, Heart, CheckCircle2 } from "lucide-react";
 import { motion } from "framer-motion";
 import type { Resource, ResourceType } from "@/data/resources";
+import { Checkbox } from "@/components/ui/checkbox";
 
 const typeConfig: Record<ResourceType, { icon: React.ElementType; label: string; className: string }> = {
   course: { icon: BookOpen, label: "Course", className: "bg-resource-course/15 text-resource-course" },
@@ -18,9 +19,11 @@ interface ResourceCardProps {
   index: number;
   isBookmarked?: boolean;
   onToggleBookmark?: (id: string) => void;
+  isCompleted?: boolean;
+  onToggleCompleted?: (id: string) => void;
 }
 
-const ResourceCard = ({ resource, index, isBookmarked = false, onToggleBookmark }: ResourceCardProps) => {
+const ResourceCard = ({ resource, index, isBookmarked = false, onToggleBookmark, isCompleted = false, onToggleCompleted }: ResourceCardProps) => {
   const config = typeConfig[resource.type];
   const TypeIcon = config.icon;
 
@@ -29,7 +32,7 @@ const ResourceCard = ({ resource, index, isBookmarked = false, onToggleBookmark 
       initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3, delay: Math.min(index * 0.03, 0.3) }}
-      className="group relative bg-card border border-border rounded-xl p-5 hover:border-primary/30 hover:shadow-glow transition-all duration-300"
+      className={`group relative bg-card border rounded-xl p-5 hover:border-primary/30 hover:shadow-glow transition-all duration-300 ${isCompleted ? "border-accent/30 bg-accent/5" : "border-border"}`}
     >
       {/* Bookmark button */}
       {onToggleBookmark && (
@@ -113,6 +116,25 @@ const ResourceCard = ({ resource, index, isBookmarked = false, onToggleBookmark 
           </div>
         )}
       </a>
+
+      {/* Completion toggle */}
+      {onToggleCompleted && (
+        <div className="mt-3 pt-3 border-t border-border">
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              onToggleCompleted(resource.id);
+            }}
+            className={`flex items-center gap-2 w-full text-xs font-medium transition-colors ${
+              isCompleted ? "text-accent" : "text-muted-foreground hover:text-foreground"
+            }`}
+          >
+            <CheckCircle2 className={`w-4 h-4 ${isCompleted ? "fill-accent/20" : ""}`} />
+            {isCompleted ? "Completed" : "Mark as completed"}
+          </button>
+        </div>
+      )}
     </motion.div>
   );
 };
