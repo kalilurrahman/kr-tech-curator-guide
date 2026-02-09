@@ -105,6 +105,12 @@
     .social-links a { color: var(--fg-muted); text-decoration: none; font-size: 0.8rem; padding: 0.4rem 0.8rem; background: var(--secondary); border-radius: var(--radius); transition: all 0.2s; }
     .social-links a:hover { color: var(--primary); background: hsla(210 75% 52% / 0.1); }
     .hidden { display: none !important; }
+    .scroll-btns { position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 50; display: flex; flex-direction: column; gap: 0.5rem; }
+    .scroll-btn { width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--border); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
+    .scroll-btn-top { background: var(--primary); color: var(--fg); border: none; }
+    .scroll-btn-top:hover { opacity: 0.9; }
+    .scroll-btn-bottom { background: var(--secondary); color: var(--fg-muted); }
+    .scroll-btn-bottom:hover { background: var(--muted-bg); color: var(--fg); }
     @media (max-width: 768px) {
       .grid { grid-template-columns: 1fr; }
       .glossary-grid { grid-template-columns: 1fr; }
@@ -180,6 +186,15 @@
     </div>
     <p>TechCurator — Curated by <a href="https://linktr.ee/kalilur.rahman" target="_blank">Kalilur Rahman</a></p>
   </footer>
+
+  <div class="scroll-btns" id="scrollBtns">
+    <button class="scroll-btn scroll-btn-top" id="scrollTopBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})" style="display:none" aria-label="Scroll to top">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m18 15-6-6-6 6"/></svg>
+    </button>
+    <button class="scroll-btn scroll-btn-bottom" id="scrollBottomBtn" onclick="window.scrollTo({top:document.body.scrollHeight,behavior:'smooth'})" aria-label="Scroll to bottom">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+    </button>
+  </div>
 
 <script>
 // Data is loaded from the main app's source files.
@@ -691,6 +706,14 @@ function renderGlossary() {
 }
 
 function toggleGlossary(el) { el.classList.toggle('expanded'); }
+
+window.addEventListener('scroll', function() {
+  var topBtn = document.getElementById('scrollTopBtn');
+  var bottomBtn = document.getElementById('scrollBottomBtn');
+  topBtn.style.display = window.scrollY > 400 ? 'flex' : 'none';
+  var nearBottom = window.innerHeight + window.scrollY >= document.body.scrollHeight - 200;
+  bottomBtn.style.display = nearBottom ? 'none' : 'flex';
+}, { passive: true });
 
 document.addEventListener('DOMContentLoaded', init);
 </script>

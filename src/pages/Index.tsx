@@ -11,6 +11,7 @@ import SortDropdown from "@/components/SortDropdown";
 import type { SortOption } from "@/components/SortDropdown";
 import KeyTermsSection from "@/components/KeyTermsSection";
 import SocialLinksSection from "@/components/SocialLinksSection";
+import ScrollButtons from "@/components/ScrollButtons";
 import { useBookmarks } from "@/hooks/useBookmarks";
 import { useProgress } from "@/hooks/useProgress";
 import { useTheme } from "@/hooks/useTheme";
@@ -252,6 +253,8 @@ const Index = () => {
           </p>
         </div>
       </footer>
+
+      <ScrollButtons />
     </div>
   );
 };
