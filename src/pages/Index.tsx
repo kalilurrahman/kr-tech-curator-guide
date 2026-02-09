@@ -16,6 +16,7 @@ import { useProgress } from "@/hooks/useProgress";
 import { useTheme } from "@/hooks/useTheme";
 import { resources } from "@/data/resources";
 import type { Category, ResourceType, Resource } from "@/data/resources";
+import type { DifficultyFilter } from "@/components/CategoryFilter";
 
 const difficultyOrder: Record<string, number> = {
   Beginner: 1,
@@ -46,6 +47,7 @@ const Index = () => {
   const [selectedCategory, setSelectedCategory] = useState<Category | "all">("all");
   const [selectedType, setSelectedType] = useState<ResourceType | "all">("all");
   const [showFreeOnly, setShowFreeOnly] = useState(false);
+  const [selectedDifficulty, setSelectedDifficulty] = useState<DifficultyFilter>("all");
   const [sortBy, setSortBy] = useState<SortOption>("default");
   const [showBookmarksOnly, setShowBookmarksOnly] = useState(false);
   const [learningPathFilter, setLearningPathFilter] = useState<string[] | null>(null);
@@ -66,14 +68,15 @@ const Index = () => {
       const matchesCategory = selectedCategory === "all" || resource.category === selectedCategory;
       const matchesType = selectedType === "all" || resource.type === selectedType;
       const matchesFree = !showFreeOnly || resource.isFree;
+      const matchesDifficulty = selectedDifficulty === "all" || resource.difficulty === selectedDifficulty;
       const matchesBookmark = !showBookmarksOnly || bookmarks.has(resource.id);
       const matchesPath = !learningPathFilter || learningPathFilter.includes(resource.id);
 
-      return matchesSearch && matchesCategory && matchesType && matchesFree && matchesBookmark && matchesPath;
+      return matchesSearch && matchesCategory && matchesType && matchesFree && matchesDifficulty && matchesBookmark && matchesPath;
     });
 
     return sortResources(filtered, sortBy);
-  }, [searchQuery, selectedCategory, selectedType, showFreeOnly, sortBy, showBookmarksOnly, bookmarks, learningPathFilter]);
+  }, [searchQuery, selectedCategory, selectedType, showFreeOnly, selectedDifficulty, sortBy, showBookmarksOnly, bookmarks, learningPathFilter]);
 
   const resourceCounts = useMemo(() => {
     const counts: Record<string, number> = { all: resources.length };
@@ -86,6 +89,7 @@ const Index = () => {
   const activeFilterCount =
     (selectedCategory !== "all" ? 1 : 0) +
     (selectedType !== "all" ? 1 : 0) +
+    (selectedDifficulty !== "all" ? 1 : 0) +
     (showFreeOnly ? 1 : 0);
 
   const showFeatured = searchQuery === "" && selectedCategory === "all" && selectedType === "all" && !showFreeOnly && !showBookmarksOnly && !learningPathFilter;
@@ -94,6 +98,7 @@ const Index = () => {
     setLearningPathFilter(resourceIds);
     setSelectedCategory("all");
     setSelectedType("all");
+    setSelectedDifficulty("all");
     setShowFreeOnly(false);
     setShowBookmarksOnly(false);
   };
@@ -159,6 +164,8 @@ const Index = () => {
               onCategoryChange={setSelectedCategory}
               selectedType={selectedType}
               onTypeChange={setSelectedType}
+              selectedDifficulty={selectedDifficulty}
+              onDifficultyChange={setSelectedDifficulty}
               showFreeOnly={showFreeOnly}
               onFreeOnlyChange={setShowFreeOnly}
               resourceCounts={resourceCounts}
@@ -176,6 +183,8 @@ const Index = () => {
                 onCategoryChange={setSelectedCategory}
                 selectedType={selectedType}
                 onTypeChange={setSelectedType}
+                selectedDifficulty={selectedDifficulty}
+                onDifficultyChange={setSelectedDifficulty}
                 showFreeOnly={showFreeOnly}
                 onFreeOnlyChange={setShowFreeOnly}
                 resourceCounts={resourceCounts}
@@ -193,6 +202,7 @@ const Index = () => {
                     setSearchQuery("");
                     setSelectedCategory("all");
                     setSelectedType("all");
+                    setSelectedDifficulty("all");
                     setShowFreeOnly(false);
                     setShowBookmarksOnly(false);
                     setLearningPathFilter(null);

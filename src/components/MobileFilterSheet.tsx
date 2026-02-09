@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Filter, X } from "lucide-react";
 import CategoryFilter from "./CategoryFilter";
+import type { DifficultyFilter } from "./CategoryFilter";
 import type { Category, ResourceType } from "@/data/resources";
 
 interface MobileFilterSheetProps {
@@ -8,6 +9,8 @@ interface MobileFilterSheetProps {
   onCategoryChange: (category: Category | "all") => void;
   selectedType: ResourceType | "all";
   onTypeChange: (type: ResourceType | "all") => void;
+  selectedDifficulty: DifficultyFilter;
+  onDifficultyChange: (difficulty: DifficultyFilter) => void;
   showFreeOnly: boolean;
   onFreeOnlyChange: (free: boolean) => void;
   resourceCounts: Record<string, number>;
