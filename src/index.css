@@ -61,6 +61,60 @@
     --resource-tweet: 203 89% 53%;
     --resource-free: 160 84% 39%;
   }
+
+  .light {
+    --background: 210 20% 98%;
+    --foreground: 225 20% 12%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 225 20% 12%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 225 20% 12%;
+
+    --primary: 210 75% 48%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 220 15% 93%;
+    --secondary-foreground: 220 15% 30%;
+
+    --muted: 220 12% 94%;
+    --muted-foreground: 220 10% 42%;
+
+    --accent: 160 60% 38%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 84% 55%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 220 12% 88%;
+    --input: 220 12% 88%;
+    --ring: 210 75% 48%;
+
+    --sidebar-background: 220 15% 96%;
+    --sidebar-foreground: 225 20% 25%;
+    --sidebar-primary: 210 75% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 220 15% 93%;
+    --sidebar-accent-foreground: 220 15% 30%;
+    --sidebar-border: 220 12% 88%;
+    --sidebar-ring: 210 75% 48%;
+
+    --gradient-gold: linear-gradient(135deg, hsl(210 75% 48%), hsl(160 60% 38%));
+    --gradient-card: linear-gradient(145deg, hsl(0 0% 100%), hsl(220 15% 97%));
+    --gradient-hero: linear-gradient(135deg, hsl(210 20% 98%), hsl(220 25% 94%), hsl(210 20% 98%));
+    --shadow-card: 0 4px 24px -4px hsl(220 15% 50% / 0.12);
+    --shadow-glow: 0 0 30px -5px hsl(210 75% 48% / 0.1);
+    --teal: 160 60% 38%;
+    --teal-foreground: 0 0% 100%;
+    --resource-course: 210 75% 48%;
+    --resource-github: 142 70% 35%;
+    --resource-youtube: 0 84% 55%;
+    --resource-website: 210 80% 50%;
+    --resource-cert: 280 65% 50%;
+    --resource-pdf: 15 85% 50%;
+    --resource-tweet: 203 89% 48%;
+    --resource-free: 160 84% 34%;
+  }
 }
 
 @layer base {

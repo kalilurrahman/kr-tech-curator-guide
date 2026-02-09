@@ -12,6 +12,8 @@ import type { SortOption } from "@/components/SortDropdown";
 import KeyTermsSection from "@/components/KeyTermsSection";
 import SocialLinksSection from "@/components/SocialLinksSection";
 import { useBookmarks } from "@/hooks/useBookmarks";
+import { useProgress } from "@/hooks/useProgress";
+import { useTheme } from "@/hooks/useTheme";
 import { resources } from "@/data/resources";
 import type { Category, ResourceType, Resource } from "@/data/resources";
 
@@ -49,6 +51,8 @@ const Index = () => {
   const [learningPathFilter, setLearningPathFilter] = useState<string[] | null>(null);
 
   const { toggleBookmark, isBookmarked, bookmarkCount, bookmarks } = useBookmarks();
+  const { toggleCompleted, isCompleted, getPathProgress, getPathCompletedCount } = useProgress();
+  const { theme, toggleTheme } = useTheme();
 
   const filteredResources = useMemo(() => {
     let filtered = resources.filter((resource) => {
@@ -105,6 +109,8 @@ const Index = () => {
           setShowBookmarksOnly(!showBookmarksOnly);
           setLearningPathFilter(null);
         }}
+        theme={theme}
+        onToggleTheme={toggleTheme}
       />
       <HeroSection
         searchQuery={searchQuery}
@@ -114,7 +120,13 @@ const Index = () => {
       <StatsBar />
 
       {showFeatured && <FeaturedSection />}
-      {showFeatured && <LearningPathsSection onSelectPath={handleSelectPath} />}
+      {showFeatured && (
+        <LearningPathsSection
+          onSelectPath={handleSelectPath}
+          getPathProgress={getPathProgress}
+          getPathCompletedCount={getPathCompletedCount}
+        />
+      )}
 
       <main className="container max-w-7xl mx-auto px-4 py-8">
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
@@ -199,6 +211,8 @@ const Index = () => {
                     index={index}
                     isBookmarked={isBookmarked(resource.id)}
                     onToggleBookmark={toggleBookmark}
+                    isCompleted={isCompleted(resource.id)}
+                    onToggleCompleted={toggleCompleted}
                   />
                 ))}
               </div>
