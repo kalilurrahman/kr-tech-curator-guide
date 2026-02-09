@@ -23,7 +23,7 @@ export default defineConfig(({ mode }) => ({
         name: "TechCurator - Curated Tech Learning Hub",
         short_name: "TechCurator",
         description: "Your curated hub for Technology, AI/ML and System Design learning resources.",
-        theme_color: "#d4940a",
+        theme_color: "#2b7bd4",
         background_color: "#0f1117",
         display: "standalone",
         orientation: "portrait",
