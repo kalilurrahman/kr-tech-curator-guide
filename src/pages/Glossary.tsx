@@ -1,5 +1,5 @@
 import { useState, useMemo, useCallback } from "react";
-import { Search, BookOpen, ArrowLeft, ArrowUpDown, ChevronDown } from "lucide-react";
+import { Search, BookOpen, ArrowLeft, ChevronDown } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
 import { glossaryTerms, glossaryCategories } from "@/data/glossary";
@@ -115,40 +115,31 @@ const GlossaryPage = () => {
         </div>
       </section>
 
-      {/* Category pills + Sort */}
+      {/* Compact filter bar */}
       <div className="border-b border-border bg-card/50 sticky top-14 sm:top-16 z-30 backdrop-blur-xl">
-        <div className="container max-w-7xl mx-auto px-4 py-2.5">
-          <div className="flex flex-col sm:flex-row sm:items-center gap-2">
-            <div className="flex flex-wrap gap-1.5 flex-1 overflow-x-auto" style={{ scrollbarWidth: "none" }}>
+        <div className="container max-w-7xl mx-auto px-4 py-2">
+          <div className="flex items-center gap-3">
+            <select
+              value={selectedCategory}
+              onChange={(e) => handleFilterChange(setSelectedCategory, e.target.value)}
+              className="bg-card border border-border rounded-lg px-3 py-1.5 text-xs font-medium text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 min-w-[160px]"
+            >
               {glossaryCategories.map((cat) => (
-                <button
-                  key={cat}
-                  onClick={() => handleFilterChange(setSelectedCategory, cat)}
-                  className={`flex-shrink-0 px-2.5 py-1 rounded-lg text-[11px] font-medium transition-all whitespace-nowrap ${
-                    selectedCategory === cat
-                      ? "bg-primary/10 text-primary border border-primary/30"
-                      : "bg-secondary text-secondary-foreground hover:bg-secondary/80 border border-transparent"
-                  }`}
-                >
-                  {cat}
-                  <span className="ml-1 opacity-60">
-                    {categoryCounts[cat] || 0}
-                  </span>
-                </button>
+                <option key={cat} value={cat}>
+                  {cat} ({categoryCounts[cat] || 0})
+                </option>
               ))}
-            </div>
-            <div className="flex items-center gap-2 flex-shrink-0">
-              <ArrowUpDown className="w-3.5 h-3.5 text-muted-foreground" />
-              <select
-                value={sortBy}
-                onChange={(e) => handleFilterChange(setSortBy, e.target.value as SortOption)}
-                className="bg-secondary border border-border rounded-lg px-3 py-1.5 text-xs font-medium text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50"
-              >
-                <option value="a-z">A → Z</option>
-                <option value="z-a">Z → A</option>
-                <option value="category">By Category</option>
-              </select>
-            </div>
+            </select>
+
+            <select
+              value={sortBy}
+              onChange={(e) => handleFilterChange(setSortBy, e.target.value as SortOption)}
+              className="bg-card border border-border rounded-lg px-3 py-1.5 text-xs font-medium text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50"
+            >
+              <option value="a-z">A → Z</option>
+              <option value="z-a">Z → A</option>
+              <option value="category">By Category</option>
+            </select>
           </div>
         </div>
       </div>
