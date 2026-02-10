@@ -2,10 +2,10 @@ import { useState, useMemo } from "react";
 import AppHeader from "@/components/AppHeader";
 import HeroSection from "@/components/HeroSection";
 import StatsBar from "@/components/StatsBar";
+import QuickFilterBar from "@/components/QuickFilterBar";
+import ProgressTracker from "@/components/ProgressTracker";
 import FeaturedSection from "@/components/FeaturedSection";
 import LearningPathsSection from "@/components/LearningPathsSection";
-import CategoryFilter from "@/components/CategoryFilter";
-import MobileFilterSheet from "@/components/MobileFilterSheet";
 import ResourceCard from "@/components/ResourceCard";
 import SortDropdown from "@/components/SortDropdown";
 import type { SortOption } from "@/components/SortDropdown";
@@ -54,7 +54,7 @@ const Index = () => {
   const [learningPathFilter, setLearningPathFilter] = useState<string[] | null>(null);
 
   const { toggleBookmark, isBookmarked, bookmarkCount, bookmarks } = useBookmarks();
-  const { toggleCompleted, isCompleted, getPathProgress, getPathCompletedCount } = useProgress();
+  const { completed, toggleCompleted, isCompleted, getPathProgress, getPathCompletedCount } = useProgress();
   const { theme, toggleTheme } = useTheme();
 
   const filteredResources = useMemo(() => {
@@ -106,6 +106,15 @@ const Index = () => {
 
   const clearPathFilter = () => setLearningPathFilter(null);
 
+  const clearAllFilters = () => {
+    setSelectedCategory("all");
+    setSelectedType("all");
+    setSelectedDifficulty("all");
+    setShowFreeOnly(false);
+    setShowBookmarksOnly(false);
+    setLearningPathFilter(null);
+  };
+
   return (
     <div className="min-h-screen bg-background">
       <AppHeader
@@ -123,6 +132,24 @@ const Index = () => {
         onSearchChange={setSearchQuery}
         totalResources={resources.length}
       />
+
+      {/* Sticky filter bar immediately after hero */}
+      <QuickFilterBar
+        selectedCategory={selectedCategory}
+        onCategoryChange={setSelectedCategory}
+        selectedType={selectedType}
+        onTypeChange={setSelectedType}
+        selectedDifficulty={selectedDifficulty}
+        onDifficultyChange={setSelectedDifficulty}
+        showFreeOnly={showFreeOnly}
+        onFreeOnlyChange={setShowFreeOnly}
+        activeFilterCount={activeFilterCount}
+        onClearAll={clearAllFilters}
+      />
+
+      {/* Progress tracker */}
+      <ProgressTracker completedCount={completed.size} />
+
       <StatsBar />
 
       {showFeatured && <FeaturedSection />}
@@ -135,7 +162,7 @@ const Index = () => {
       )}
 
       <main className="container max-w-7xl mx-auto px-4 py-8">
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
+        <div className="flex items-center justify-between gap-4 mb-6">
           <div>
             <h2 className="text-xl font-display font-bold text-foreground">
               {learningPathFilter
@@ -158,78 +185,35 @@ const Index = () => {
               )}
             </p>
           </div>
-          <div className="flex items-center gap-3">
-            <SortDropdown value={sortBy} onChange={setSortBy} />
-            <MobileFilterSheet
-              selectedCategory={selectedCategory}
-              onCategoryChange={setSelectedCategory}
-              selectedType={selectedType}
-              onTypeChange={setSelectedType}
-              selectedDifficulty={selectedDifficulty}
-              onDifficultyChange={setSelectedDifficulty}
-              showFreeOnly={showFreeOnly}
-              onFreeOnlyChange={setShowFreeOnly}
-              resourceCounts={resourceCounts}
-              activeFilterCount={activeFilterCount}
-            />
-          </div>
+          <SortDropdown value={sortBy} onChange={setSortBy} />
         </div>
 
-        <div className="flex gap-8">
-          {/* Desktop sidebar */}
-          <aside className="hidden lg:block w-64 flex-shrink-0">
-            <div className="sticky top-24">
-              <CategoryFilter
-                selectedCategory={selectedCategory}
-                onCategoryChange={setSelectedCategory}
-                selectedType={selectedType}
-                onTypeChange={setSelectedType}
-                selectedDifficulty={selectedDifficulty}
-                onDifficultyChange={setSelectedDifficulty}
-                showFreeOnly={showFreeOnly}
-                onFreeOnlyChange={setShowFreeOnly}
-                resourceCounts={resourceCounts}
+        {/* Resource grid — full width, no sidebar */}
+        {filteredResources.length === 0 ? (
+          <div className="text-center py-16">
+            <p className="text-lg text-muted-foreground">No resources found matching your filters.</p>
+            <button
+              onClick={clearAllFilters}
+              className="mt-4 text-primary hover:underline text-sm font-medium"
+            >
+              Clear all filters
+            </button>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+            {filteredResources.map((resource, index) => (
+              <ResourceCard
+                key={resource.id}
+                resource={resource}
+                index={index}
+                isBookmarked={isBookmarked(resource.id)}
+                onToggleBookmark={toggleBookmark}
+                isCompleted={isCompleted(resource.id)}
+                onToggleCompleted={toggleCompleted}
               />
-            </div>
-          </aside>
-
-          {/* Resource grid */}
-          <div className="flex-1 min-w-0">
-            {filteredResources.length === 0 ? (
-              <div className="text-center py-16">
-                <p className="text-lg text-muted-foreground">No resources found matching your filters.</p>
-                <button
-                  onClick={() => {
-                    setSearchQuery("");
-                    setSelectedCategory("all");
-                    setSelectedType("all");
-                    setSelectedDifficulty("all");
-                    setShowFreeOnly(false);
-                    setShowBookmarksOnly(false);
-                    setLearningPathFilter(null);
-                  }}
-                  className="mt-4 text-primary hover:underline text-sm font-medium"
-                >
-                  Clear all filters
-                </button>
-              </div>
-            ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
-                {filteredResources.map((resource, index) => (
-                  <ResourceCard
-                    key={resource.id}
-                    resource={resource}
-                    index={index}
-                    isBookmarked={isBookmarked(resource.id)}
-                    onToggleBookmark={toggleBookmark}
-                    isCompleted={isCompleted(resource.id)}
-                    onToggleCompleted={toggleCompleted}
-                  />
-                ))}
-              </div>
-            )}
+            ))}
           </div>
-        </div>
+        )}
       </main>
 
       <KeyTermsSection />

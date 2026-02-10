@@ -1,16 +1,27 @@
-import { useState, useMemo } from "react";
-import { Search, BookOpen, ChevronDown, ArrowLeft, ArrowUpDown } from "lucide-react";
+import { useState, useMemo, useCallback } from "react";
+import { Search, BookOpen, ArrowLeft, ArrowUpDown, ChevronDown } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
 import { glossaryTerms, glossaryCategories } from "@/data/glossary";
+import {
+  Table,
+  TableHeader,
+  TableBody,
+  TableHead,
+  TableRow,
+  TableCell,
+} from "@/components/ui/table";
 
 type SortOption = "a-z" | "z-a" | "category";
+
+const PAGE_SIZE = 50;
 
 const GlossaryPage = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [expandedTerm, setExpandedTerm] = useState<string | null>(null);
   const [sortBy, setSortBy] = useState<SortOption>("a-z");
+  const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
 
   const filteredTerms = useMemo(() => {
     let terms = glossaryTerms.filter((item) => {
@@ -29,13 +40,27 @@ const GlossaryPage = () => {
       case "z-a":
         return [...terms].sort((a, b) => b.term.localeCompare(a.term));
       case "category":
-        return [...terms].sort((a, b) =>
-          a.category.localeCompare(b.category) || a.term.localeCompare(b.term)
+        return [...terms].sort(
+          (a, b) =>
+            a.category.localeCompare(b.category) ||
+            a.term.localeCompare(b.term)
         );
       default:
         return terms;
     }
   }, [searchQuery, selectedCategory, sortBy]);
+
+  // Reset visible count when filters change
+  const handleFilterChange = useCallback(
+    (setter: (val: any) => void, val: any) => {
+      setter(val);
+      setVisibleCount(PAGE_SIZE);
+    },
+    []
+  );
+
+  const visibleTerms = filteredTerms.slice(0, visibleCount);
+  const hasMore = visibleCount < filteredTerms.length;
 
   const categoryCounts = useMemo(() => {
     const counts: Record<string, number> = { All: glossaryTerms.length };
@@ -66,61 +91,57 @@ const GlossaryPage = () => {
         </div>
       </header>
 
-      {/* Hero */}
-      <section className="relative overflow-hidden bg-gradient-hero py-12 md:py-16">
+      {/* Compact Hero */}
+      <section className="relative overflow-hidden bg-gradient-hero py-8 md:py-12">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[300px] bg-primary/5 rounded-full blur-3xl pointer-events-none" />
         <div className="container relative z-10 max-w-4xl mx-auto px-4 text-center">
-          <h1 className="text-3xl md:text-5xl font-display font-bold tracking-tight mb-3">
+          <h1 className="text-3xl md:text-4xl font-display font-bold tracking-tight mb-2">
             <span className="text-foreground">Tech </span>
             <span className="text-gradient-gold">Glossary</span>
           </h1>
-          <p className="text-muted-foreground max-w-xl mx-auto mb-6">
-            {glossaryTerms.length}+ essential technology terms and concepts —
-            searchable and categorized.
+          <p className="text-sm text-muted-foreground max-w-xl mx-auto mb-5">
+            {glossaryTerms.length}+ essential technology terms — searchable, categorized, and tabulated.
           </p>
-
           <div className="relative max-w-xl mx-auto">
             <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
             <input
               type="text"
               placeholder="Search terms..."
               value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-12 pr-4 py-3.5 bg-card border border-border rounded-xl text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/50 transition-all text-base"
+              onChange={(e) => handleFilterChange(setSearchQuery, e.target.value)}
+              className="w-full pl-12 pr-4 py-3 bg-card border border-border rounded-xl text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/50 transition-all text-base"
             />
           </div>
         </div>
       </section>
 
       {/* Category pills + Sort */}
-      <div className="border-b border-border bg-card/50">
-        <div className="container max-w-7xl mx-auto px-4 py-3">
-          <div className="flex flex-col sm:flex-row sm:items-center gap-3">
-            <div className="flex flex-wrap gap-2 flex-1">
+      <div className="border-b border-border bg-card/50 sticky top-14 sm:top-16 z-30 backdrop-blur-xl">
+        <div className="container max-w-7xl mx-auto px-4 py-2.5">
+          <div className="flex flex-col sm:flex-row sm:items-center gap-2">
+            <div className="flex flex-wrap gap-1.5 flex-1 overflow-x-auto" style={{ scrollbarWidth: "none" }}>
               {glossaryCategories.map((cat) => (
                 <button
                   key={cat}
-                  onClick={() => setSelectedCategory(cat)}
-                  className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
+                  onClick={() => handleFilterChange(setSelectedCategory, cat)}
+                  className={`flex-shrink-0 px-2.5 py-1 rounded-lg text-[11px] font-medium transition-all whitespace-nowrap ${
                     selectedCategory === cat
                       ? "bg-primary/10 text-primary border border-primary/30"
                       : "bg-secondary text-secondary-foreground hover:bg-secondary/80 border border-transparent"
                   }`}
                 >
                   {cat}
-                  <span className="ml-1.5 opacity-60">
+                  <span className="ml-1 opacity-60">
                     {categoryCounts[cat] || 0}
                   </span>
                 </button>
               ))}
             </div>
-
-            {/* Sort dropdown */}
             <div className="flex items-center gap-2 flex-shrink-0">
               <ArrowUpDown className="w-3.5 h-3.5 text-muted-foreground" />
               <select
                 value={sortBy}
-                onChange={(e) => setSortBy(e.target.value as SortOption)}
+                onChange={(e) => handleFilterChange(setSortBy, e.target.value as SortOption)}
                 className="bg-secondary border border-border rounded-lg px-3 py-1.5 text-xs font-medium text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50"
               >
                 <option value="a-z">A → Z</option>
@@ -132,55 +153,96 @@ const GlossaryPage = () => {
         </div>
       </div>
 
-      {/* Terms */}
-      <main className="container max-w-4xl mx-auto px-4 py-8">
-        <p className="text-sm text-muted-foreground mb-6">
-          {filteredTerms.length} term{filteredTerms.length !== 1 ? "s" : ""}{" "}
-          found
+      {/* Tabular Terms */}
+      <main className="container max-w-5xl mx-auto px-4 py-6">
+        <p className="text-sm text-muted-foreground mb-4">
+          Showing {visibleTerms.length} of {filteredTerms.length} term{filteredTerms.length !== 1 ? "s" : ""}
         </p>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-          {filteredTerms.map((item) => (
-            <button
-              key={item.term}
-              onClick={() =>
-                setExpandedTerm(
-                  expandedTerm === item.term ? null : item.term
-                )
-              }
-              className="text-left bg-card border border-border rounded-xl p-4 hover:border-primary/30 transition-all group"
-            >
-              <div className="flex items-start justify-between gap-2">
-                <div className="flex-1 min-w-0">
-                  <h4 className="font-display font-semibold text-sm text-foreground group-hover:text-primary transition-colors truncate">
-                    {item.term}
-                  </h4>
-                  <span className="text-[10px] text-muted-foreground uppercase tracking-wider">
-                    {item.category}
-                  </span>
-                </div>
-                <ChevronDown
-                  className={`w-4 h-4 text-muted-foreground flex-shrink-0 mt-0.5 transition-transform ${
-                    expandedTerm === item.term ? "rotate-180" : ""
-                  }`}
-                />
-              </div>
-              <AnimatePresence>
-                {expandedTerm === item.term && (
-                  <motion.p
-                    initial={{ opacity: 0, height: 0 }}
-                    animate={{ opacity: 1, height: "auto" }}
-                    exit={{ opacity: 0, height: 0 }}
-                    transition={{ duration: 0.2 }}
-                    className="text-sm text-muted-foreground mt-2 leading-relaxed"
-                  >
-                    {item.definition}
-                  </motion.p>
-                )}
-              </AnimatePresence>
-            </button>
-          ))}
+        <div className="border border-border rounded-xl overflow-hidden bg-card">
+          <Table>
+            <TableHeader>
+              <TableRow className="bg-muted/30 hover:bg-muted/30">
+                <TableHead className="w-[200px] sm:w-[260px] font-display font-semibold text-foreground text-xs">
+                  Term
+                </TableHead>
+                <TableHead className="hidden sm:table-cell w-[140px] font-display font-semibold text-foreground text-xs">
+                  Category
+                </TableHead>
+                <TableHead className="font-display font-semibold text-foreground text-xs">
+                  Definition
+                </TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {visibleTerms.map((item) => (
+                <TableRow
+                  key={item.term}
+                  className="cursor-pointer hover:bg-primary/5 transition-colors"
+                  onClick={() =>
+                    setExpandedTerm(expandedTerm === item.term ? null : item.term)
+                  }
+                >
+                  <TableCell className="font-display font-semibold text-sm text-foreground align-top py-3">
+                    <div className="flex items-start gap-1.5">
+                      <ChevronDown
+                        className={`w-3.5 h-3.5 text-muted-foreground flex-shrink-0 mt-0.5 transition-transform sm:hidden ${
+                          expandedTerm === item.term ? "rotate-180" : ""
+                        }`}
+                      />
+                      <span>{item.term}</span>
+                    </div>
+                    {/* Mobile: show category below term */}
+                    <span className="block sm:hidden text-[10px] text-muted-foreground uppercase tracking-wider mt-0.5 ml-5">
+                      {item.category}
+                    </span>
+                  </TableCell>
+                  <TableCell className="hidden sm:table-cell text-xs text-muted-foreground align-top py-3">
+                    <span className="px-2 py-0.5 rounded-md bg-secondary text-secondary-foreground text-[10px] font-medium uppercase tracking-wider">
+                      {item.category}
+                    </span>
+                  </TableCell>
+                  <TableCell className="text-sm text-muted-foreground leading-relaxed align-top py-3">
+                    {/* Desktop: always show definition */}
+                    <span className="hidden sm:inline">{item.definition}</span>
+                    {/* Mobile: expandable */}
+                    <span className="sm:hidden">
+                      <AnimatePresence mode="wait">
+                        {expandedTerm === item.term ? (
+                          <motion.span
+                            key="open"
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            transition={{ duration: 0.15 }}
+                          >
+                            {item.definition}
+                          </motion.span>
+                        ) : (
+                          <span className="text-xs text-muted-foreground/60">
+                            Tap to expand
+                          </span>
+                        )}
+                      </AnimatePresence>
+                    </span>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
         </div>
+
+        {/* Load more */}
+        {hasMore && (
+          <div className="flex justify-center mt-6">
+            <button
+              onClick={() => setVisibleCount((prev) => prev + PAGE_SIZE)}
+              className="px-6 py-2.5 bg-primary/10 text-primary border border-primary/30 rounded-xl text-sm font-medium hover:bg-primary/20 transition-all"
+            >
+              Load more ({filteredTerms.length - visibleCount} remaining)
+            </button>
+          </div>
+        )}
 
         {filteredTerms.length === 0 && (
           <div className="text-center py-16">
@@ -191,6 +253,7 @@ const GlossaryPage = () => {
               onClick={() => {
                 setSearchQuery("");
                 setSelectedCategory("All");
+                setVisibleCount(PAGE_SIZE);
               }}
               className="mt-4 text-primary hover:underline text-sm font-medium"
             >
