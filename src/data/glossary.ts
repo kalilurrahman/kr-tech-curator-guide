@@ -23,7 +23,9 @@ export const glossaryCategories = [
   "Hardware & Architecture",
 ];
 
-export const glossaryTerms: GlossaryTerm[] = [
+import { cyberGlossaryTerms } from "./cyberGlossary";
+
+const baseGlossaryTerms: GlossaryTerm[] = [
   // ===== Programming Fundamentals (120+) =====
   { term: "Algorithm", definition: "A step-by-step procedure for solving a problem or performing a computation.", category: "Programming Fundamentals" },
   { term: "Data Structure", definition: "A way of organizing and storing data for efficient access and modification.", category: "Programming Fundamentals" },
@@ -867,3 +869,14 @@ export const glossaryTerms: GlossaryTerm[] = [
   { term: "Cloud-Native", definition: "Applications designed from the ground up to exploit cloud computing advantages like elasticity and resilience.", category: "Cloud Computing" },
   { term: "Serverless Container", definition: "Running containers without managing underlying infrastructure (e.g., AWS Fargate, Cloud Run).", category: "Cloud Computing" },
 ];
+
+// Merge base glossary with cyber lexicon terms, deduplicating by term name
+const termSet = new Set<string>();
+export const glossaryTerms: GlossaryTerm[] = [];
+for (const t of [...baseGlossaryTerms, ...cyberGlossaryTerms]) {
+  const key = t.term.toLowerCase();
+  if (!termSet.has(key)) {
+    termSet.add(key);
+    glossaryTerms.push(t);
+  }
+}
