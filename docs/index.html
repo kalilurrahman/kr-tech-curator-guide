@@ -4,11 +4,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes" />
   <title>TechCurator — Curated Tech Learning Hub</title>
-  <meta name="description" content="Your curated hub for Technology, AI/ML and System Design learning resources. 300+ courses, tutorials, and tools organized by category." />
+  <meta name="description" content="Your curated hub for Technology, AI/ML and System Design learning resources. 200+ courses, tutorials, and tools organized by category." />
   <meta name="author" content="Kalilur Rahman" />
   <meta name="theme-color" content="#2b7bd4" />
   <meta property="og:title" content="TechCurator — Curated Tech Learning Hub" />
-  <meta property="og:description" content="300+ curated learning resources for AI/ML, System Design, Cloud, DevOps and more." />
+  <meta property="og:description" content="200+ curated learning resources for AI/ML, System Design, Cloud, DevOps and more." />
   <meta property="og:type" content="website" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -85,18 +85,19 @@
     .card-rating { color: var(--primary); display: flex; align-items: center; gap: 0.25rem; }
     .card-tags { display: flex; flex-wrap: wrap; gap: 0.3rem; margin-top: 0.6rem; padding-top: 0.6rem; border-top: 1px solid var(--border); }
     .tag { font-size: 0.65rem; color: var(--fg-muted); background: var(--muted-bg); padding: 0.15rem 0.5rem; border-radius: 999px; }
-    .glossary-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 0.75rem; padding: 1.5rem 0; }
-    .glossary-item { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 1rem; cursor: pointer; transition: all 0.2s; text-align: left; width: 100%; }
-    .glossary-item:hover { border-color: hsla(210 75% 52% / 0.3); }
-    .glossary-term { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 0.85rem; color: var(--fg); }
-    .glossary-item:hover .glossary-term { color: var(--primary); }
-    .glossary-cat { font-size: 0.6rem; color: var(--fg-muted); text-transform: uppercase; letter-spacing: 0.08em; }
-    .glossary-def { font-size: 0.82rem; color: var(--fg-muted); line-height: 1.5; margin-top: 0.5rem; display: none; }
-    .glossary-item.expanded .glossary-def { display: block; }
-    .glossary-header { display: flex; justify-content: space-between; align-items: flex-start; }
-    .chevron { color: var(--fg-muted); transition: transform 0.2s; flex-shrink: 0; }
-    .glossary-item.expanded .chevron { transform: rotate(180deg); }
+    .glossary-table { width: 100%; border-collapse: collapse; }
+    .glossary-table th { text-align: left; padding: 0.6rem 0.8rem; font-size: 0.75rem; font-weight: 600; color: var(--fg); background: var(--secondary); border-bottom: 1px solid var(--border); font-family: 'Space Grotesk', sans-serif; }
+    .glossary-table td { padding: 0.6rem 0.8rem; font-size: 0.82rem; color: var(--fg-muted); border-bottom: 1px solid var(--border); vertical-align: top; }
+    .glossary-table tr:hover { background: hsla(210 75% 52% / 0.05); }
+    .glossary-table .term-cell { font-family: 'Space Grotesk', sans-serif; font-weight: 600; color: var(--fg); min-width: 160px; }
+    .glossary-table .cat-cell { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.05em; white-space: nowrap; }
+    .glossary-table .cat-badge { background: var(--secondary); color: var(--fg-secondary); padding: 0.15rem 0.4rem; border-radius: 0.375rem; font-size: 0.6rem; font-weight: 500; }
+    .glossary-filter { display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap; }
+    .glossary-filter select { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 0.4rem 0.75rem; color: var(--fg); font-size: 0.75rem; outline: none; }
+    .glossary-filter select:focus { border-color: var(--primary); }
     .count { font-size: 0.85rem; color: var(--fg-muted); padding: 0.5rem 0; }
+    .load-more { display: block; margin: 1.5rem auto; padding: 0.6rem 1.5rem; background: hsla(210 75% 52% / 0.1); color: var(--primary); border: 1px solid hsla(210 75% 52% / 0.3); border-radius: var(--radius); font-size: 0.85rem; font-weight: 500; cursor: pointer; transition: all 0.2s; }
+    .load-more:hover { background: hsla(210 75% 52% / 0.2); }
     .footer { border-top: 1px solid var(--border); padding: 2rem 0; text-align: center; }
     .footer p { font-size: 0.85rem; color: var(--fg-muted); }
     .footer a { color: var(--primary); text-decoration: none; }
@@ -113,11 +114,11 @@
     .scroll-btn-bottom:hover { background: var(--muted-bg); color: var(--fg); }
     @media (max-width: 768px) {
       .grid { grid-template-columns: 1fr; }
-      .glossary-grid { grid-template-columns: 1fr; }
       .stats-inner { gap: 1rem; }
       .hero { padding: 2rem 0 2.5rem; }
       .hero h1 { font-size: 1.8rem; }
       .filter-row { gap: 0.35rem; }
+      .glossary-table .cat-cell { display: none; }
     }
     @media (max-width: 480px) {
       .header-inner { padding: 0 0.5rem; }
@@ -163,18 +164,17 @@
 
   <div id="glossary-tab" class="hidden">
     <div class="container filters">
-      <div class="filter-row" id="glossaryCatFilters"></div>
-      <div class="filter-row" style="margin-top:0.5rem">
-        <select class="sort-select" id="glossarySort">
-          <option value="a-z">A → Z</option>
-          <option value="z-a">Z → A</option>
-          <option value="category">By Category</option>
-        </select>
-      </div>
+      <div class="glossary-filter" id="glossaryFilters"></div>
     </div>
     <div class="container">
       <div class="count" id="glossaryCount"></div>
-      <div class="glossary-grid" id="glossaryGrid"></div>
+      <div style="border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;background:var(--bg-card);">
+        <table class="glossary-table">
+          <thead><tr><th>Term</th><th class="cat-cell">Category</th><th>Definition</th></tr></thead>
+          <tbody id="glossaryBody"></tbody>
+        </table>
+      </div>
+      <button class="load-more hidden" id="glossaryLoadMore">Load more</button>
     </div>
   </div>
 
@@ -197,361 +197,256 @@
   </div>
 
 <script>
-// Data is loaded from the main app's source files.
-// This static version mirrors all resources and glossary terms.
-
 const categories=["AI & Machine Learning","Cloud Computing","DevOps & Infrastructure","Web Development","Cybersecurity","Data Science & Analytics","Blockchain & Web3","Programming Languages","Mobile Development","System Design"];
 const catIcons={"AI & Machine Learning":"🧠","Cloud Computing":"☁️","DevOps & Infrastructure":"⚙️","Web Development":"🌐","Cybersecurity":"🔒","Data Science & Analytics":"📊","Blockchain & Web3":"⛓️","Programming Languages":"💻","Mobile Development":"📱","System Design":"🏗️"};
 const typeLabels={course:"Course",github:"GitHub",youtube:"YouTube",website:"Website",certification:"Cert",pdf:"PDF",tweet:"Tweet",free:"Free"};
 
-// Resources data - synced from src/data/resources.ts
 const resources=[
-{id:"ai-1",title:"Machine Learning Specialization",description:"Andrew Ng's foundational ML course covering supervised/unsupervised learning, neural networks, and best practices.",url:"https://www.coursera.org/specializations/machine-learning-introduction",type:"course",category:"AI & Machine Learning",provider:"DeepLearning.AI",tags:["machine learning","neural networks","andrew ng"],isFree:false,difficulty:"Beginner",rating:4.9},
-{id:"ai-2",title:"Fast.ai - Practical Deep Learning",description:"Top-down approach to deep learning. Build models before theory. Free, world-class course by Jeremy Howard.",url:"https://course.fast.ai/",type:"free",category:"AI & Machine Learning",provider:"Fast.ai",tags:["deep learning","pytorch","practical"],isFree:true,difficulty:"Intermediate",rating:4.9},
-{id:"ai-3",title:"Hugging Face Transformers Course",description:"Learn to use transformers for NLP, computer vision, and audio processing with the Hugging Face ecosystem.",url:"https://huggingface.co/learn/nlp-course",type:"free",category:"AI & Machine Learning",provider:"Hugging Face",tags:["transformers","NLP","hugging face"],isFree:true,difficulty:"Intermediate",rating:4.8},
-{id:"ai-4",title:"Stanford CS229 - Machine Learning",description:"Stanford's legendary ML course. Full lecture videos, notes, and problem sets available free online.",url:"https://www.youtube.com/playlist?list=PLoROMvodv4rMiGQp3WXShtMGgzqpfVfbU",type:"youtube",category:"AI & Machine Learning",provider:"Stanford",tags:["stanford","machine learning","theory"],isFree:true,difficulty:"Advanced",rating:4.9},
-{id:"ai-5",title:"OpenAI Cookbook",description:"Example code and guides for building with the OpenAI API. Covers embeddings, GPT, fine-tuning, and more.",url:"https://github.com/openai/openai-cookbook",type:"github",category:"AI & Machine Learning",provider:"OpenAI",tags:["openai","gpt","api","cookbook"],isFree:true,difficulty:"Intermediate",rating:4.7},
-{id:"ai-6",title:"Google AI/ML Crash Course",description:"Google's fast-paced introduction to machine learning with TensorFlow APIs and practical exercises.",url:"https://developers.google.com/machine-learning/crash-course",type:"free",category:"AI & Machine Learning",provider:"Google",tags:["tensorflow","google","crash course"],isFree:true,difficulty:"Beginner",rating:4.6},
-{id:"ai-7",title:"Anthropic Prompt Engineering Guide",description:"Comprehensive guide to prompt engineering with Claude. Best practices, techniques, and real-world examples.",url:"https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering",type:"website",category:"AI & Machine Learning",provider:"Anthropic",tags:["prompt engineering","claude","anthropic","LLM"],isFree:true,difficulty:"Beginner",rating:4.8},
-{id:"ai-8",title:"LangChain Documentation & Tutorials",description:"Build LLM-powered applications with LangChain. Chains, agents, RAG, memory, and tool use patterns.",url:"https://python.langchain.com/docs/get_started/introduction",type:"website",category:"AI & Machine Learning",provider:"LangChain",tags:["langchain","LLM","RAG","agents"],isFree:true,difficulty:"Intermediate",rating:4.5},
-{id:"ai-9",title:"Kaggle Learn - Intro to Machine Learning",description:"Hands-on micro-courses with coding exercises. Perfect for beginners wanting practical ML experience.",url:"https://www.kaggle.com/learn/intro-to-machine-learning",type:"free",category:"AI & Machine Learning",provider:"Kaggle",tags:["kaggle","hands-on","beginner"],isFree:true,difficulty:"Beginner",rating:4.5},
-{id:"ai-10",title:"Nvidia Deep Learning Institute",description:"GPU-accelerated computing courses. Covers deep learning, computer vision, NLP, and accelerated data science.",url:"https://www.nvidia.com/en-us/training/",type:"course",category:"AI & Machine Learning",provider:"Nvidia",tags:["nvidia","GPU","deep learning","CUDA"],isFree:false,difficulty:"Intermediate",rating:4.6},
-{id:"ai-11",title:"Awesome Machine Learning",description:"Curated list of awesome ML frameworks, libraries, and software organized by programming language.",url:"https://github.com/josephmisiti/awesome-machine-learning",type:"github",category:"AI & Machine Learning",provider:"Community",tags:["awesome list","frameworks","libraries"],isFree:true,difficulty:"Intermediate",rating:4.7},
-{id:"ai-12",title:"3Blue1Brown - Neural Networks",description:"Visually stunning series explaining neural networks, backpropagation, and gradient descent intuitively.",url:"https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi",type:"youtube",category:"AI & Machine Learning",provider:"YouTube",tags:["neural networks","visual","intuition","3blue1brown"],isFree:true,difficulty:"Beginner",rating:4.9},
-{id:"cloud-1",title:"AWS Cloud Practitioner Essentials",description:"Official AWS foundational course. Understand cloud concepts, AWS services, security, and pricing.",url:"https://aws.amazon.com/training/learn-about/cloud-practitioner/",type:"free",category:"Cloud Computing",provider:"AWS",tags:["aws","cloud practitioner","fundamentals"],isFree:true,difficulty:"Beginner",rating:4.6},
-{id:"cloud-2",title:"Google Cloud Skills Boost",description:"Free hands-on labs and learning paths for Google Cloud Platform. Earn badges and credentials.",url:"https://www.cloudskillsboost.google/",type:"free",category:"Cloud Computing",provider:"Google",tags:["gcp","google cloud","hands-on labs"],isFree:true,difficulty:"Beginner",rating:4.7},
-{id:"cloud-3",title:"Microsoft Azure Fundamentals (AZ-900)",description:"Official Microsoft learning path for Azure fundamentals certification. Cloud concepts and core services.",url:"https://learn.microsoft.com/en-us/training/paths/az-900-describe-cloud-concepts/",type:"free",category:"Cloud Computing",provider:"Microsoft",tags:["azure","az-900","fundamentals"],isFree:true,difficulty:"Beginner",rating:4.6},
-{id:"cloud-4",title:"AWS Well-Architected Framework",description:"Best practices for designing and operating reliable, secure, efficient, and cost-effective systems.",url:"https://aws.amazon.com/architecture/well-architected/",type:"website",category:"Cloud Computing",provider:"AWS",tags:["architecture","best practices","well-architected"],isFree:true,difficulty:"Advanced",rating:4.8},
-{id:"cloud-5",title:"Cloud Computing Concepts (Illinois/Coursera)",description:"University of Illinois course on distributed systems, cloud computing paradigms, and key technologies.",url:"https://www.coursera.org/learn/cloud-computing",type:"course",category:"Cloud Computing",provider:"Coursera",tags:["distributed systems","theory","university"],isFree:false,difficulty:"Intermediate",rating:4.5},
-{id:"cloud-6",title:"Awesome AWS",description:"Curated list of AWS libraries, open source repos, guides, blogs, and other resources.",url:"https://github.com/donnemartin/awesome-aws",type:"github",category:"Cloud Computing",provider:"Community",tags:["aws","awesome list","tools"],isFree:true,difficulty:"Intermediate",rating:4.6},
-{id:"devops-1",title:"Docker Getting Started Tutorial",description:"Official Docker tutorial. Learn containerization from scratch — images, containers, compose, and networking.",url:"https://docs.docker.com/get-started/",type:"free",category:"DevOps & Infrastructure",provider:"Docker",tags:["docker","containers","tutorial"],isFree:true,difficulty:"Beginner",rating:4.6},
-{id:"devops-2",title:"Kubernetes the Hard Way",description:"Kelsey Hightower's legendary guide to bootstrapping Kubernetes the hard way. Deep understanding of K8s.",url:"https://github.com/kelseyhightower/kubernetes-the-hard-way",type:"github",category:"DevOps & Infrastructure",provider:"Community",tags:["kubernetes","hard way","deep dive"],isFree:true,difficulty:"Advanced",rating:4.9},
-{id:"devops-3",title:"HashiCorp Terraform Tutorials",description:"Learn Infrastructure as Code with Terraform. Official tutorials covering AWS, Azure, GCP providers.",url:"https://developer.hashicorp.com/terraform/tutorials",type:"free",category:"DevOps & Infrastructure",provider:"HashiCorp",tags:["terraform","IaC","infrastructure"],isFree:true,difficulty:"Intermediate",rating:4.7},
-{id:"devops-4",title:"GitHub Actions Documentation",description:"Automate your software workflows with GitHub Actions. CI/CD, testing, deployment pipelines.",url:"https://docs.github.com/en/actions",type:"website",category:"DevOps & Infrastructure",provider:"GitHub",tags:["github actions","CI/CD","automation"],isFree:true,difficulty:"Intermediate",rating:4.6},
-{id:"devops-5",title:"Linux Foundation - Intro to Kubernetes",description:"Free edX course on Kubernetes fundamentals. Container orchestration concepts and hands-on exercises.",url:"https://www.edx.org/learn/kubernetes/the-linux-foundation-introduction-to-kubernetes",type:"free",category:"DevOps & Infrastructure",provider:"Linux Foundation",tags:["kubernetes","edx","containers"],isFree:true,difficulty:"Beginner",rating:4.5},
-{id:"devops-6",title:"The DevOps Handbook",description:"Key principles from the DevOps Handbook — flow, feedback, continuous learning, and experimentation.",url:"https://itrevolution.com/product/the-devops-handbook-second-edition/",type:"website",category:"DevOps & Infrastructure",provider:"Other",tags:["devops","book","culture","practices"],isFree:false,difficulty:"Intermediate",rating:4.8},
-{id:"devops-7",title:"TechWorld with Nana - DevOps Bootcamp",description:"Complete DevOps bootcamp covering Linux, networking, Docker, K8s, CI/CD, IaC, and monitoring.",url:"https://www.youtube.com/c/TechWorldwithNana",type:"youtube",category:"DevOps & Infrastructure",provider:"YouTube",tags:["devops","bootcamp","nana","complete"],isFree:true,difficulty:"Beginner",rating:4.8},
-{id:"web-1",title:"The Odin Project",description:"Full-stack web development curriculum. HTML, CSS, JavaScript, React, Node.js — completely free.",url:"https://www.theodinproject.com/",type:"free",category:"Web Development",provider:"Community",tags:["full-stack","curriculum","free"],isFree:true,difficulty:"Beginner",rating:4.8},
-{id:"web-2",title:"freeCodeCamp Full Curriculum",description:"Thousands of hours of free coding challenges and projects. Earn certifications in web dev, data science.",url:"https://www.freecodecamp.org/",type:"free",category:"Web Development",provider:"freeCodeCamp",tags:["freecodecamp","certifications","projects"],isFree:true,difficulty:"Beginner",rating:4.7},
-{id:"web-3",title:"MDN Web Docs",description:"The definitive reference for web technologies. HTML, CSS, JavaScript, Web APIs documentation.",url:"https://developer.mozilla.org/",type:"website",category:"Web Development",provider:"Mozilla",tags:["documentation","reference","web standards"],isFree:true,difficulty:"Beginner",rating:4.9},
-{id:"web-4",title:"React Official Documentation",description:"Learn React from the official docs. Interactive tutorials, thinking in React, hooks, and advanced patterns.",url:"https://react.dev/",type:"website",category:"Web Development",provider:"Meta",tags:["react","official docs","hooks"],isFree:true,difficulty:"Beginner",rating:4.8},
-{id:"web-5",title:"JavaScript.info",description:"From fundamentals to advanced topics. Thorough, well-structured JavaScript reference and tutorial.",url:"https://javascript.info/",type:"free",category:"Web Development",provider:"Community",tags:["javascript","tutorial","comprehensive"],isFree:true,difficulty:"Beginner",rating:4.8},
-{id:"web-6",title:"Vercel Next.js Learn",description:"Official Next.js tutorial by Vercel. Build a full-stack web app with React, routing, data fetching.",url:"https://nextjs.org/learn",type:"free",category:"Web Development",provider:"Vercel",tags:["nextjs","react","full-stack","vercel"],isFree:true,difficulty:"Intermediate",rating:4.7},
-{id:"web-7",title:"CSS Tricks / Smashing Magazine",description:"In-depth articles on CSS, front-end development, UX design, and modern web development techniques.",url:"https://css-tricks.com/",type:"website",category:"Web Development",provider:"Community",tags:["CSS","front-end","design","articles"],isFree:true,difficulty:"Intermediate",rating:4.6},
-{id:"web-8",title:"Full Stack Open (Helsinki University)",description:"Modern web development with React, Redux, Node.js, MongoDB, GraphQL, and TypeScript.",url:"https://fullstackopen.com/en/",type:"free",category:"Web Development",provider:"Other",tags:["full-stack","react","node","university"],isFree:true,difficulty:"Intermediate",rating:4.8},
-{id:"web-9",title:"Awesome React",description:"Curated list of React ecosystem — libraries, tools, tutorials, videos, and community resources.",url:"https://github.com/enaqx/awesome-react",type:"github",category:"Web Development",provider:"Community",tags:["react","awesome list","ecosystem"],isFree:true,difficulty:"Intermediate",rating:4.6},
-{id:"web-10",title:"Fireship - 100 Seconds of Code",description:"Fast-paced, entertaining tech explainers. Frameworks, languages, and concepts in bite-sized videos.",url:"https://www.youtube.com/c/Fireship",type:"youtube",category:"Web Development",provider:"YouTube",tags:["fireship","quick","entertaining","overview"],isFree:true,difficulty:"Beginner",rating:4.9},
-{id:"sec-1",title:"OWASP Top 10",description:"The most critical web application security risks. Essential reading for every developer.",url:"https://owasp.org/www-project-top-ten/",type:"website",category:"Cybersecurity",provider:"OWASP",tags:["owasp","web security","top 10"],isFree:true,difficulty:"Intermediate",rating:4.9},
-{id:"sec-2",title:"Google Cybersecurity Professional Certificate",description:"Entry-level cybersecurity certificate by Google. Security concepts, tools, incident response.",url:"https://www.coursera.org/professional-certificates/google-cybersecurity",type:"certification",category:"Cybersecurity",provider:"Google",tags:["google","certificate","entry-level"],isFree:false,difficulty:"Beginner",rating:4.7},
-{id:"sec-3",title:"Hack The Box Academy",description:"Interactive cybersecurity training platform. Pentesting, web exploitation, and defensive security.",url:"https://academy.hackthebox.com/",type:"course",category:"Cybersecurity",provider:"Other",tags:["pentesting","hands-on","CTF"],isFree:true,difficulty:"Intermediate",rating:4.8},
-{id:"sec-4",title:"TryHackMe",description:"Gamified cybersecurity training. Beginner-friendly rooms for offensive/defensive security.",url:"https://tryhackme.com/",type:"free",category:"Cybersecurity",provider:"Other",tags:["tryhackme","gamified","beginner-friendly"],isFree:true,difficulty:"Beginner",rating:4.7},
-{id:"sec-5",title:"Awesome Security",description:"Comprehensive collection of security tools, resources, books, and techniques curated by the community.",url:"https://github.com/sbilly/awesome-security",type:"github",category:"Cybersecurity",provider:"Community",tags:["awesome list","tools","comprehensive"],isFree:true,difficulty:"Intermediate",rating:4.5},
-{id:"sec-6",title:"Professor Messer - Security+ Training",description:"Free CompTIA Security+ certification training videos. Complete exam preparation series.",url:"https://www.youtube.com/c/professormesser",type:"youtube",category:"Cybersecurity",provider:"YouTube",tags:["security+","comptia","certification","free"],isFree:true,difficulty:"Beginner",rating:4.7},
-{id:"data-1",title:"IBM Data Science Professional Certificate",description:"9-course series covering data science methodology, Python, SQL, data visualization, and ML.",url:"https://www.coursera.org/professional-certificates/ibm-data-science",type:"certification",category:"Data Science & Analytics",provider:"IBM",tags:["ibm","data science","certificate"],isFree:false,difficulty:"Beginner",rating:4.6},
-{id:"data-2",title:"Kaggle Competitions & Datasets",description:"World's largest data science competition platform. Real datasets, competitions, and notebooks.",url:"https://www.kaggle.com/",type:"website",category:"Data Science & Analytics",provider:"Kaggle",tags:["kaggle","competitions","datasets","notebooks"],isFree:true,difficulty:"Intermediate",rating:4.8},
-{id:"data-3",title:"Python for Data Analysis (Wes McKinney)",description:"The definitive guide to data analysis with Python, pandas, NumPy, and Jupyter.",url:"https://wesmckinney.com/book/",type:"free",category:"Data Science & Analytics",provider:"Community",tags:["python","pandas","data analysis","book"],isFree:true,difficulty:"Intermediate",rating:4.7},
-{id:"data-4",title:"Google Data Analytics Professional Certificate",description:"Learn data analytics — spreadsheets, SQL, Tableau, R. Prepare for entry-level analyst roles.",url:"https://www.coursera.org/professional-certificates/google-data-analytics",type:"certification",category:"Data Science & Analytics",provider:"Google",tags:["google","data analytics","SQL","tableau"],isFree:false,difficulty:"Beginner",rating:4.7},
-{id:"data-5",title:"DataCamp - Data Scientist Track",description:"Interactive data science courses in Python and R. Hands-on exercises and real-world projects.",url:"https://www.datacamp.com/tracks/data-scientist-with-python",type:"course",category:"Data Science & Analytics",provider:"DataCamp",tags:["datacamp","python","interactive"],isFree:false,difficulty:"Beginner",rating:4.5},
-{id:"data-6",title:"Statistics and Probability (Khan Academy)",description:"Free comprehensive statistics course. Probability, distributions, regression, hypothesis testing.",url:"https://www.khanacademy.org/math/statistics-probability",type:"free",category:"Data Science & Analytics",provider:"Other",tags:["statistics","khan academy","math","free"],isFree:true,difficulty:"Beginner",rating:4.7},
-{id:"web3-1",title:"CryptoZombies",description:"Learn Solidity by building a zombie game. Interactive, gamified smart contract development.",url:"https://cryptozombies.io/",type:"free",category:"Blockchain & Web3",provider:"Community",tags:["solidity","ethereum","smart contracts","gamified"],isFree:true,difficulty:"Beginner",rating:4.7},
-{id:"web3-2",title:"Ethereum Development Documentation",description:"Official Ethereum developer docs. Smart contracts, dApps, EVM, and development frameworks.",url:"https://ethereum.org/en/developers/docs/",type:"website",category:"Blockchain & Web3",provider:"Community",tags:["ethereum","docs","smart contracts","dApps"],isFree:true,difficulty:"Intermediate",rating:4.6},
-{id:"web3-3",title:"Buildspace",description:"Project-based Web3 learning. Build NFTs, DAOs, and dApps in weekend-long cohort sessions.",url:"https://buildspace.so/",type:"free",category:"Blockchain & Web3",provider:"Community",tags:["buildspace","projects","NFT","DAO"],isFree:true,difficulty:"Beginner",rating:4.5},
-{id:"web3-4",title:"Awesome Blockchain",description:"Curated list of blockchain resources — papers, courses, tools, and development frameworks.",url:"https://github.com/yjjnls/awesome-blockchain",type:"github",category:"Blockchain & Web3",provider:"Community",tags:["awesome list","blockchain","resources"],isFree:true,difficulty:"Intermediate",rating:4.4},
-{id:"lang-1",title:"Rust Book",description:"The official Rust book. Learn systems programming with safety, concurrency, and speed.",url:"https://doc.rust-lang.org/book/",type:"free",category:"Programming Languages",provider:"Community",tags:["rust","systems","book","official"],isFree:true,difficulty:"Intermediate",rating:4.9},
-{id:"lang-2",title:"Go by Example",description:"Hands-on introduction to Go using annotated example programs. Clean, idiomatic Go code.",url:"https://gobyexample.com/",type:"free",category:"Programming Languages",provider:"Community",tags:["go","golang","examples","practical"],isFree:true,difficulty:"Beginner",rating:4.7},
-{id:"lang-3",title:"Python Official Tutorial",description:"Official Python tutorial covering fundamentals, data structures, modules, I/O, and standard library.",url:"https://docs.python.org/3/tutorial/",type:"free",category:"Programming Languages",provider:"Community",tags:["python","official","fundamentals"],isFree:true,difficulty:"Beginner",rating:4.6},
-{id:"lang-4",title:"TypeScript Deep Dive",description:"Comprehensive, free TypeScript guide by Basarat. Types, generics, advanced patterns, and best practices.",url:"https://basarat.gitbook.io/typescript",type:"free",category:"Programming Languages",provider:"Community",tags:["typescript","deep dive","advanced"],isFree:true,difficulty:"Intermediate",rating:4.7},
-{id:"lang-5",title:"Exercism",description:"Free coding challenges in 50+ languages with mentoring. Level up through practice and feedback.",url:"https://exercism.org/",type:"free",category:"Programming Languages",provider:"Community",tags:["exercism","practice","mentoring","multi-language"],isFree:true,difficulty:"Beginner",rating:4.7},
-{id:"mobile-1",title:"React Native Documentation",description:"Build native mobile apps with React. Official getting started guide, components, and API reference.",url:"https://reactnative.dev/docs/getting-started",type:"website",category:"Mobile Development",provider:"Meta",tags:["react native","mobile","cross-platform"],isFree:true,difficulty:"Intermediate",rating:4.6},
-{id:"mobile-2",title:"Flutter Codelabs",description:"Google's Flutter tutorials. Build beautiful, natively compiled multiplatform apps.",url:"https://docs.flutter.dev/codelabs",type:"free",category:"Mobile Development",provider:"Google",tags:["flutter","dart","google","cross-platform"],isFree:true,difficulty:"Beginner",rating:4.7},
-{id:"mobile-3",title:"Apple Swift Playgrounds & Tutorials",description:"Learn Swift and iOS development with Apple's official interactive tutorials.",url:"https://developer.apple.com/tutorials/swiftui",type:"free",category:"Mobile Development",provider:"Apple",tags:["swift","iOS","apple","swiftui"],isFree:true,difficulty:"Beginner",rating:4.7},
-{id:"mobile-4",title:"Android Developers - Training",description:"Official Android training by Google. Kotlin, Jetpack Compose, app architecture.",url:"https://developer.android.com/courses",type:"free",category:"Mobile Development",provider:"Google",tags:["android","kotlin","jetpack compose","google"],isFree:true,difficulty:"Beginner",rating:4.6},
-{id:"sys-1",title:"System Design Primer",description:"Learn how to design large-scale systems. Prep for the system design interview.",url:"https://github.com/donnemartin/system-design-primer",type:"github",category:"System Design",provider:"Community",tags:["system design","interview","architecture","scalability"],isFree:true,difficulty:"Advanced",rating:4.9},
-{id:"sys-2",title:"Designing Data-Intensive Applications",description:"Martin Kleppmann's essential book on distributed systems, databases, and data pipelines.",url:"https://dataintensive.net/",type:"website",category:"System Design",provider:"Other",tags:["DDIA","distributed systems","databases","book"],isFree:false,difficulty:"Advanced",rating:4.9},
-{id:"sys-3",title:"ByteByteGo - System Design",description:"Alex Xu's system design content. Visual explanations of real-world architectures.",url:"https://www.youtube.com/@ByteByteGo",type:"youtube",category:"System Design",provider:"YouTube",tags:["system design","visual","architecture","bytebytego"],isFree:true,difficulty:"Intermediate",rating:4.8},
-{id:"sys-4",title:"High Scalability Blog",description:"Real-world architecture case studies. How tech companies scale their systems.",url:"http://highscalability.com/",type:"website",category:"System Design",provider:"Community",tags:["scalability","case studies","architecture"],isFree:true,difficulty:"Advanced",rating:4.5},
-{id:"sys-5",title:"MIT 6.824 - Distributed Systems",description:"MIT's graduate course on distributed systems. MapReduce, Raft, transactions, fault tolerance.",url:"https://www.youtube.com/playlist?list=PLrw6a1wE39_tb2fErI4-WkMbsvGQk9_UB",type:"youtube",category:"System Design",provider:"MIT",tags:["MIT","distributed systems","raft","graduate"],isFree:true,difficulty:"Advanced",rating:4.9},
-{id:"cert-1",title:"AWS Solutions Architect Associate",description:"Design available, cost-efficient, fault-tolerant systems on AWS.",url:"https://aws.amazon.com/certification/certified-solutions-architect-associate/",type:"certification",category:"Cloud Computing",provider:"AWS",tags:["aws","solutions architect","SAA-C03"],isFree:false,difficulty:"Intermediate",rating:4.8},
-{id:"cert-2",title:"AWS Developer Associate",description:"Validate your ability to develop, deploy, and debug cloud-based applications on AWS.",url:"https://aws.amazon.com/certification/certified-developer-associate/",type:"certification",category:"Cloud Computing",provider:"AWS",tags:["aws","developer","DVA-C02"],isFree:false,difficulty:"Intermediate",rating:4.7},
-{id:"cert-3",title:"Google Cloud Professional Cloud Architect",description:"Design, develop, and manage robust, secure, scalable cloud architecture on GCP.",url:"https://cloud.google.com/learn/certification/cloud-architect",type:"certification",category:"Cloud Computing",provider:"Google",tags:["gcp","architect","professional"],isFree:false,difficulty:"Advanced",rating:4.8},
-{id:"cert-4",title:"Microsoft Azure Administrator (AZ-104)",description:"Manage Azure subscriptions, secure identities, configure virtual networking.",url:"https://learn.microsoft.com/en-us/credentials/certifications/azure-administrator/",type:"certification",category:"Cloud Computing",provider:"Microsoft",tags:["azure","AZ-104","administrator"],isFree:false,difficulty:"Intermediate",rating:4.7},
-{id:"cert-5",title:"Microsoft Azure AI Engineer (AI-102)",description:"Design and implement AI solutions using Azure Cognitive Services and ML.",url:"https://learn.microsoft.com/en-us/credentials/certifications/azure-ai-engineer/",type:"certification",category:"AI & Machine Learning",provider:"Microsoft",tags:["azure","AI-102","ai engineer"],isFree:false,difficulty:"Intermediate",rating:4.6},
-{id:"cert-6",title:"Certified Kubernetes Administrator (CKA)",description:"CNCF certification proving competency in Kubernetes administration.",url:"https://www.cncf.io/certification/cka/",type:"certification",category:"DevOps & Infrastructure",provider:"CNCF",tags:["kubernetes","CKA","CNCF"],isFree:false,difficulty:"Advanced",rating:4.8},
-{id:"cert-7",title:"Certified Kubernetes Application Developer (CKAD)",description:"Proficiency in designing and deploying cloud-native applications for Kubernetes.",url:"https://www.cncf.io/certification/ckad/",type:"certification",category:"DevOps & Infrastructure",provider:"CNCF",tags:["kubernetes","CKAD","developer"],isFree:false,difficulty:"Intermediate",rating:4.7},
-{id:"cert-8",title:"CompTIA Security+ (SY0-701)",description:"Globally recognized cybersecurity certification. Threats, attacks, vulnerabilities.",url:"https://www.comptia.org/certifications/security",type:"certification",category:"Cybersecurity",provider:"CompTIA",tags:["comptia","security+","cybersecurity"],isFree:false,difficulty:"Beginner",rating:4.7},
-{id:"cert-9",title:"CompTIA Network+ (N10-009)",description:"Foundation-level networking certification covering troubleshooting and managing networks.",url:"https://www.comptia.org/certifications/network",type:"certification",category:"Cybersecurity",provider:"CompTIA",tags:["comptia","network+","networking"],isFree:false,difficulty:"Beginner",rating:4.6},
-{id:"cert-10",title:"Cisco CCNA (200-301)",description:"Industry-standard networking certification. Network fundamentals, security, automation.",url:"https://www.cisco.com/site/us/en/learn/training-certifications/certifications/enterprise/ccna/index.html",type:"certification",category:"Cybersecurity",provider:"Cisco",tags:["cisco","CCNA","networking"],isFree:false,difficulty:"Intermediate",rating:4.7},
-{id:"cert-11",title:"ISC2 Certified in Cybersecurity (CC)",description:"Entry-level cybersecurity certification from ISC2. Free training and exam voucher.",url:"https://www.isc2.org/certifications/cc",type:"certification",category:"Cybersecurity",provider:"ISC2",tags:["ISC2","cybersecurity","entry-level"],isFree:true,difficulty:"Beginner",rating:4.5},
-{id:"cert-12",title:"HashiCorp Terraform Associate",description:"Validate your knowledge of IaC concepts and Terraform skills.",url:"https://www.hashicorp.com/en/certification/terraform-associate",type:"certification",category:"DevOps & Infrastructure",provider:"HashiCorp",tags:["terraform","IaC","hashicorp"],isFree:false,difficulty:"Intermediate",rating:4.6},
-{id:"cert-13",title:"Google TensorFlow Developer Certificate",description:"Proficiency in building TensorFlow models for CV, NLP, and time series.",url:"https://www.tensorflow.org/certificate",type:"certification",category:"AI & Machine Learning",provider:"Google",tags:["tensorflow","deep learning","google"],isFree:false,difficulty:"Intermediate",rating:4.6},
-{id:"cert-14",title:"Databricks Data Engineer Associate",description:"Skills in data engineering with Apache Spark, Delta Lake, and Lakehouse Platform.",url:"https://www.databricks.com/learn/certification/data-engineer-associate",type:"certification",category:"Data Science & Analytics",provider:"Databricks",tags:["databricks","spark","data engineering"],isFree:false,difficulty:"Intermediate",rating:4.6},
-{id:"cert-15",title:"Snowflake SnowPro Core Certification",description:"Expertise in Snowflake's cloud data platform. Data warehousing and performance.",url:"https://www.snowflake.com/certifications/",type:"certification",category:"Data Science & Analytics",provider:"Snowflake",tags:["snowflake","data warehouse","SQL"],isFree:false,difficulty:"Intermediate",rating:4.5},
-{id:"pdf-1",title:"Attention Is All You Need",description:"The foundational paper that introduced the Transformer architecture.",url:"https://arxiv.org/abs/1706.03762",type:"pdf",category:"AI & Machine Learning",provider:"Community",tags:["transformer","attention","seminal paper"],isFree:true,difficulty:"Advanced",rating:5.0},
-{id:"pdf-2",title:"The Illustrated Transformer",description:"Visual, intuitive walkthrough of the Transformer architecture by Jay Alammar.",url:"https://jalammar.github.io/illustrated-transformer/",type:"pdf",category:"AI & Machine Learning",provider:"Community",tags:["transformer","visual","illustrated"],isFree:true,difficulty:"Intermediate",rating:4.9},
-{id:"pdf-3",title:"NIST Cybersecurity Framework 2.0",description:"US government cybersecurity framework. Identify, Protect, Detect, Respond, Recover.",url:"https://www.nist.gov/cyberframework",type:"pdf",category:"Cybersecurity",provider:"Other",tags:["NIST","framework","governance"],isFree:true,difficulty:"Intermediate",rating:4.7},
-{id:"pdf-4",title:"Google SRE Book",description:"How Google runs production systems. SLIs, SLOs, incident management, reliability.",url:"https://sre.google/sre-book/table-of-contents/",type:"pdf",category:"DevOps & Infrastructure",provider:"Google",tags:["SRE","reliability","google"],isFree:true,difficulty:"Advanced",rating:4.9},
-{id:"pdf-5",title:"AWS Well-Architected Framework (Whitepaper)",description:"Official AWS whitepaper on best practices for cloud architectures.",url:"https://docs.aws.amazon.com/wellarchitected/latest/framework/welcome.html",type:"pdf",category:"Cloud Computing",provider:"AWS",tags:["AWS","whitepaper","architecture"],isFree:true,difficulty:"Intermediate",rating:4.7},
-{id:"pdf-6",title:"Bitcoin Whitepaper",description:"The original Bitcoin whitepaper by Satoshi Nakamoto. Peer-to-peer electronic cash system.",url:"https://bitcoin.org/bitcoin.pdf",type:"pdf",category:"Blockchain & Web3",provider:"Community",tags:["bitcoin","whitepaper","cryptocurrency"],isFree:true,difficulty:"Intermediate",rating:4.9},
-{id:"pdf-7",title:"Ethereum Yellowpaper",description:"Formal specification of the Ethereum protocol. EVM, gas, state transitions.",url:"https://ethereum.github.io/yellowpaper/paper.pdf",type:"pdf",category:"Blockchain & Web3",provider:"Community",tags:["ethereum","yellowpaper","EVM"],isFree:true,difficulty:"Advanced",rating:4.5},
-{id:"pdf-8",title:"MapReduce (Google)",description:"Google's seminal paper on MapReduce. Foundation for distributed data processing.",url:"https://research.google/pubs/pub62/",type:"pdf",category:"System Design",provider:"Google",tags:["mapreduce","distributed","google"],isFree:true,difficulty:"Advanced",rating:4.8},
-{id:"pdf-9",title:"Dynamo: Amazon's Key-Value Store",description:"Amazon's paper on Dynamo — eventual consistency and consistent hashing.",url:"https://www.allthingsdistributed.com/files/amazon-dynamo-sosp2007.pdf",type:"pdf",category:"System Design",provider:"AWS",tags:["dynamo","distributed","amazon"],isFree:true,difficulty:"Advanced",rating:4.8},
-{id:"pdf-10",title:"The Twelve-Factor App",description:"Methodology for building modern, scalable SaaS apps.",url:"https://12factor.net/",type:"pdf",category:"DevOps & Infrastructure",provider:"Community",tags:["twelve-factor","SaaS","methodology"],isFree:true,difficulty:"Intermediate",rating:4.7},
-{id:"pdf-11",title:"Clean Architecture",description:"Key principles from Clean Architecture by Robert C. Martin.",url:"https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html",type:"pdf",category:"System Design",provider:"Community",tags:["clean architecture","SOLID","uncle bob"],isFree:true,difficulty:"Intermediate",rating:4.7},
-{id:"pdf-12",title:"Microsoft AI Red Team Guide",description:"Guide on red teaming AI systems. Threat modeling and safety evaluation.",url:"https://learn.microsoft.com/en-us/azure/ai-services/openai/concepts/red-teaming",type:"pdf",category:"AI & Machine Learning",provider:"Microsoft",tags:["red team","AI safety","security"],isFree:true,difficulty:"Advanced",rating:4.5},
-{id:"pdf-13",title:"State of DevOps Report (DORA)",description:"Google's annual DORA report on software delivery performance.",url:"https://dora.dev/research/",type:"pdf",category:"DevOps & Infrastructure",provider:"Google",tags:["DORA","metrics","devops"],isFree:true,difficulty:"Intermediate",rating:4.6},
-{id:"tweet-1",title:"Andrej Karpathy — LLMs",description:"Karpathy's legendary threads explaining LLMs from first principles.",url:"https://x.com/karpathy",type:"tweet",category:"AI & Machine Learning",provider:"Community",tags:["karpathy","LLM","fundamentals"],isFree:true,difficulty:"Intermediate",rating:4.9},
-{id:"tweet-2",title:"Jim Fan (Nvidia) — AI Agents",description:"Jim Fan's insights on AI agents, embodied intelligence, and future of AI.",url:"https://x.com/DrJimFan",type:"tweet",category:"AI & Machine Learning",provider:"Nvidia",tags:["jim fan","AI agents","robotics"],isFree:true,difficulty:"Intermediate",rating:4.7},
-{id:"tweet-3",title:"Kelsey Hightower — Cloud Native",description:"Kelsey Hightower's invaluable takes on Kubernetes and cloud native.",url:"https://x.com/kelaboratory",type:"tweet",category:"DevOps & Infrastructure",provider:"Community",tags:["kelsey hightower","kubernetes","cloud native"],isFree:true,difficulty:"Intermediate",rating:4.8},
-{id:"tweet-4",title:"Guillermo Rauch — Web Dev & Vercel",description:"Vercel CEO sharing insights on React, Next.js, AI, and the future of web.",url:"https://x.com/raaborges",type:"tweet",category:"Web Development",provider:"Vercel",tags:["guillermo rauch","vercel","nextjs"],isFree:true,difficulty:"Intermediate",rating:4.6},
-{id:"tweet-5",title:"Swyx — AI Engineering Threads",description:"Prolific threads on AI engineering, prompt engineering, and the AI landscape.",url:"https://x.com/swyx",type:"tweet",category:"AI & Machine Learning",provider:"Community",tags:["swyx","AI engineering","prompts"],isFree:true,difficulty:"Intermediate",rating:4.7},
-{id:"tweet-7",title:"Simon Willison — LLMs & Data Tools",description:"Creator of Datasette. Deep dives into LLM capabilities and open source AI.",url:"https://x.com/simonw",type:"tweet",category:"AI & Machine Learning",provider:"Community",tags:["simon willison","LLM","datasette"],isFree:true,difficulty:"Intermediate",rating:4.8},
-{id:"tweet-8",title:"Chip Huyen — MLOps",description:"ML systems expert sharing threads on MLOps, data pipelines, and production ML.",url:"https://x.com/chipro",type:"tweet",category:"AI & Machine Learning",provider:"Community",tags:["chip huyen","MLOps","production ML"],isFree:true,difficulty:"Advanced",rating:4.7},
-{id:"tweet-9",title:"Theo Browne — Full Stack & TypeScript",description:"Deep takes on TypeScript, React, Next.js. T3 stack creator.",url:"https://x.com/t3dotgg",type:"tweet",category:"Web Development",provider:"Community",tags:["theo","t3 stack","typescript"],isFree:true,difficulty:"Intermediate",rating:4.6},
-{id:"tweet-10",title:"Dan Abramov — React Internals",description:"Former React core team member sharing deep insights on React architecture.",url:"https://x.com/dan_abramov2",type:"tweet",category:"Web Development",provider:"Meta",tags:["dan abramov","react","internals"],isFree:true,difficulty:"Advanced",rating:4.8},
-{id:"tweet-11",title:"Alex Xu — System Design Visuals",description:"ByteByteGo founder sharing visual system design explanations.",url:"https://x.com/aleaborov",type:"tweet",category:"System Design",provider:"Community",tags:["alex xu","system design","visual"],isFree:true,difficulty:"Intermediate",rating:4.7},
-{id:"ext-1",title:"Deep Learning Specialization",description:"Andrew Ng's 5-course deep learning series. Neural networks, CNNs, RNNs, sequence models.",url:"https://www.deeplearning.ai/courses/deep-learning-specialization/",type:"course",category:"AI & Machine Learning",provider:"DeepLearning.AI",tags:["deep learning","andrew ng","CNN","RNN"],isFree:false,difficulty:"Intermediate",rating:4.9},
-{id:"ext-3",title:"MIT 6.036 — Intro to Machine Learning",description:"MIT OpenCourseWare intro to ML covering classification, regression, neural networks.",url:"https://openlearninglibrary.mit.edu/courses/course-v1:MITx+6.036+1T2019/about",type:"free",category:"AI & Machine Learning",provider:"MIT",tags:["MIT","intro ML","classification"],isFree:true,difficulty:"Intermediate",rating:4.7},
-{id:"ext-4",title:"AWS AI & Machine Learning Training",description:"Free digital training from AWS on AI/ML services including SageMaker and generative AI.",url:"https://aws.amazon.com/training/learn-about/ai/",type:"free",category:"AI & Machine Learning",provider:"AWS",tags:["aws","sagemaker","generative AI"],isFree:true,difficulty:"Beginner",rating:4.5},
-{id:"ext-5",title:"Elements of AI",description:"Free online course by University of Helsinki. AI fundamentals for everyone.",url:"https://www.elementsofai.com/",type:"free",category:"AI & Machine Learning",provider:"University of Helsinki",tags:["elements of AI","non-technical","fundamentals"],isFree:true,difficulty:"Beginner",rating:4.7},
-{id:"ext-6",title:"Dive into Deep Learning (d2l.ai)",description:"Interactive deep learning textbook with code, math, and discussions.",url:"https://d2l.ai/",type:"free",category:"AI & Machine Learning",provider:"Community",tags:["d2l","deep learning","textbook","interactive"],isFree:true,difficulty:"Intermediate",rating:4.8},
-{id:"ext-7",title:"Deep Learning Book (Goodfellow et al.)",description:"The definitive deep learning textbook. Linear algebra, probability, CNNs, RNNs.",url:"https://www.deeplearningbook.org/",type:"pdf",category:"AI & Machine Learning",provider:"Community",tags:["deep learning","textbook","goodfellow"],isFree:true,difficulty:"Advanced",rating:4.9},
-{id:"ext-9",title:"Kaggle Learn — Micro-Courses",description:"Free hands-on micro-courses covering Python, ML, deep learning, SQL, data viz.",url:"https://www.kaggle.com/learn",type:"free",category:"Data Science & Analytics",provider:"Kaggle",tags:["kaggle","micro-courses","hands-on"],isFree:true,difficulty:"Beginner",rating:4.6},
-{id:"ext-10",title:"freeCodeCamp — ML with Python",description:"Learn ML fundamentals with Python including TensorFlow. Build neural networks.",url:"https://www.freecodecamp.org/learn/machine-learning-with-python/",type:"free",category:"AI & Machine Learning",provider:"freeCodeCamp",tags:["freecodecamp","python","tensorflow"],isFree:true,difficulty:"Beginner",rating:4.5},
-{id:"ext-11",title:"Machine Learning Zoomcamp",description:"Free 4-month ML engineering course. Regression, classification, deployment.",url:"https://github.com/DataTalksClub/machine-learning-zoomcamp",type:"github",category:"AI & Machine Learning",provider:"DataTalks.Club",tags:["zoomcamp","deployment","engineering"],isFree:true,difficulty:"Intermediate",rating:4.7},
-{id:"ext-12",title:"nanoGPT — Andrej Karpathy",description:"Simplest repository for training/fine-tuning GPTs. ~300 lines of PyTorch.",url:"https://github.com/karpathy/nanoGPT",type:"github",category:"AI & Machine Learning",provider:"Community",tags:["karpathy","GPT","training","pytorch"],isFree:true,difficulty:"Intermediate",rating:4.9},
-{id:"ext-14",title:"LLM Course — Maxime Labonne",description:"Comprehensive LLM course: fundamentals, fine-tuning, RAG, and deployment.",url:"https://github.com/mlabonne/llm-course",type:"github",category:"AI & Machine Learning",provider:"Community",tags:["LLM","fine-tuning","RAG","comprehensive"],isFree:true,difficulty:"Intermediate",rating:4.8},
-{id:"ext-20",title:"Microsoft AI for Beginners",description:"Microsoft's 12-week AI curriculum covering symbolic AI, neural networks, NLP, CV.",url:"https://github.com/microsoft/AI-For-Beginners",type:"github",category:"AI & Machine Learning",provider:"Microsoft",tags:["microsoft","curriculum","beginner"],isFree:true,difficulty:"Beginner",rating:4.7},
-{id:"ext-21",title:"Microsoft ML for Beginners",description:"Classic ML techniques with Scikit-learn. 26 lessons covering regression, classification.",url:"https://github.com/microsoft/ML-For-Beginners",type:"github",category:"AI & Machine Learning",provider:"Microsoft",tags:["microsoft","scikit-learn","curriculum"],isFree:true,difficulty:"Beginner",rating:4.7},
-{id:"ext-22",title:"Microsoft Data Science for Beginners",description:"20-lesson curriculum on data science fundamentals. Ethics, statistics, visualization.",url:"https://github.com/microsoft/Data-Science-For-Beginners",type:"github",category:"Data Science & Analytics",provider:"Microsoft",tags:["microsoft","data science","curriculum"],isFree:true,difficulty:"Beginner",rating:4.6},
-{id:"ext-38",title:"Grokking the System Design Interview",description:"DesignGurus' flagship course. Step-by-step system design patterns.",url:"https://www.designgurus.io/course/grokking-the-system-design-interview",type:"course",category:"System Design",provider:"Other",tags:["grokking","interview prep","patterns"],isFree:false,difficulty:"Intermediate",rating:4.8},
-{id:"ext-39",title:"MIT 6.824 — Distributed Systems (Course)",description:"MIT's legendary distributed systems course. Labs on MapReduce, Raft.",url:"https://pdos.csail.mit.edu/6.824/",type:"course",category:"System Design",provider:"MIT",tags:["MIT","distributed systems","raft","labs"],isFree:true,difficulty:"Advanced",rating:4.9},
-{id:"ext-40",title:"Google Cloud Infrastructure Training",description:"Official GCP training for infrastructure engineers. Networking, compute, storage.",url:"https://cloud.google.com/learn/training/cloud-infrastructure",type:"course",category:"Cloud Computing",provider:"Google",tags:["gcp","infrastructure","networking"],isFree:false,difficulty:"Intermediate",rating:4.6},
-{id:"web-11",title:"Tailwind CSS Documentation",description:"Official Tailwind CSS docs. Utility-first CSS framework.",url:"https://tailwindcss.com/docs",type:"website",category:"Web Development",provider:"Community",tags:["tailwind","CSS","utility-first"],isFree:true,difficulty:"Beginner",rating:4.8},
-{id:"web-12",title:"Web.dev by Google",description:"Modern web development best practices. Performance, accessibility, SEO, PWAs.",url:"https://web.dev/",type:"free",category:"Web Development",provider:"Google",tags:["google","performance","best practices"],isFree:true,difficulty:"Intermediate",rating:4.7},
-{id:"web-14",title:"Traversy Media — Web Dev Crash Courses",description:"High-quality web development tutorials and crash courses.",url:"https://www.youtube.com/@TraversyMedia",type:"youtube",category:"Web Development",provider:"YouTube",tags:["traversy","crash course","tutorials"],isFree:true,difficulty:"Beginner",rating:4.8},
-{id:"web-15",title:"Frontend Masters",description:"Expert-led video courses on frontend engineering.",url:"https://frontendmasters.com/",type:"course",category:"Web Development",provider:"Other",tags:["frontend masters","expert","video courses"],isFree:false,difficulty:"Intermediate",rating:4.8},
-{id:"sec-7",title:"PortSwigger Web Security Academy",description:"Free, comprehensive web security training with interactive labs.",url:"https://portswigger.net/web-security",type:"free",category:"Cybersecurity",provider:"Other",tags:["portswigger","web security","labs"],isFree:true,difficulty:"Intermediate",rating:4.9},
-{id:"sec-8",title:"CyberDefenders — Blue Team Training",description:"Free blue team cyber defense challenges. Incident response, forensics.",url:"https://cyberdefenders.org/",type:"free",category:"Cybersecurity",provider:"Other",tags:["blue team","forensics","incident response"],isFree:true,difficulty:"Intermediate",rating:4.6},
-{id:"sec-12",title:"OWASP AI Security Guide",description:"Standards and best practices for securing AI systems.",url:"https://owasp.org/www-project-ai-security-and-privacy-guide",type:"website",category:"Cybersecurity",provider:"OWASP",tags:["AI security","OWASP","prompt injection"],isFree:true,difficulty:"Intermediate",rating:4.7},
-{id:"sec-13",title:"Snyk — Developer Security Platform",description:"Developer-first security scanning for code, dependencies, containers.",url:"https://snyk.io",type:"website",category:"Cybersecurity",provider:"Other",tags:["DevSecOps","scanning","dependencies"],isFree:true,difficulty:"Intermediate",rating:4.6},
-{id:"sec-15",title:"Burp Suite — Web App Security Testing",description:"Leading toolkit for web application security testing.",url:"https://portswigger.net/burp",type:"website",category:"Cybersecurity",provider:"Other",tags:["pentesting","web security","proxy"],isFree:false,difficulty:"Intermediate",rating:4.8},
-{id:"sec-16",title:"Metasploit — Penetration Testing",description:"Most widely used penetration testing framework.",url:"https://metasploit.com",type:"free",category:"Cybersecurity",provider:"Community",tags:["pentesting","exploits","vulnerability"],isFree:true,difficulty:"Advanced",rating:4.8},
-{id:"sec-17",title:"HashiCorp Vault — Secrets Management",description:"Industry standard for managing secrets, encryption keys, and sensitive data.",url:"https://vaultproject.io",type:"website",category:"Cybersecurity",provider:"HashiCorp",tags:["secrets","encryption","security"],isFree:true,difficulty:"Intermediate",rating:4.7},
-{id:"sec-19",title:"Wireshark — Network Protocol Analyzer",description:"The world's foremost network protocol analyzer.",url:"https://wireshark.org",type:"free",category:"Cybersecurity",provider:"Community",tags:["networking","packet analysis","protocol"],isFree:true,difficulty:"Intermediate",rating:4.8},
-{id:"mobile-5",title:"Expo Documentation",description:"Build universal React Native apps with Expo.",url:"https://docs.expo.dev/",type:"website",category:"Mobile Development",provider:"Community",tags:["expo","react native","universal"],isFree:true,difficulty:"Beginner",rating:4.7},
-{id:"mobile-8",title:"The Flutter Way — YouTube",description:"Beautiful Flutter UI tutorials and app clones.",url:"https://www.youtube.com/@TheFlutterWay",type:"youtube",category:"Mobile Development",provider:"YouTube",tags:["flutter","UI","tutorials"],isFree:true,difficulty:"Intermediate",rating:4.6},
-{id:"lang-6",title:"Learn You a Haskell",description:"Fun, illustrated guide to Haskell and functional programming. Free online book.",url:"http://learnyouahaskell.com/",type:"free",category:"Programming Languages",provider:"Community",tags:["haskell","functional","book"],isFree:true,difficulty:"Intermediate",rating:4.6},
-{id:"lang-9",title:"C++ Reference (cppreference.com)",description:"The definitive C++ reference. Complete documentation of the standard library.",url:"https://en.cppreference.com/",type:"website",category:"Programming Languages",provider:"Community",tags:["c++","reference","standard library"],isFree:true,difficulty:"Intermediate",rating:4.8},
-{id:"lang-10",title:"Java Tutorials (Oracle)",description:"Official Java tutorials by Oracle. Language basics, collections, concurrency.",url:"https://docs.oracle.com/javase/tutorial/",type:"free",category:"Programming Languages",provider:"Oracle",tags:["java","oracle","tutorial"],isFree:true,difficulty:"Beginner",rating:4.5},
-{id:"web3-5",title:"Alchemy University",description:"Free Web3 development bootcamp. Solidity, smart contracts, dApp development.",url:"https://www.alchemy.com/university",type:"free",category:"Blockchain & Web3",provider:"Other",tags:["alchemy","solidity","bootcamp"],isFree:true,difficulty:"Beginner",rating:4.7},
-{id:"web3-8",title:"Patrick Collins — Solidity Course",description:"32-hour free Solidity & smart contract development course on YouTube.",url:"https://www.youtube.com/@PatrickAlphaC",type:"youtube",category:"Blockchain & Web3",provider:"YouTube",tags:["patrick collins","solidity","smart contracts"],isFree:true,difficulty:"Beginner",rating:4.8},
-{id:"data-7",title:"Pandas Documentation",description:"Official pandas docs. Essential Python library for data manipulation and analysis.",url:"https://pandas.pydata.org/docs/",type:"website",category:"Data Science & Analytics",provider:"Community",tags:["pandas","python","data manipulation"],isFree:true,difficulty:"Beginner",rating:4.7},
-{id:"data-10",title:"Apache Airflow",description:"Industry standard for programmatically authoring and monitoring data workflows.",url:"https://airflow.apache.org",type:"free",category:"Data Science & Analytics",provider:"Community",tags:["orchestration","workflows","ETL"],isFree:true,difficulty:"Intermediate",rating:4.6},
-{id:"data-11",title:"dbt — Data Transformation",description:"SQL-based transformation framework for data warehouses.",url:"https://getdbt.com",type:"website",category:"Data Science & Analytics",provider:"Community",tags:["transformation","SQL","data warehouse"],isFree:true,difficulty:"Intermediate",rating:4.7},
-{id:"cloud-7",title:"DigitalOcean Community Tutorials",description:"Thousands of free tutorials on Linux, databases, Docker, and cloud.",url:"https://www.digitalocean.com/community/tutorials",type:"free",category:"Cloud Computing",provider:"Other",tags:["digitalocean","tutorials","linux"],isFree:true,difficulty:"Beginner",rating:4.7},
-{id:"devops-8",title:"Prometheus & Grafana Monitoring Stack",description:"Open-source monitoring and alerting toolkit with beautiful dashboards.",url:"https://prometheus.io/docs/introduction/overview/",type:"website",category:"DevOps & Infrastructure",provider:"CNCF",tags:["prometheus","grafana","monitoring"],isFree:true,difficulty:"Intermediate",rating:4.7},
-{id:"devops-9",title:"ArgoCD — GitOps Continuous Delivery",description:"Declarative GitOps continuous delivery tool for Kubernetes.",url:"https://argo-cd.readthedocs.io/",type:"website",category:"DevOps & Infrastructure",provider:"CNCF",tags:["argocd","gitops","kubernetes"],isFree:true,difficulty:"Intermediate",rating:4.6},
-{id:"devops-10",title:"Ansible Documentation",description:"Automate IT infrastructure with Ansible. Agentless automation.",url:"https://docs.ansible.com/",type:"website",category:"DevOps & Infrastructure",provider:"Other",tags:["ansible","automation","configuration"],isFree:true,difficulty:"Intermediate",rating:4.6},
-{id:"sys-6",title:"Gaurav Sen — System Design YouTube",description:"Popular system design explanations. Consistent hashing, message queues, sharding.",url:"https://www.youtube.com/@gaborsenyt",type:"youtube",category:"System Design",provider:"YouTube",tags:["gaurav sen","visual","system design"],isFree:true,difficulty:"Intermediate",rating:4.7},
-{id:"sys-7",title:"Martin Fowler's Architecture Blog",description:"Seminal articles on software architecture, microservices, and refactoring.",url:"https://martinfowler.com/architecture/",type:"website",category:"System Design",provider:"Community",tags:["martin fowler","architecture","patterns"],isFree:true,difficulty:"Advanced",rating:4.8},
-{id:"tool-1",title:"Cursor — AI-Native Code Editor",description:"AI-native fork of VS Code for pair-programming with built-in AI assistance.",url:"https://cursor.com",type:"website",category:"DevOps & Infrastructure",provider:"Other",tags:["IDE","AI","code editor"],isFree:false,difficulty:"Beginner",rating:4.7},
-{id:"tool-4",title:"Postman — API Development Platform",description:"Full-lifecycle API development and testing platform.",url:"https://postman.com",type:"website",category:"Web Development",provider:"Other",tags:["API","testing","development"],isFree:true,difficulty:"Beginner",rating:4.7},
-{id:"tool-7",title:"Excalidraw — Virtual Whiteboard",description:"Hand-drawn style virtual whiteboard for system diagrams and architecture.",url:"https://excalidraw.com",type:"free",category:"System Design",provider:"Community",tags:["whiteboard","diagrams","design"],isFree:true,difficulty:"Beginner",rating:4.7},
-{id:"llmops-1",title:"Ollama — Run LLMs Locally",description:"Run large language models locally. Privacy-first, low-latency AI inference.",url:"https://ollama.com",type:"free",category:"AI & Machine Learning",provider:"Community",tags:["LLM","local","inference","privacy"],isFree:true,difficulty:"Beginner",rating:4.8},
-{id:"llmops-2",title:"Pinecone — Managed Vector Database",description:"Managed vector database for scalable RAG applications and semantic search.",url:"https://pinecone.io",type:"website",category:"AI & Machine Learning",provider:"Other",tags:["vector database","RAG","semantic search"],isFree:false,difficulty:"Intermediate",rating:4.6},
-{id:"llmops-4",title:"ChromaDB — AI-Native Embedding Database",description:"AI-native open-source embedding database for building LLM applications.",url:"https://trychroma.com",type:"free",category:"AI & Machine Learning",provider:"Community",tags:["vector database","embeddings","open source"],isFree:true,difficulty:"Beginner",rating:4.5},
-{id:"llmops-5",title:"Langfuse — LLM Observability",description:"Open-source LLM engineering platform for traces, metrics, and evaluation.",url:"https://langfuse.com",type:"free",category:"AI & Machine Learning",provider:"Community",tags:["LLM","observability","traces"],isFree:true,difficulty:"Intermediate",rating:4.5},
-{id:"llmops-7",title:"Gradio — ML Model Web Interfaces",description:"Rapid prototyping of web interfaces for ML models.",url:"https://gradio.app",type:"free",category:"AI & Machine Learning",provider:"Community",tags:["ML","web interface","demo"],isFree:true,difficulty:"Beginner",rating:4.6},
-{id:"llmops-10",title:"Polars — Lightning-Fast DataFrames",description:"Multi-threaded DataFrame library written in Rust. Alternative to pandas.",url:"https://pola.rs",type:"free",category:"Data Science & Analytics",provider:"Community",tags:["dataframe","rust","performance"],isFree:true,difficulty:"Intermediate",rating:4.7},
-{id:"llmops-11",title:"DuckDB — In-Process Analytical SQL",description:"Analytical SQL database optimized for local datasets. Fast OLAP queries.",url:"https://duckdb.org",type:"free",category:"Data Science & Analytics",provider:"Community",tags:["SQL","analytics","embedded"],isFree:true,difficulty:"Intermediate",rating:4.7},
-{id:"devops-12",title:"Sentry — Error Tracking & Performance",description:"Real-time crash reporting, error triage, and performance monitoring.",url:"https://sentry.io",type:"website",category:"DevOps & Infrastructure",provider:"Other",tags:["error tracking","performance","monitoring"],isFree:true,difficulty:"Beginner",rating:4.7},
-{id:"devops-13",title:"Datadog — Unified Observability",description:"Unified monitoring, logging, and APM for cloud-scale infrastructure.",url:"https://datadoghq.com",type:"website",category:"DevOps & Infrastructure",provider:"Other",tags:["monitoring","APM","logging"],isFree:false,difficulty:"Intermediate",rating:4.7},
-{id:"devops-14",title:"OpenTelemetry",description:"Open-source framework for vendor-neutral telemetry — traces, metrics, logs.",url:"https://opentelemetry.io",type:"free",category:"DevOps & Infrastructure",provider:"CNCF",tags:["telemetry","observability","traces"],isFree:true,difficulty:"Intermediate",rating:4.6},
-{id:"devops-15",title:"Istio — Service Mesh for Kubernetes",description:"Service mesh for securing, connecting, and observing microservices.",url:"https://istio.io",type:"website",category:"DevOps & Infrastructure",provider:"Community",tags:["service mesh","kubernetes","microservices"],isFree:true,difficulty:"Advanced",rating:4.5},
-{id:"devops-17",title:"Backstage — Developer Portal",description:"Open-source developer portal framework by Spotify. Service catalog.",url:"https://backstage.io",type:"free",category:"DevOps & Infrastructure",provider:"Community",tags:["developer portal","spotify","service catalog"],isFree:true,difficulty:"Intermediate",rating:4.5},
-{id:"learn-1",title:"LeetCode — Coding Interview Prep",description:"Industry standard for technical coding interview preparation. 2500+ problems.",url:"https://leetcode.com",type:"website",category:"Programming Languages",provider:"Other",tags:["interview prep","coding","algorithms"],isFree:true,difficulty:"Intermediate",rating:4.8},
-{id:"learn-2",title:"NeetCode — Structured Interview Patterns",description:"Structured patterns for FAANG interview prep with video explanations.",url:"https://neetcode.io",type:"website",category:"Programming Languages",provider:"Community",tags:["interview prep","patterns","FAANG"],isFree:true,difficulty:"Intermediate",rating:4.8},
-{id:"learn-3",title:"Roadmap.sh — Developer Roadmaps",description:"Role-based visual roadmaps for developers. Frontend, backend, DevOps, AI.",url:"https://roadmap.sh",type:"free",category:"Web Development",provider:"Community",tags:["roadmap","learning path","career"],isFree:true,difficulty:"Beginner",rating:4.8},
-{id:"learn-4",title:"GeeksforGeeks — CS Encyclopedia",description:"Comprehensive CS reference: algorithms, data structures, and programming.",url:"https://geeksforgeeks.org",type:"website",category:"Programming Languages",provider:"Community",tags:["CS","algorithms","data structures"],isFree:true,difficulty:"Beginner",rating:4.6},
-{id:"learn-5",title:"Codewars — Coding Kata Challenges",description:"Gamified coding challenges to build coding habits. 50+ languages.",url:"https://codewars.com",type:"free",category:"Programming Languages",provider:"Community",tags:["practice","gamified","kata"],isFree:true,difficulty:"Beginner",rating:4.6},
-{id:"web-20",title:"Shadcn/ui — Copy-Paste Components",description:"Beautiful, accessible components built with Tailwind CSS and Radix UI.",url:"https://ui.shadcn.com",type:"free",category:"Web Development",provider:"Community",tags:["shadcn","components","tailwind"],isFree:true,difficulty:"Beginner",rating:4.8},
-{id:"web-21",title:"Three.js — 3D Graphics for the Web",description:"JavaScript 3D library for creating stunning graphics and animations.",url:"https://threejs.org",type:"free",category:"Web Development",provider:"Community",tags:["3D","graphics","WebGL"],isFree:true,difficulty:"Intermediate",rating:4.7},
-{id:"web-22",title:"HTMX — HTML-First Interactivity",description:"Access AJAX, WebSockets directly in HTML. Build modern UIs without JS.",url:"https://htmx.org",type:"free",category:"Web Development",provider:"Community",tags:["htmx","HTML","AJAX"],isFree:true,difficulty:"Beginner",rating:4.5},
-{id:"web-23",title:"Supabase — Open Source Firebase Alternative",description:"Open-source Firebase alternative with PostgreSQL, auth, real-time.",url:"https://supabase.com",type:"website",category:"Web Development",provider:"Community",tags:["supabase","postgres","backend"],isFree:true,difficulty:"Beginner",rating:4.7},
+{id:"ai-1",title:"Machine Learning Specialization",description:"Andrew Ng's foundational ML course covering supervised/unsupervised learning, neural networks.",url:"https://www.coursera.org/specializations/machine-learning-introduction",type:"course",category:"AI & Machine Learning",provider:"DeepLearning.AI",tags:["machine learning","neural networks","andrew ng"],isFree:false,difficulty:"Beginner",rating:4.9},
+{id:"ai-2",title:"Fast.ai - Practical Deep Learning",description:"Top-down approach to deep learning. Build models before theory.",url:"https://course.fast.ai/",type:"free",category:"AI & Machine Learning",provider:"Fast.ai",tags:["deep learning","pytorch","practical"],isFree:true,difficulty:"Intermediate",rating:4.9},
+{id:"ai-3",title:"Hugging Face Transformers Course",description:"Learn to use transformers for NLP, computer vision, and audio processing.",url:"https://huggingface.co/learn/nlp-course",type:"free",category:"AI & Machine Learning",provider:"Hugging Face",tags:["transformers","NLP","hugging face"],isFree:true,difficulty:"Intermediate",rating:4.8},
+{id:"ai-4",title:"Stanford CS229 - Machine Learning",description:"Stanford's legendary ML course. Full lecture videos, notes, and problem sets.",url:"https://www.youtube.com/playlist?list=PLoROMvodv4rMiGQp3WXShtMGgzqpfVfbU",type:"youtube",category:"AI & Machine Learning",provider:"Stanford",tags:["stanford","machine learning","theory"],isFree:true,difficulty:"Advanced",rating:4.9},
+{id:"ai-5",title:"OpenAI Cookbook",description:"Example code and guides for building with the OpenAI API.",url:"https://github.com/openai/openai-cookbook",type:"github",category:"AI & Machine Learning",provider:"OpenAI",tags:["openai","gpt","api"],isFree:true,difficulty:"Intermediate",rating:4.7},
+{id:"ai-6",title:"Google AI/ML Crash Course",description:"Google's fast-paced introduction to machine learning with TensorFlow.",url:"https://developers.google.com/machine-learning/crash-course",type:"free",category:"AI & Machine Learning",provider:"Google",tags:["tensorflow","google","crash course"],isFree:true,difficulty:"Beginner",rating:4.6},
+{id:"ai-7",title:"Anthropic Prompt Engineering Guide",description:"Comprehensive guide to prompt engineering with Claude.",url:"https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering",type:"website",category:"AI & Machine Learning",provider:"Anthropic",tags:["prompt engineering","claude","LLM"],isFree:true,difficulty:"Beginner",rating:4.8},
+{id:"ai-8",title:"LangChain Documentation",description:"Build LLM-powered applications. Chains, agents, RAG, memory.",url:"https://python.langchain.com/docs/get_started/introduction",type:"website",category:"AI & Machine Learning",provider:"LangChain",tags:["langchain","LLM","RAG"],isFree:true,difficulty:"Intermediate",rating:4.5},
+{id:"ai-9",title:"Kaggle Learn - Intro to ML",description:"Hands-on micro-courses with coding exercises for beginners.",url:"https://www.kaggle.com/learn/intro-to-machine-learning",type:"free",category:"AI & Machine Learning",provider:"Kaggle",tags:["kaggle","hands-on","beginner"],isFree:true,difficulty:"Beginner",rating:4.5},
+{id:"ai-10",title:"Nvidia Deep Learning Institute",description:"GPU-accelerated computing courses covering deep learning and NLP.",url:"https://www.nvidia.com/en-us/training/",type:"course",category:"AI & Machine Learning",provider:"Nvidia",tags:["nvidia","GPU","deep learning"],isFree:false,difficulty:"Intermediate",rating:4.6},
+{id:"ai-11",title:"Awesome Machine Learning",description:"Curated list of ML frameworks, libraries, and software.",url:"https://github.com/josephmisiti/awesome-machine-learning",type:"github",category:"AI & Machine Learning",provider:"Community",tags:["awesome list","frameworks","libraries"],isFree:true,difficulty:"Intermediate",rating:4.7},
+{id:"ai-12",title:"3Blue1Brown - Neural Networks",description:"Visually stunning series explaining neural networks intuitively.",url:"https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi",type:"youtube",category:"AI & Machine Learning",provider:"YouTube",tags:["neural networks","visual","3blue1brown"],isFree:true,difficulty:"Beginner",rating:4.9},
+{id:"cloud-1",title:"AWS Cloud Practitioner Essentials",description:"Official AWS foundational course on cloud concepts and services.",url:"https://aws.amazon.com/training/learn-about/cloud-practitioner/",type:"free",category:"Cloud Computing",provider:"AWS",tags:["aws","cloud practitioner","fundamentals"],isFree:true,difficulty:"Beginner",rating:4.6},
+{id:"cloud-2",title:"Google Cloud Skills Boost",description:"Free hands-on labs and learning paths for GCP.",url:"https://www.cloudskillsboost.google/",type:"free",category:"Cloud Computing",provider:"Google",tags:["gcp","google cloud","hands-on labs"],isFree:true,difficulty:"Beginner",rating:4.7},
+{id:"cloud-3",title:"Microsoft Azure Fundamentals (AZ-900)",description:"Official Microsoft learning path for Azure fundamentals.",url:"https://learn.microsoft.com/en-us/training/paths/az-900-describe-cloud-concepts/",type:"free",category:"Cloud Computing",provider:"Microsoft",tags:["azure","az-900","fundamentals"],isFree:true,difficulty:"Beginner",rating:4.6},
+{id:"cloud-4",title:"AWS Well-Architected Framework",description:"Best practices for reliable, secure, efficient cloud systems.",url:"https://aws.amazon.com/architecture/well-architected/",type:"website",category:"Cloud Computing",provider:"AWS",tags:["architecture","best practices"],isFree:true,difficulty:"Advanced",rating:4.8},
+{id:"cloud-5",title:"Cloud Computing Concepts (Illinois)",description:"University of Illinois course on distributed systems and cloud.",url:"https://www.coursera.org/learn/cloud-computing",type:"course",category:"Cloud Computing",provider:"Coursera",tags:["distributed systems","theory"],isFree:false,difficulty:"Intermediate",rating:4.5},
+{id:"cloud-6",title:"Awesome AWS",description:"Curated list of AWS libraries, repos, guides, and blogs.",url:"https://github.com/donnemartin/awesome-aws",type:"github",category:"Cloud Computing",provider:"Community",tags:["aws","awesome list","tools"],isFree:true,difficulty:"Intermediate",rating:4.6},
+{id:"devops-1",title:"Docker Getting Started",description:"Official Docker tutorial on containerization from scratch.",url:"https://docs.docker.com/get-started/",type:"free",category:"DevOps & Infrastructure",provider:"Docker",tags:["docker","containers","tutorial"],isFree:true,difficulty:"Beginner",rating:4.6},
+{id:"devops-2",title:"Kubernetes the Hard Way",description:"Kelsey Hightower's legendary K8s bootstrap guide.",url:"https://github.com/kelseyhightower/kubernetes-the-hard-way",type:"github",category:"DevOps & Infrastructure",provider:"Community",tags:["kubernetes","hard way","deep dive"],isFree:true,difficulty:"Advanced",rating:4.9},
+{id:"devops-3",title:"HashiCorp Terraform Tutorials",description:"Learn IaC with Terraform covering AWS, Azure, GCP.",url:"https://developer.hashicorp.com/terraform/tutorials",type:"free",category:"DevOps & Infrastructure",provider:"HashiCorp",tags:["terraform","IaC","infrastructure"],isFree:true,difficulty:"Intermediate",rating:4.7},
+{id:"devops-4",title:"GitHub Actions Documentation",description:"Automate CI/CD with GitHub Actions.",url:"https://docs.github.com/en/actions",type:"website",category:"DevOps & Infrastructure",provider:"GitHub",tags:["github actions","CI/CD","automation"],isFree:true,difficulty:"Intermediate",rating:4.6},
+{id:"devops-5",title:"Linux Foundation - Intro to K8s",description:"Free edX course on Kubernetes fundamentals.",url:"https://www.edx.org/learn/kubernetes/the-linux-foundation-introduction-to-kubernetes",type:"free",category:"DevOps & Infrastructure",provider:"Linux Foundation",tags:["kubernetes","edx","containers"],isFree:true,difficulty:"Beginner",rating:4.5},
+{id:"devops-7",title:"TechWorld with Nana",description:"Complete DevOps bootcamp covering Linux, Docker, K8s, CI/CD.",url:"https://www.youtube.com/c/TechWorldwithNana",type:"youtube",category:"DevOps & Infrastructure",provider:"YouTube",tags:["devops","bootcamp","nana"],isFree:true,difficulty:"Beginner",rating:4.8},
+{id:"web-1",title:"The Odin Project",description:"Full-stack web development curriculum — completely free.",url:"https://www.theodinproject.com/",type:"free",category:"Web Development",provider:"Community",tags:["full-stack","curriculum","free"],isFree:true,difficulty:"Beginner",rating:4.8},
+{id:"web-2",title:"freeCodeCamp",description:"Thousands of hours of free coding challenges and certifications.",url:"https://www.freecodecamp.org/",type:"free",category:"Web Development",provider:"freeCodeCamp",tags:["freecodecamp","certifications","projects"],isFree:true,difficulty:"Beginner",rating:4.7},
+{id:"web-3",title:"MDN Web Docs",description:"The definitive reference for HTML, CSS, JavaScript, Web APIs.",url:"https://developer.mozilla.org/",type:"website",category:"Web Development",provider:"Mozilla",tags:["documentation","reference","web standards"],isFree:true,difficulty:"Beginner",rating:4.9},
+{id:"web-4",title:"React Official Documentation",description:"Learn React from the official docs with interactive tutorials.",url:"https://react.dev/",type:"website",category:"Web Development",provider:"Meta",tags:["react","official docs","hooks"],isFree:true,difficulty:"Beginner",rating:4.8},
+{id:"web-5",title:"JavaScript.info",description:"Thorough, well-structured JavaScript reference and tutorial.",url:"https://javascript.info/",type:"free",category:"Web Development",provider:"Community",tags:["javascript","tutorial","comprehensive"],isFree:true,difficulty:"Beginner",rating:4.8},
+{id:"web-6",title:"Vercel Next.js Learn",description:"Official Next.js tutorial. Build a full-stack web app.",url:"https://nextjs.org/learn",type:"free",category:"Web Development",provider:"Vercel",tags:["nextjs","react","full-stack"],isFree:true,difficulty:"Intermediate",rating:4.7},
+{id:"web-10",title:"Fireship - 100 Seconds of Code",description:"Fast-paced, entertaining tech explainers.",url:"https://www.youtube.com/c/Fireship",type:"youtube",category:"Web Development",provider:"YouTube",tags:["fireship","quick","entertaining"],isFree:true,difficulty:"Beginner",rating:4.9},
+{id:"sec-1",title:"OWASP Top 10",description:"The most critical web application security risks.",url:"https://owasp.org/www-project-top-ten/",type:"website",category:"Cybersecurity",provider:"OWASP",tags:["owasp","web security","top 10"],isFree:true,difficulty:"Intermediate",rating:4.9},
+{id:"sec-2",title:"Google Cybersecurity Certificate",description:"Entry-level cybersecurity certificate by Google.",url:"https://www.coursera.org/professional-certificates/google-cybersecurity",type:"certification",category:"Cybersecurity",provider:"Google",tags:["google","certificate","entry-level"],isFree:false,difficulty:"Beginner",rating:4.7},
+{id:"sec-3",title:"Hack The Box Academy",description:"Interactive cybersecurity training. Pentesting and defense.",url:"https://academy.hackthebox.com/",type:"course",category:"Cybersecurity",provider:"Other",tags:["pentesting","hands-on","CTF"],isFree:true,difficulty:"Intermediate",rating:4.8},
+{id:"sec-4",title:"TryHackMe",description:"Gamified cybersecurity training for all levels.",url:"https://tryhackme.com/",type:"free",category:"Cybersecurity",provider:"Other",tags:["tryhackme","gamified","beginner-friendly"],isFree:true,difficulty:"Beginner",rating:4.7},
+{id:"sec-5",title:"Awesome Security",description:"Comprehensive collection of security tools and resources.",url:"https://github.com/sbilly/awesome-security",type:"github",category:"Cybersecurity",provider:"Community",tags:["awesome list","tools","comprehensive"],isFree:true,difficulty:"Intermediate",rating:4.5},
+{id:"sec-6",title:"Professor Messer - Security+",description:"Free CompTIA Security+ certification training videos.",url:"https://www.youtube.com/c/professormesser",type:"youtube",category:"Cybersecurity",provider:"YouTube",tags:["security+","comptia","certification"],isFree:true,difficulty:"Beginner",rating:4.7},
+{id:"sec-7",title:"PortSwigger Web Security Academy",description:"Free web security training with interactive labs.",url:"https://portswigger.net/web-security",type:"free",category:"Cybersecurity",provider:"Other",tags:["portswigger","web security","labs"],isFree:true,difficulty:"Intermediate",rating:4.9},
+{id:"data-1",title:"IBM Data Science Certificate",description:"9-course series covering data science, Python, SQL, and ML.",url:"https://www.coursera.org/professional-certificates/ibm-data-science",type:"certification",category:"Data Science & Analytics",provider:"IBM",tags:["ibm","data science","certificate"],isFree:false,difficulty:"Beginner",rating:4.6},
+{id:"data-2",title:"Kaggle Competitions & Datasets",description:"World's largest data science competition platform.",url:"https://www.kaggle.com/",type:"website",category:"Data Science & Analytics",provider:"Kaggle",tags:["kaggle","competitions","datasets"],isFree:true,difficulty:"Intermediate",rating:4.8},
+{id:"data-3",title:"Python for Data Analysis",description:"The definitive guide to data analysis with pandas and NumPy.",url:"https://wesmckinney.com/book/",type:"free",category:"Data Science & Analytics",provider:"Community",tags:["python","pandas","data analysis"],isFree:true,difficulty:"Intermediate",rating:4.7},
+{id:"data-4",title:"Google Data Analytics Certificate",description:"Learn data analytics — spreadsheets, SQL, Tableau, R.",url:"https://www.coursera.org/professional-certificates/google-data-analytics",type:"certification",category:"Data Science & Analytics",provider:"Google",tags:["google","data analytics","SQL"],isFree:false,difficulty:"Beginner",rating:4.7},
+{id:"web3-1",title:"CryptoZombies",description:"Learn Solidity by building a zombie game.",url:"https://cryptozombies.io/",type:"free",category:"Blockchain & Web3",provider:"Community",tags:["solidity","ethereum","smart contracts"],isFree:true,difficulty:"Beginner",rating:4.7},
+{id:"web3-2",title:"Ethereum Developer Docs",description:"Official Ethereum developer documentation.",url:"https://ethereum.org/en/developers/docs/",type:"website",category:"Blockchain & Web3",provider:"Community",tags:["ethereum","docs","smart contracts"],isFree:true,difficulty:"Intermediate",rating:4.6},
+{id:"lang-1",title:"Rust Book",description:"The official Rust programming language book.",url:"https://doc.rust-lang.org/book/",type:"free",category:"Programming Languages",provider:"Community",tags:["rust","systems","official"],isFree:true,difficulty:"Intermediate",rating:4.9},
+{id:"lang-2",title:"Go by Example",description:"Hands-on introduction to Go using annotated examples.",url:"https://gobyexample.com/",type:"free",category:"Programming Languages",provider:"Community",tags:["go","golang","examples"],isFree:true,difficulty:"Beginner",rating:4.7},
+{id:"lang-3",title:"Python Official Tutorial",description:"Official Python tutorial covering fundamentals and standard library.",url:"https://docs.python.org/3/tutorial/",type:"free",category:"Programming Languages",provider:"Community",tags:["python","official","fundamentals"],isFree:true,difficulty:"Beginner",rating:4.6},
+{id:"lang-5",title:"Exercism",description:"Free coding challenges in 50+ languages with mentoring.",url:"https://exercism.org/",type:"free",category:"Programming Languages",provider:"Community",tags:["exercism","practice","mentoring"],isFree:true,difficulty:"Beginner",rating:4.7},
+{id:"mobile-1",title:"React Native Documentation",description:"Build native mobile apps with React.",url:"https://reactnative.dev/docs/getting-started",type:"website",category:"Mobile Development",provider:"Meta",tags:["react native","mobile","cross-platform"],isFree:true,difficulty:"Intermediate",rating:4.6},
+{id:"mobile-2",title:"Flutter Codelabs",description:"Google's Flutter tutorials for multiplatform apps.",url:"https://docs.flutter.dev/codelabs",type:"free",category:"Mobile Development",provider:"Google",tags:["flutter","dart","cross-platform"],isFree:true,difficulty:"Beginner",rating:4.7},
+{id:"mobile-3",title:"Apple SwiftUI Tutorials",description:"Learn Swift and iOS with Apple's official tutorials.",url:"https://developer.apple.com/tutorials/swiftui",type:"free",category:"Mobile Development",provider:"Apple",tags:["swift","iOS","swiftui"],isFree:true,difficulty:"Beginner",rating:4.7},
+{id:"mobile-4",title:"Android Developers Training",description:"Official Android training by Google.",url:"https://developer.android.com/courses",type:"free",category:"Mobile Development",provider:"Google",tags:["android","kotlin","jetpack compose"],isFree:true,difficulty:"Beginner",rating:4.6},
+{id:"sys-1",title:"System Design Primer",description:"Learn how to design large-scale systems.",url:"https://github.com/donnemartin/system-design-primer",type:"github",category:"System Design",provider:"Community",tags:["system design","interview","architecture"],isFree:true,difficulty:"Advanced",rating:4.9},
+{id:"sys-2",title:"Designing Data-Intensive Applications",description:"Martin Kleppmann's essential book on distributed systems.",url:"https://dataintensive.net/",type:"website",category:"System Design",provider:"Other",tags:["DDIA","distributed systems","databases"],isFree:false,difficulty:"Advanced",rating:4.9},
+{id:"sys-3",title:"ByteByteGo - System Design",description:"Visual explanations of real-world system architectures.",url:"https://www.youtube.com/@ByteByteGo",type:"youtube",category:"System Design",provider:"YouTube",tags:["system design","visual","bytebytego"],isFree:true,difficulty:"Intermediate",rating:4.8},
+{id:"sys-5",title:"MIT 6.824 - Distributed Systems",description:"MIT's graduate course on distributed systems.",url:"https://www.youtube.com/playlist?list=PLrw6a1wE39_tb2fErI4-WkMbsvGQk9_UB",type:"youtube",category:"System Design",provider:"MIT",tags:["MIT","distributed systems","raft"],isFree:true,difficulty:"Advanced",rating:4.9},
+{id:"cert-1",title:"AWS Solutions Architect Associate",description:"Design available, cost-efficient systems on AWS.",url:"https://aws.amazon.com/certification/certified-solutions-architect-associate/",type:"certification",category:"Cloud Computing",provider:"AWS",tags:["aws","solutions architect","SAA-C03"],isFree:false,difficulty:"Intermediate",rating:4.8},
+{id:"cert-6",title:"Certified Kubernetes Administrator (CKA)",description:"CNCF certification for Kubernetes administration.",url:"https://www.cncf.io/certification/cka/",type:"certification",category:"DevOps & Infrastructure",provider:"CNCF",tags:["kubernetes","CKA","CNCF"],isFree:false,difficulty:"Advanced",rating:4.8},
+{id:"cert-8",title:"CompTIA Security+ (SY0-701)",description:"Globally recognized cybersecurity certification.",url:"https://www.comptia.org/certifications/security",type:"certification",category:"Cybersecurity",provider:"CompTIA",tags:["comptia","security+","cybersecurity"],isFree:false,difficulty:"Beginner",rating:4.7},
+{id:"cert-10",title:"Cisco CCNA (200-301)",description:"Industry-standard networking certification.",url:"https://www.cisco.com/site/us/en/learn/training-certifications/certifications/enterprise/ccna/index.html",type:"certification",category:"Cybersecurity",provider:"Cisco",tags:["cisco","CCNA","networking"],isFree:false,difficulty:"Intermediate",rating:4.7},
+{id:"pdf-1",title:"Attention Is All You Need",description:"The foundational Transformer architecture paper.",url:"https://arxiv.org/abs/1706.03762",type:"pdf",category:"AI & Machine Learning",provider:"Community",tags:["transformer","attention","seminal paper"],isFree:true,difficulty:"Advanced",rating:5.0},
+{id:"pdf-4",title:"Google SRE Book",description:"How Google runs production systems.",url:"https://sre.google/sre-book/table-of-contents/",type:"pdf",category:"DevOps & Infrastructure",provider:"Google",tags:["SRE","reliability","google"],isFree:true,difficulty:"Advanced",rating:4.9},
+{id:"tweet-1",title:"Andrej Karpathy — LLMs",description:"Karpathy's threads explaining LLMs from first principles.",url:"https://x.com/karpathy",type:"tweet",category:"AI & Machine Learning",provider:"Community",tags:["karpathy","LLM","fundamentals"],isFree:true,difficulty:"Intermediate",rating:4.9},
+{id:"ext-1",title:"Deep Learning Specialization",description:"Andrew Ng's 5-course deep learning series.",url:"https://www.deeplearning.ai/courses/deep-learning-specialization/",type:"course",category:"AI & Machine Learning",provider:"DeepLearning.AI",tags:["deep learning","andrew ng","CNN"],isFree:false,difficulty:"Intermediate",rating:4.9},
+{id:"ext-5",title:"Elements of AI",description:"Free AI fundamentals course by University of Helsinki.",url:"https://www.elementsofai.com/",type:"free",category:"AI & Machine Learning",provider:"University of Helsinki",tags:["elements of AI","non-technical","fundamentals"],isFree:true,difficulty:"Beginner",rating:4.7},
+{id:"ext-6",title:"Dive into Deep Learning (d2l.ai)",description:"Interactive deep learning textbook with code, math, and discussions.",url:"https://d2l.ai/",type:"free",category:"AI & Machine Learning",provider:"Community",tags:["d2l","deep learning","textbook"],isFree:true,difficulty:"Intermediate",rating:4.8},
+{id:"ext-12",title:"nanoGPT — Karpathy",description:"Simplest repository for training GPTs. ~300 lines of PyTorch.",url:"https://github.com/karpathy/nanoGPT",type:"github",category:"AI & Machine Learning",provider:"Community",tags:["karpathy","GPT","training","pytorch"],isFree:true,difficulty:"Intermediate",rating:4.9},
+{id:"ext-14",title:"LLM Course — Maxime Labonne",description:"Comprehensive LLM course: fundamentals, fine-tuning, RAG.",url:"https://github.com/mlabonne/llm-course",type:"github",category:"AI & Machine Learning",provider:"Community",tags:["LLM","fine-tuning","RAG"],isFree:true,difficulty:"Intermediate",rating:4.8},
+{id:"ext-20",title:"Microsoft AI for Beginners",description:"Microsoft's 12-week AI curriculum.",url:"https://github.com/microsoft/AI-For-Beginners",type:"github",category:"AI & Machine Learning",provider:"Microsoft",tags:["microsoft","curriculum","beginner"],isFree:true,difficulty:"Beginner",rating:4.7},
+{id:"ext-38",title:"Grokking System Design Interview",description:"DesignGurus' flagship system design course.",url:"https://www.designgurus.io/course/grokking-the-system-design-interview",type:"course",category:"System Design",provider:"Other",tags:["grokking","interview prep","patterns"],isFree:false,difficulty:"Intermediate",rating:4.8},
+{id:"web-11",title:"Tailwind CSS Documentation",description:"Official Tailwind CSS utility-first framework docs.",url:"https://tailwindcss.com/docs",type:"website",category:"Web Development",provider:"Community",tags:["tailwind","CSS","utility-first"],isFree:true,difficulty:"Beginner",rating:4.8},
+{id:"web-14",title:"Traversy Media",description:"High-quality web development tutorials and crash courses.",url:"https://www.youtube.com/@TraversyMedia",type:"youtube",category:"Web Development",provider:"YouTube",tags:["traversy","crash course","tutorials"],isFree:true,difficulty:"Beginner",rating:4.8},
+{id:"sec-16",title:"Metasploit",description:"Most widely used penetration testing framework.",url:"https://metasploit.com",type:"free",category:"Cybersecurity",provider:"Community",tags:["pentesting","exploits","vulnerability"],isFree:true,difficulty:"Advanced",rating:4.8},
+{id:"sec-19",title:"Wireshark",description:"The world's foremost network protocol analyzer.",url:"https://wireshark.org",type:"free",category:"Cybersecurity",provider:"Community",tags:["networking","packet analysis","protocol"],isFree:true,difficulty:"Intermediate",rating:4.8},
+{id:"llmops-1",title:"Ollama — Run LLMs Locally",description:"Run large language models locally. Privacy-first AI inference.",url:"https://ollama.com",type:"free",category:"AI & Machine Learning",provider:"Community",tags:["LLM","local","inference","privacy"],isFree:true,difficulty:"Beginner",rating:4.8},
+{id:"learn-1",title:"LeetCode",description:"Industry standard for coding interview preparation. 2500+ problems.",url:"https://leetcode.com",type:"website",category:"Programming Languages",provider:"Other",tags:["interview prep","coding","algorithms"],isFree:true,difficulty:"Intermediate",rating:4.8},
+{id:"learn-2",title:"NeetCode",description:"Structured patterns for FAANG interview prep.",url:"https://neetcode.io",type:"website",category:"Programming Languages",provider:"Community",tags:["interview prep","patterns","FAANG"],isFree:true,difficulty:"Intermediate",rating:4.8},
+{id:"learn-3",title:"Roadmap.sh",description:"Role-based visual roadmaps for developers.",url:"https://roadmap.sh",type:"free",category:"Web Development",provider:"Community",tags:["roadmap","learning path","career"],isFree:true,difficulty:"Beginner",rating:4.8},
+{id:"web-20",title:"Shadcn/ui",description:"Beautiful, accessible components with Tailwind and Radix UI.",url:"https://ui.shadcn.com",type:"free",category:"Web Development",provider:"Community",tags:["shadcn","components","tailwind"],isFree:true,difficulty:"Beginner",rating:4.8},
 {id:"api-1",title:"Public APIs — 1400+ Free APIs",description:"Collaborative list of 1400+ free APIs for building projects.",url:"https://github.com/public-apis/public-apis",type:"github",category:"Web Development",provider:"Community",tags:["APIs","free","collection"],isFree:true,difficulty:"Beginner",rating:4.8},
-{id:"news-1",title:"TLDR Tech — Daily Newsletter",description:"Daily summary of the most interesting tech news, tools, and products.",url:"https://tldr.tech",type:"free",category:"Web Development",provider:"Community",tags:["newsletter","daily","tech news"],isFree:true,difficulty:"Beginner",rating:4.6},
-{id:"news-2",title:"Pragmatic Engineer Newsletter",description:"Insights on engineering leadership, big tech culture, and building at scale.",url:"https://blog.pragmaticengineer.com",type:"website",category:"System Design",provider:"Community",tags:["newsletter","engineering","leadership"],isFree:false,difficulty:"Intermediate",rating:4.8}
+{id:"cloud-new-2",title:"Cloud Resume Challenge",description:"Build your resume as a cloud-hosted website.",url:"https://cloudresumechallenge.dev/",type:"free",category:"Cloud Computing",provider:"Community",tags:["project","hands-on","resume"],isFree:true,difficulty:"Beginner",rating:4.7},
+{id:"ai-new-1",title:"Stanford CS25 — Transformers United",description:"Stanford seminar on transformer architecture's cross-domain impact.",url:"https://web.stanford.edu/class/cs25/",type:"free",category:"AI & Machine Learning",provider:"Stanford",tags:["transformers","stanford","seminar"],isFree:true,difficulty:"Advanced",rating:4.8},
+{id:"ai-new-2",title:"Cohere AI — LLM University",description:"Free LLM curriculum: embeddings, semantic search, generation.",url:"https://cohere.com/llmu",type:"free",category:"AI & Machine Learning",provider:"Other",tags:["LLM","embeddings","curriculum"],isFree:true,difficulty:"Beginner",rating:4.6},
+{id:"ai-new-4",title:"Lilian Weng's Blog",description:"OpenAI researcher's blog distilling complex AI research.",url:"https://lilianweng.github.io/",type:"website",category:"AI & Machine Learning",provider:"Community",tags:["research","blog","openai"],isFree:true,difficulty:"Advanced",rating:4.9},
+{id:"ai-new-6",title:"Unsloth — Fast LLM Fine-Tuning",description:"2x faster, 60% less memory for LLM fine-tuning.",url:"https://github.com/unslothai/unsloth",type:"github",category:"AI & Machine Learning",provider:"Community",tags:["fine-tuning","optimization","open source"],isFree:true,difficulty:"Intermediate",rating:4.7},
+{id:"sec-new-2",title:"MITRE ATT&CK Navigator",description:"Interactive MITRE ATT&CK framework exploration tool.",url:"https://mitre-attack.github.io/attack-navigator/",type:"free",category:"Cybersecurity",provider:"Other",tags:["MITRE","ATT&CK","threat"],isFree:true,difficulty:"Intermediate",rating:4.7},
+{id:"web-new-1",title:"Drizzle ORM",description:"Lightweight TypeScript ORM with SQL-like syntax.",url:"https://orm.drizzle.team",type:"website",category:"Web Development",provider:"Community",tags:["ORM","typescript","SQL"],isFree:true,difficulty:"Intermediate",rating:4.7},
+{id:"web-new-3",title:"Bun — JS Runtime",description:"Ultra-fast JavaScript runtime, bundler, and package manager.",url:"https://bun.sh",type:"free",category:"Web Development",provider:"Community",tags:["runtime","bundler","fast"],isFree:true,difficulty:"Beginner",rating:4.7},
+{id:"mobile-new-2",title:"Tauri — Desktop Apps",description:"Build lightweight desktop apps with web technologies and Rust.",url:"https://tauri.app",type:"free",category:"Mobile Development",provider:"Community",tags:["desktop","rust","web"],isFree:true,difficulty:"Intermediate",rating:4.6},
+{id:"web3-new-1",title:"Foundry — Ethereum Toolkit",description:"Blazing fast Ethereum development framework in Rust.",url:"https://book.getfoundry.sh",type:"free",category:"Blockchain & Web3",provider:"Community",tags:["foundry","ethereum","rust"],isFree:true,difficulty:"Intermediate",rating:4.7},
+{id:"sys-new-1",title:"Architecture Notes",description:"Visual explanations of system design concepts.",url:"https://architecturenotes.co",type:"free",category:"System Design",provider:"Community",tags:["visual","architecture","notes"],isFree:true,difficulty:"Intermediate",rating:4.6},
+{id:"news-2",title:"Pragmatic Engineer Newsletter",description:"Engineering leadership and building at scale insights.",url:"https://blog.pragmaticengineer.com",type:"website",category:"System Design",provider:"Community",tags:["newsletter","engineering","leadership"],isFree:false,difficulty:"Intermediate",rating:4.8}
 ];
 
-// Glossary data - synced from src/data/glossary.ts (compact format: t=term, d=definition, c=category)
+// Glossary - compact format: t=term, d=definition, c=category
 const glossaryTerms=[
 {t:"Algorithm",d:"A step-by-step procedure for solving a problem or performing a computation.",c:"Programming Fundamentals"},
 {t:"Data Structure",d:"A way of organizing and storing data for efficient access and modification.",c:"Programming Fundamentals"},
-{t:"Variable",d:"A named storage location in memory that holds a value which can change during execution.",c:"Programming Fundamentals"},
-{t:"Function",d:"A reusable block of code that performs a specific task and can accept inputs and return outputs.",c:"Programming Fundamentals"},
+{t:"Variable",d:"A named storage location in memory that holds a value which can change.",c:"Programming Fundamentals"},
+{t:"Function",d:"A reusable block of code that performs a specific task.",c:"Programming Fundamentals"},
 {t:"Class",d:"A blueprint for creating objects that defines properties and behaviors.",c:"Programming Fundamentals"},
-{t:"Object",d:"An instance of a class containing data (state) and code (behavior).",c:"Programming Fundamentals"},
-{t:"Inheritance",d:"A mechanism where a new class derives properties and behavior from an existing parent class.",c:"Programming Fundamentals"},
-{t:"Polymorphism",d:"The ability of different objects to respond to the same method call in their own way.",c:"Programming Fundamentals"},
-{t:"Encapsulation",d:"Bundling data and methods together while restricting direct access to internal state.",c:"Programming Fundamentals"},
-{t:"Abstraction",d:"Hiding complex implementation details and exposing only the essential features.",c:"Programming Fundamentals"},
-{t:"Array",d:"A collection of elements stored at contiguous memory locations, accessed by index.",c:"Programming Fundamentals"},
-{t:"Linked List",d:"A linear data structure where elements are connected via pointers.",c:"Programming Fundamentals"},
-{t:"Stack",d:"A LIFO (Last In, First Out) data structure supporting push and pop operations.",c:"Programming Fundamentals"},
-{t:"Queue",d:"A FIFO (First In, First Out) data structure supporting enqueue and dequeue operations.",c:"Programming Fundamentals"},
-{t:"Hash Table",d:"A data structure mapping keys to values using a hash function for O(1) average lookups.",c:"Programming Fundamentals"},
-{t:"Binary Tree",d:"A hierarchical data structure where each node has at most two children.",c:"Programming Fundamentals"},
-{t:"Graph",d:"A data structure consisting of vertices connected by edges, representing relationships.",c:"Programming Fundamentals"},
-{t:"Recursion",d:"A technique where a function calls itself to solve smaller instances of the same problem.",c:"Programming Fundamentals"},
-{t:"Big O Notation",d:"Mathematical notation describing the upper bound of an algorithm's complexity.",c:"Programming Fundamentals"},
-{t:"Dynamic Programming",d:"An optimization technique solving complex problems by breaking them into overlapping subproblems.",c:"Programming Fundamentals"},
+{t:"Object",d:"An instance of a class containing data and code.",c:"Programming Fundamentals"},
+{t:"Inheritance",d:"A mechanism where a new class derives properties from a parent class.",c:"Programming Fundamentals"},
+{t:"Polymorphism",d:"The ability of different objects to respond to the same method call.",c:"Programming Fundamentals"},
+{t:"Encapsulation",d:"Bundling data and methods while restricting direct access.",c:"Programming Fundamentals"},
+{t:"Recursion",d:"A technique where a function calls itself to solve smaller instances.",c:"Programming Fundamentals"},
+{t:"Big O Notation",d:"Mathematical notation describing algorithm complexity upper bound.",c:"Programming Fundamentals"},
+{t:"Dynamic Programming",d:"Optimization technique breaking problems into overlapping subproblems.",c:"Programming Fundamentals"},
 {t:"Design Pattern",d:"A reusable solution template for common software design problems.",c:"Programming Fundamentals"},
-{t:"SOLID Principles",d:"Five design principles for maintainable OOP: Single Responsibility, Open-Closed, Liskov, Interface Segregation, Dependency Inversion.",c:"Programming Fundamentals"},
-{t:"Functional Programming",d:"A paradigm treating computation as evaluation of mathematical functions.",c:"Programming Fundamentals"},
+{t:"SOLID Principles",d:"Five design principles for maintainable OOP.",c:"Programming Fundamentals"},
+{t:"Async/Await",d:"Syntactic sugar for working with promises asynchronously.",c:"Programming Fundamentals"},
 {t:"Concurrency",d:"The ability to handle multiple tasks at the same time.",c:"Programming Fundamentals"},
-{t:"Async/Await",d:"Syntactic sugar for working with promises, making asynchronous code look synchronous.",c:"Programming Fundamentals"},
-{t:"HTML",d:"The standard markup language for creating web page structure and content.",c:"Web Development"},
-{t:"CSS",d:"A stylesheet language for describing the presentation and layout of HTML documents.",c:"Web Development"},
+{t:"HTML",d:"The standard markup language for creating web pages.",c:"Web Development"},
+{t:"CSS",d:"A stylesheet language for describing HTML presentation.",c:"Web Development"},
 {t:"JavaScript",d:"A dynamic programming language that is the core technology of the web.",c:"Web Development"},
 {t:"TypeScript",d:"A typed superset of JavaScript that compiles to plain JavaScript.",c:"Web Development"},
-{t:"React",d:"A JavaScript library by Meta for building user interfaces using components.",c:"Web Development"},
-{t:"Next.js",d:"A React framework providing server-side rendering, static generation, and API routes.",c:"Web Development"},
-{t:"DOM",d:"Document Object Model — a programming interface representing HTML documents as a tree.",c:"Web Development"},
-{t:"Virtual DOM",d:"An in-memory representation of the real DOM used by frameworks like React.",c:"Web Development"},
-{t:"REST",d:"An architectural style for APIs using HTTP methods on resources.",c:"Web Development"},
-{t:"GraphQL",d:"A query language for APIs allowing clients to request exactly the data they need.",c:"Web Development"},
-{t:"WebSocket",d:"A protocol providing full-duplex communication channels over TCP.",c:"Web Development"},
-{t:"PWA",d:"Progressive Web App — a web application with native app-like experiences.",c:"Web Development"},
-{t:"SSR",d:"Server-Side Rendering — generating HTML on the server for each request.",c:"Web Development"},
-{t:"SSG",d:"Static Site Generation — pre-rendering pages at build time.",c:"Web Development"},
-{t:"JWT",d:"JSON Web Token — a compact token format for securely transmitting information.",c:"Web Development"},
-{t:"OAuth 2.0",d:"An authorization framework enabling third-party apps to access user resources.",c:"Web Development"},
-{t:"CORS",d:"Cross-Origin Resource Sharing — a security mechanism for controlled cross-domain access.",c:"Web Development"},
-{t:"Webpack",d:"A module bundler that transforms and bundles JavaScript, CSS, and assets.",c:"Web Development"},
-{t:"Vite",d:"A next-generation frontend build tool with instant hot module replacement.",c:"Web Development"},
-{t:"Tailwind CSS",d:"A utility-first CSS framework for rapidly building custom designs.",c:"Web Development"},
-{t:"Neural Network",d:"A computing system inspired by biological neural networks for pattern recognition.",c:"AI & Machine Learning"},
-{t:"Deep Learning",d:"ML using multi-layered neural networks to learn hierarchical representations.",c:"AI & Machine Learning"},
+{t:"React",d:"A JavaScript library by Meta for building user interfaces.",c:"Web Development"},
+{t:"Next.js",d:"A React framework providing SSR, SSG, and API routes.",c:"Web Development"},
+{t:"DOM",d:"Document Object Model — programming interface for HTML documents.",c:"Web Development"},
+{t:"REST",d:"An architectural style for APIs using HTTP methods.",c:"Web Development"},
+{t:"GraphQL",d:"A query language for APIs allowing clients to request exactly needed data.",c:"Web Development"},
+{t:"WebSocket",d:"A protocol providing full-duplex communication over TCP.",c:"Web Development"},
+{t:"PWA",d:"Progressive Web App — web app with native app-like experiences.",c:"Web Development"},
+{t:"JWT",d:"JSON Web Token — compact token format for secure information transmission.",c:"Web Development"},
+{t:"OAuth 2.0",d:"An authorization framework enabling third-party app access.",c:"Web Development"},
+{t:"Vite",d:"A next-generation frontend build tool with instant HMR.",c:"Web Development"},
+{t:"Tailwind CSS",d:"A utility-first CSS framework for rapidly building designs.",c:"Web Development"},
+{t:"Neural Network",d:"A computing system inspired by biological neural networks.",c:"AI & Machine Learning"},
+{t:"Deep Learning",d:"ML using multi-layered neural networks for hierarchical representations.",c:"AI & Machine Learning"},
 {t:"Transformer",d:"Neural network architecture using self-attention. Foundation of modern NLP.",c:"AI & Machine Learning"},
 {t:"Large Language Model (LLM)",d:"AI models trained on massive text data to understand and generate language.",c:"AI & Machine Learning"},
-{t:"RAG",d:"Retrieval-Augmented Generation — combining LLMs with external knowledge retrieval.",c:"AI & Machine Learning"},
-{t:"Fine-tuning",d:"Further training a pre-trained model on a specific dataset to specialize it.",c:"AI & Machine Learning"},
+{t:"RAG",d:"Retrieval-Augmented Generation — combining LLMs with knowledge retrieval.",c:"AI & Machine Learning"},
+{t:"Fine-tuning",d:"Further training a pre-trained model on a specific dataset.",c:"AI & Machine Learning"},
 {t:"Prompt Engineering",d:"The art of crafting effective inputs to AI models.",c:"AI & Machine Learning"},
-{t:"Transfer Learning",d:"Using a pre-trained model as a starting point for a new task.",c:"AI & Machine Learning"},
-{t:"Computer Vision",d:"AI field enabling machines to interpret visual information from images/video.",c:"AI & Machine Learning"},
-{t:"NLP",d:"Natural Language Processing — enabling machines to understand human language.",c:"AI & Machine Learning"},
-{t:"Reinforcement Learning",d:"Training agents through rewards and penalties for actions in an environment.",c:"AI & Machine Learning"},
-{t:"GAN",d:"Generative Adversarial Network — two neural networks competing to generate data.",c:"AI & Machine Learning"},
-{t:"Diffusion Model",d:"Generative model learning to reverse a noise process for image generation.",c:"AI & Machine Learning"},
+{t:"Computer Vision",d:"AI field enabling machines to interpret visual information.",c:"AI & Machine Learning"},
+{t:"NLP",d:"Natural Language Processing — enabling machines to understand language.",c:"AI & Machine Learning"},
 {t:"MLOps",d:"Practices for deploying and maintaining ML models in production.",c:"AI & Machine Learning"},
-{t:"Feature Engineering",d:"Creating informative features from raw data for ML models.",c:"AI & Machine Learning"},
-{t:"Vector Database",d:"Database optimized for storing and querying high-dimensional vectors for AI.",c:"AI & Machine Learning"},
-{t:"Model Context Protocol (MCP)",d:"An open protocol for connecting AI assistants to external data and tools.",c:"AI & Machine Learning"},
-{t:"LoRA",d:"Low-Rank Adaptation — parameter-efficient fine-tuning of large language models.",c:"AI & Machine Learning"},
-{t:"LLMOps",d:"Practices for deploying, monitoring, and managing LLM applications in production.",c:"AI & Machine Learning"},
+{t:"Vector Database",d:"Database optimized for storing and querying high-dimensional vectors.",c:"AI & Machine Learning"},
+{t:"LoRA",d:"Low-Rank Adaptation — parameter-efficient fine-tuning of LLMs.",c:"AI & Machine Learning"},
 {t:"AWS",d:"Amazon Web Services — the world's most comprehensive cloud platform.",c:"Cloud Computing"},
-{t:"Azure",d:"Microsoft's cloud computing platform for building and managing applications.",c:"Cloud Computing"},
-{t:"GCP",d:"Google Cloud Platform — Google's cloud computing services.",c:"Cloud Computing"},
-{t:"Serverless",d:"A cloud model where the provider manages servers. Pay only for execution time.",c:"Cloud Computing"},
-{t:"Lambda Function",d:"AWS's serverless compute service running code in response to events.",c:"Cloud Computing"},
+{t:"Azure",d:"Microsoft's cloud computing platform.",c:"Cloud Computing"},
+{t:"GCP",d:"Google Cloud Platform — Google's cloud services.",c:"Cloud Computing"},
+{t:"Serverless",d:"A cloud model where the provider manages servers.",c:"Cloud Computing"},
 {t:"S3",d:"Amazon Simple Storage Service — scalable object storage.",c:"Cloud Computing"},
-{t:"EC2",d:"Amazon Elastic Compute Cloud — virtual servers in the cloud.",c:"Cloud Computing"},
 {t:"VPC",d:"Virtual Private Cloud — isolated cloud networking environment.",c:"Cloud Computing"},
-{t:"Auto Scaling",d:"Automatically adjusting compute capacity based on demand.",c:"Cloud Computing"},
-{t:"Cloud-Native",d:"Applications designed from the ground up to exploit cloud computing advantages.",c:"Cloud Computing"},
-{t:"FinOps",d:"A practice combining financial management with cloud operations for cost optimization.",c:"Cloud Computing"},
+{t:"FinOps",d:"Financial management with cloud operations for cost optimization.",c:"Cloud Computing"},
 {t:"Docker",d:"A platform for building and running containerized applications.",c:"DevOps & CI/CD"},
-{t:"Kubernetes",d:"An open-source container orchestration platform for automating deployment and scaling.",c:"DevOps & CI/CD"},
-{t:"CI/CD",d:"Continuous Integration/Continuous Deployment — automating build, test, and deploy.",c:"DevOps & CI/CD"},
-{t:"Infrastructure as Code",d:"Managing infrastructure through code. Tools: Terraform, Pulumi.",c:"DevOps & CI/CD"},
+{t:"Kubernetes",d:"Open-source container orchestration platform.",c:"DevOps & CI/CD"},
+{t:"CI/CD",d:"Continuous Integration/Continuous Deployment — automating build, test, deploy.",c:"DevOps & CI/CD"},
 {t:"Terraform",d:"An IaC tool for provisioning cloud infrastructure declaratively.",c:"DevOps & CI/CD"},
-{t:"Helm",d:"A package manager for Kubernetes, simplifying application deployment.",c:"DevOps & CI/CD"},
-{t:"GitOps",d:"Using Git as the single source of truth for infrastructure and deployments.",c:"DevOps & CI/CD"},
-{t:"Prometheus",d:"Open-source monitoring and alerting toolkit for cloud-native applications.",c:"DevOps & CI/CD"},
-{t:"Grafana",d:"Open-source visualization and monitoring platform.",c:"DevOps & CI/CD"},
-{t:"Service Mesh",d:"Infrastructure layer handling service-to-service communication.",c:"DevOps & CI/CD"},
-{t:"Platform Engineering",d:"Building internal platforms and tools to improve developer productivity.",c:"DevOps & CI/CD"},
-{t:"OpenTofu",d:"An open-source fork of Terraform maintained by the Linux Foundation.",c:"DevOps & CI/CD"},
-{t:"SQL Injection",d:"A code injection technique exploiting vulnerabilities in SQL queries.",c:"Cybersecurity"},
+{t:"GitOps",d:"Using Git as the single source of truth for infrastructure.",c:"DevOps & CI/CD"},
+{t:"Prometheus",d:"Open-source monitoring and alerting toolkit.",c:"DevOps & CI/CD"},
+{t:"Platform Engineering",d:"Building internal platforms to improve developer productivity.",c:"DevOps & CI/CD"},
+{t:"SQL Injection",d:"A code injection technique exploiting SQL query vulnerabilities.",c:"Cybersecurity"},
 {t:"XSS",d:"Cross-Site Scripting — injecting malicious scripts into web pages.",c:"Cybersecurity"},
 {t:"Zero Trust",d:"Security model assuming no implicit trust, verifying every request.",c:"Cybersecurity"},
-{t:"Encryption",d:"Converting data into a coded format to prevent unauthorized access.",c:"Cybersecurity"},
-{t:"Penetration Testing",d:"Authorized simulated cyberattack to evaluate system security.",c:"Cybersecurity"},
-{t:"Firewall",d:"A network security device monitoring and controlling traffic.",c:"Cybersecurity"},
+{t:"Encryption",d:"Converting data into coded format to prevent unauthorized access.",c:"Cybersecurity"},
+{t:"Penetration Testing",d:"Authorized simulated cyberattack to evaluate security.",c:"Cybersecurity"},
 {t:"SIEM",d:"Security Information and Event Management — real-time security analysis.",c:"Cybersecurity"},
-{t:"SOC",d:"Security Operations Center — centralized team monitoring for security threats.",c:"Cybersecurity"},
+{t:"SOC",d:"Security Operations Center — centralized team monitoring for threats.",c:"Cybersecurity"},
+// Cyber Lexicon additions
+{t:"SOAR",d:"Security Orchestration, Automation and Response.",c:"Cybersecurity"},
+{t:"XDR",d:"Extended Detection and Response — holistic security across endpoints.",c:"Cybersecurity"},
+{t:"EDR",d:"Endpoint Detection and Response — monitors endpoint devices.",c:"Cybersecurity"},
+{t:"ZTNA",d:"Zero Trust Network Access — grants access based on strict verification.",c:"Cybersecurity"},
+{t:"SASE",d:"Secure Access Service Edge — cloud-delivered network and security.",c:"Cybersecurity"},
+{t:"DLP",d:"Data Loss Prevention — preventing sensitive data loss or misuse.",c:"Cybersecurity"},
+{t:"PAM",d:"Privileged Access Management — control and monitor privileged accounts.",c:"Cybersecurity"},
+{t:"CASB",d:"Cloud Access Security Broker — security policy enforcement for cloud.",c:"Cybersecurity"},
+{t:"APT",d:"Advanced Persistent Threat — prolonged, targeted cyberattack.",c:"Cybersecurity"},
+{t:"MITRE ATT&CK",d:"Framework for understanding adversary behavior.",c:"Cybersecurity"},
+{t:"CVSS",d:"Common Vulnerability Scoring System.",c:"Cybersecurity"},
+{t:"NIST",d:"National Institute of Standards and Technology — cybersecurity standards.",c:"Cybersecurity"},
+{t:"GDPR",d:"General Data Protection Regulation — EU privacy regulation.",c:"Cybersecurity"},
+{t:"HIPAA",d:"Health Insurance Portability and Accountability Act — medical records privacy.",c:"Cybersecurity"},
+{t:"PCI DSS",d:"Payment Card Industry Data Security Standard.",c:"Cybersecurity"},
+{t:"PKI",d:"Public Key Infrastructure — managing digital certificates.",c:"Cybersecurity"},
+{t:"TLS",d:"Transport Layer Security — cryptographic protocol for secure communication.",c:"Cybersecurity"},
+{t:"SAML",d:"Security Assertion Markup Language — exchanging authentication data.",c:"Cybersecurity"},
+{t:"OIDC",d:"OpenID Connect — identity layer on top of OAuth 2.0.",c:"Cybersecurity"},
+{t:"SAST",d:"Static Application Security Testing — analyzing source code.",c:"Cybersecurity"},
+{t:"DAST",d:"Dynamic Application Security Testing — analyzing running applications.",c:"Cybersecurity"},
+{t:"SBOM",d:"Software Bill of Materials — inventory of software components.",c:"Cybersecurity"},
+{t:"DFIR",d:"Digital Forensics and Incident Response.",c:"Cybersecurity"},
+{t:"GRC",d:"Governance, Risk, and Compliance — integrated management approach.",c:"Cybersecurity"},
+{t:"NIST CSF",d:"NIST Cybersecurity Framework — voluntary framework for managing risk.",c:"Cybersecurity"},
+{t:"SOC 2",d:"Service Organization Control 2 — security and privacy controls report.",c:"Cybersecurity"},
+{t:"CISSP",d:"Certified Information Systems Security Professional — top security cert.",c:"Cybersecurity"},
+{t:"OSCP",d:"Offensive Security Certified Professional — ethical hacking cert.",c:"Cybersecurity"},
+{t:"DevSecOps",d:"Integrating security into DevOps processes.",c:"Cybersecurity"},
+{t:"E2EE",d:"End-to-End Encryption — only communicating users can read messages.",c:"Cybersecurity"},
+{t:"ZKP",d:"Zero-Knowledge Proof — proves knowledge without revealing it.",c:"Cybersecurity"},
+{t:"OSINT",d:"Open Source Intelligence — intelligence from public sources.",c:"Cybersecurity"},
 {t:"Pandas",d:"Essential Python library for data manipulation and analysis.",c:"Data Science"},
-{t:"NumPy",d:"Fundamental Python package for scientific computing with arrays.",c:"Data Science"},
-{t:"Scikit-learn",d:"Popular Python library for classical machine learning algorithms.",c:"Data Science"},
-{t:"Jupyter Notebook",d:"Interactive computing environment for data science and visualization.",c:"Data Science"},
+{t:"NumPy",d:"Fundamental Python package for scientific computing.",c:"Data Science"},
+{t:"Scikit-learn",d:"Popular Python library for classical ML algorithms.",c:"Data Science"},
+{t:"Jupyter Notebook",d:"Interactive computing environment for data science.",c:"Data Science"},
 {t:"ETL",d:"Extract, Transform, Load — process for moving data between systems.",c:"Data Science"},
 {t:"Data Lake",d:"Centralized repository storing raw data at any scale.",c:"Data Science"},
-{t:"Data Warehouse",d:"System for reporting and analysis of structured data.",c:"Data Science"},
 {t:"A/B Testing",d:"Comparing two versions to determine which performs better.",c:"Data Science"},
-{t:"Load Balancer",d:"A device distributing network traffic across multiple servers.",c:"System Design"},
-{t:"API Gateway",d:"A server acting as a single entry point for microservices.",c:"System Design"},
-{t:"CAP Theorem",d:"A distributed system can only guarantee two of three: Consistency, Availability, Partition Tolerance.",c:"System Design"},
-{t:"Sharding",d:"Partitioning data across multiple databases to distribute load.",c:"System Design"},
-{t:"Consistent Hashing",d:"A hashing technique minimizing remapping when nodes change.",c:"System Design"},
+{t:"Load Balancer",d:"A device distributing network traffic across servers.",c:"System Design"},
+{t:"API Gateway",d:"A server acting as single entry point for microservices.",c:"System Design"},
+{t:"CAP Theorem",d:"Distributed system can only guarantee 2 of 3: Consistency, Availability, Partition Tolerance.",c:"System Design"},
+{t:"Sharding",d:"Partitioning data across multiple databases.",c:"System Design"},
 {t:"Event-Driven Architecture",d:"A pattern where components communicate through events.",c:"System Design"},
-{t:"CQRS",d:"Command Query Responsibility Segregation — separating read and write operations.",c:"System Design"},
-{t:"Domain-Driven Design",d:"Software design focusing on modeling the domain and aligning code with business.",c:"System Design"},
-{t:"Microservices",d:"Architecture style composing applications as small, independent services.",c:"System Design"},
-{t:"Circuit Breaker Pattern",d:"A pattern preventing cascading failures in distributed systems.",c:"System Design"},
-{t:"Rate Limiting",d:"Controlling the number of requests in a given time period.",c:"System Design"},
-{t:"Idempotency",d:"The property where performing an operation multiple times produces the same result.",c:"System Design"},
-{t:"PostgreSQL",d:"A powerful, open-source relational database known for extensibility.",c:"Databases"},
-{t:"MongoDB",d:"A popular document-oriented NoSQL database using JSON-like documents.",c:"Databases"},
-{t:"Redis",d:"An in-memory key-value data store used for caching and sessions.",c:"Databases"},
-{t:"Elasticsearch",d:"A distributed search and analytics engine for full-text search.",c:"Databases"},
-{t:"ORM",d:"Object-Relational Mapping — mapping database tables to programming objects.",c:"Databases"},
-{t:"Index (Database)",d:"A data structure improving the speed of data retrieval.",c:"Databases"},
-{t:"Normalization",d:"Organizing database tables to minimize redundancy.",c:"Databases"},
-{t:"Transaction",d:"A sequence of database operations treated as a single unit of work.",c:"Databases"},
-{t:"TCP",d:"Transmission Control Protocol — ensures reliable, ordered delivery of data.",c:"Networking"},
-{t:"DNS",d:"Domain Name System — translates domain names into IP addresses.",c:"Networking"},
-{t:"HTTP/HTTPS",d:"The application-layer protocol for transmitting web content.",c:"Networking"},
-{t:"OSI Model",d:"A seven-layer conceptual model describing network protocol interactions.",c:"Networking"},
-{t:"CDN",d:"Content Delivery Network — delivers content from the nearest location.",c:"Networking"},
-{t:"IP Address",d:"A numerical label assigned to each device on a network.",c:"Networking"},
-{t:"React Native",d:"A framework by Meta for building native mobile apps using React.",c:"Mobile Development"},
-{t:"Flutter",d:"Google's UI toolkit for building natively compiled mobile apps.",c:"Mobile Development"},
-{t:"Swift",d:"Apple's programming language for building iOS and macOS applications.",c:"Mobile Development"},
-{t:"Kotlin",d:"A modern programming language for Android development.",c:"Mobile Development"},
-{t:"SwiftUI",d:"Apple's declarative UI framework for building native interfaces.",c:"Mobile Development"},
-{t:"Jetpack Compose",d:"Android's modern declarative UI toolkit in Kotlin.",c:"Mobile Development"},
-{t:"Blockchain",d:"A decentralized, immutable digital ledger recording transactions.",c:"Blockchain & Web3"},
+{t:"CQRS",d:"Command Query Responsibility Segregation.",c:"System Design"},
+{t:"Microservices",d:"Architecture composing apps as small, independent services.",c:"System Design"},
+{t:"Circuit Breaker Pattern",d:"Preventing cascading failures in distributed systems.",c:"System Design"},
+{t:"Rate Limiting",d:"Controlling request frequency in a given time period.",c:"System Design"},
+{t:"PostgreSQL",d:"Powerful, open-source relational database.",c:"Databases"},
+{t:"MongoDB",d:"Popular document-oriented NoSQL database.",c:"Databases"},
+{t:"Redis",d:"In-memory key-value data store for caching.",c:"Databases"},
+{t:"Elasticsearch",d:"Distributed search and analytics engine.",c:"Databases"},
+{t:"TCP",d:"Transmission Control Protocol — reliable, ordered data delivery.",c:"Networking"},
+{t:"DNS",d:"Domain Name System — translates domains into IP addresses.",c:"Networking"},
+{t:"HTTP/HTTPS",d:"Application-layer protocol for transmitting web content.",c:"Networking"},
+{t:"CDN",d:"Content Delivery Network — delivers content from nearest location.",c:"Networking"},
+{t:"React Native",d:"Framework by Meta for building native mobile apps.",c:"Mobile Development"},
+{t:"Flutter",d:"Google's UI toolkit for natively compiled mobile apps.",c:"Mobile Development"},
+{t:"Swift",d:"Apple's programming language for iOS and macOS.",c:"Mobile Development"},
+{t:"Kotlin",d:"Modern programming language for Android development.",c:"Mobile Development"},
+{t:"Blockchain",d:"A decentralized, immutable digital ledger.",c:"Blockchain & Web3"},
 {t:"Smart Contract",d:"Self-executing code stored on a blockchain.",c:"Blockchain & Web3"},
-{t:"DeFi",d:"Decentralized Finance — financial services on blockchain.",c:"Blockchain & Web3"},
-{t:"NFT",d:"Non-Fungible Token — unique digital token representing ownership.",c:"Blockchain & Web3"},
-{t:"Solidity",d:"The primary programming language for Ethereum smart contracts.",c:"Blockchain & Web3"},
-{t:"Agile",d:"An iterative approach to software development emphasizing flexibility.",c:"Software Engineering"},
-{t:"Git",d:"A distributed version control system tracking changes in source code.",c:"Software Engineering"},
-{t:"TDD",d:"Test-Driven Development — writing tests before writing code.",c:"Software Engineering"},
-{t:"Code Review",d:"Systematic examination of source code by peers.",c:"Software Engineering"},
-{t:"Technical Debt",d:"The cost of additional rework caused by choosing quick solutions.",c:"Software Engineering"},
-{t:"CPU",d:"Central Processing Unit — the primary component performing calculations.",c:"Hardware & Architecture"},
-{t:"GPU",d:"Graphics Processing Unit — specialized for parallel computations, essential for AI.",c:"Hardware & Architecture"},
-{t:"Linux",d:"An open-source, Unix-like operating system kernel powering servers and cloud.",c:"Operating Systems"},
-{t:"Kernel",d:"The core component of an OS managing system resources.",c:"Operating Systems"},
-{t:"Containerization",d:"OS-level virtualization running isolated applications.",c:"Operating Systems"}
+{t:"Solidity",d:"Primary programming language for Ethereum smart contracts.",c:"Blockchain & Web3"},
+{t:"Git",d:"Distributed version control system tracking changes in code.",c:"Software Engineering"},
+{t:"Agile",d:"An iterative approach to software development.",c:"Software Engineering"},
+{t:"TDD",d:"Test-Driven Development — writing tests before code.",c:"Software Engineering"},
+{t:"GPU",d:"Graphics Processing Unit — specialized for parallel computations.",c:"Hardware & Architecture"},
+{t:"Linux",d:"Open-source Unix-like operating system kernel.",c:"Operating Systems"}
 ];
 const glossaryCategories=["All","Programming Fundamentals","Web Development","AI & Machine Learning","Cloud Computing","DevOps & CI/CD","Cybersecurity","Data Science","System Design","Databases","Networking","Mobile Development","Blockchain & Web3","Software Engineering","Operating Systems","Hardware & Architecture"];
 
 // ===== APP STATE =====
-let state = { tab: 'resources', search: '', category: 'all', type: 'all', difficulty: 'all', sort: 'default', freeOnly: false, gCat: 'All', gSort: 'a-z' };
+let state = { tab: 'resources', search: '', category: 'all', type: 'all', difficulty: 'all', sort: 'default', freeOnly: false, gCat: 'All', gSort: 'a-z', gVisible: 50 };
 
 function init() {
   renderStats();
   renderCategoryFilters();
   renderTypeFilters();
   renderDifficultyFilters();
-  renderGlossaryCatFilters();
+  renderGlossaryFilters();
   renderResources();
   renderGlossary();
-  document.getElementById('searchInput').addEventListener('input', e => { state.search = e.target.value; renderResources(); renderGlossary(); });
+  document.getElementById('searchInput').addEventListener('input', e => { state.search = e.target.value; renderResources(); state.gVisible = 50; renderGlossary(); });
   document.querySelectorAll('.tab-btn').forEach(btn => btn.addEventListener('click', () => switchTab(btn.dataset.tab)));
-  document.getElementById('glossarySort').addEventListener('change', e => { state.gSort = e.target.value; renderGlossary(); });
 }
 
 function switchTab(tab) {
@@ -563,11 +458,11 @@ function switchTab(tab) {
 
 function renderStats() {
   const free = resources.filter(r => r.isFree).length;
-  const html = `<div class="stat"><div class="stat-num">${resources.length}+</div><div class="stat-label">Resources</div></div>` +
+  document.getElementById('statsBar').innerHTML =
+    `<div class="stat"><div class="stat-num">${resources.length}+</div><div class="stat-label">Resources</div></div>` +
     `<div class="stat"><div class="stat-num">${categories.length}</div><div class="stat-label">Categories</div></div>` +
     `<div class="stat"><div class="stat-num">${free}</div><div class="stat-label">Free</div></div>` +
     `<div class="stat"><div class="stat-num">${glossaryTerms.length}+</div><div class="stat-label">Glossary Terms</div></div>`;
-  document.getElementById('statsBar').innerHTML = html;
   document.getElementById('heroSubtitle').textContent = `${resources.length}+ curated training resources, courses, and tools — organized by technology, provider, and type.`;
 }
 
@@ -598,16 +493,30 @@ function renderDifficultyFilters() {
   document.getElementById('difficultyFilters').innerHTML = html;
 }
 
+function renderGlossaryFilters() {
+  const counts = { All: glossaryTerms.length };
+  glossaryTerms.forEach(t => { counts[t.c] = (counts[t.c] || 0) + 1; });
+  let html = `<select onchange="setGlossaryCat(this.value)" style="min-width:160px">`;
+  glossaryCategories.forEach(cat => {
+    html += `<option value="${cat}"${cat === state.gCat ? ' selected' : ''}>${cat} (${counts[cat] || 0})</option>`;
+  });
+  html += `</select>`;
+  html += `<select onchange="setGlossarySort(this.value)"><option value="a-z">A → Z</option><option value="z-a">Z → A</option><option value="category">By Category</option></select>`;
+  document.getElementById('glossaryFilters').innerHTML = html;
+}
+
 function setCategory(cat) { state.category = cat; updateFilterUI(); renderResources(); }
 function setType(type) { state.type = type; updateFilterUI(); renderResources(); }
 function setDifficulty(diff) { state.difficulty = diff; updateFilterUI(); renderResources(); }
 function setSort(sort) { state.sort = sort; renderResources(); }
 function toggleFree() { state.freeOnly = !state.freeOnly; updateFilterUI(); renderResources(); }
+function setGlossaryCat(cat) { state.gCat = cat; state.gVisible = 50; renderGlossary(); }
+function setGlossarySort(sort) { state.gSort = sort; renderGlossary(); }
 
 function updateFilterUI() {
   document.querySelectorAll('#categoryFilters .filter-pill').forEach((btn, i) => {
     if (i === 0) btn.classList.toggle('active', state.category === 'all');
-    else { const cat = categories[i - 1]; btn.classList.toggle('active', state.category === cat); }
+    else { const cat = categories[i - 1]; if (cat) btn.classList.toggle('active', state.category === cat); }
   });
   document.querySelectorAll('#typeFilters .filter-pill').forEach((btn, i) => {
     if (i === 0) btn.classList.toggle('active', state.type === 'all');
@@ -631,7 +540,6 @@ function renderResources() {
     const matchDiff = state.difficulty === 'all' || r.difficulty === state.difficulty;
     return matchSearch && matchCat && matchType && matchFree && matchDiff;
   });
-
   if (state.sort !== 'default') {
     const diffOrder = { Beginner: 1, Intermediate: 2, Advanced: 3 };
     filtered.sort((a, b) => {
@@ -644,7 +552,6 @@ function renderResources() {
       }
     });
   }
-
   document.getElementById('resourceCount').textContent = `${filtered.length} resource${filtered.length !== 1 ? 's' : ''} found`;
   document.getElementById('resourceGrid').innerHTML = filtered.map(r => `
     <a href="${r.url}" target="_blank" rel="noopener" class="card">
@@ -664,23 +571,6 @@ function renderResources() {
   `).join('');
 }
 
-function renderGlossaryCatFilters() {
-  let html = '';
-  glossaryCategories.forEach(cat => {
-    const count = cat === 'All' ? glossaryTerms.length : glossaryTerms.filter(t => t.c === cat).length;
-    html += `<button class="filter-pill${cat === 'All' ? ' active' : ''}" onclick="setGlossaryCat('${cat}')">${cat} (${count})</button>`;
-  });
-  document.getElementById('glossaryCatFilters').innerHTML = html;
-}
-
-function setGlossaryCat(cat) {
-  state.gCat = cat;
-  document.querySelectorAll('#glossaryCatFilters .filter-pill').forEach(btn => {
-    btn.classList.toggle('active', btn.textContent.startsWith(cat));
-  });
-  renderGlossary();
-}
-
 function renderGlossary() {
   const s = state.search.toLowerCase();
   let terms = glossaryTerms.filter(t => {
@@ -693,19 +583,17 @@ function renderGlossary() {
     case 'z-a': terms.sort((a, b) => b.t.localeCompare(a.t)); break;
     case 'category': terms.sort((a, b) => a.c.localeCompare(b.c) || a.t.localeCompare(b.t)); break;
   }
-  document.getElementById('glossaryCount').textContent = `${terms.length} term${terms.length !== 1 ? 's' : ''} found`;
-  document.getElementById('glossaryGrid').innerHTML = terms.map(t => `
-    <button class="glossary-item" onclick="toggleGlossary(this)">
-      <div class="glossary-header">
-        <div><div class="glossary-term">${t.t}</div><div class="glossary-cat">${t.c}</div></div>
-        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
-      </div>
-      <div class="glossary-def">${t.d}</div>
-    </button>
+  const visible = terms.slice(0, state.gVisible);
+  const hasMore = state.gVisible < terms.length;
+  document.getElementById('glossaryCount').textContent = `Showing ${visible.length} of ${terms.length} term${terms.length !== 1 ? 's' : ''}`;
+  document.getElementById('glossaryBody').innerHTML = visible.map(t => `
+    <tr><td class="term-cell">${t.t}</td><td class="cat-cell"><span class="cat-badge">${t.c}</span></td><td>${t.d}</td></tr>
   `).join('');
+  const btn = document.getElementById('glossaryLoadMore');
+  btn.classList.toggle('hidden', !hasMore);
+  btn.textContent = hasMore ? `Load more (${terms.length - state.gVisible} remaining)` : '';
+  btn.onclick = () => { state.gVisible += 50; renderGlossary(); };
 }
-
-function toggleGlossary(el) { el.classList.toggle('expanded'); }
 
 window.addEventListener('scroll', function() {
   var topBtn = document.getElementById('scrollTopBtn');
