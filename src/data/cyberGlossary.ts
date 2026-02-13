@@ -207,4 +207,49 @@ export const cyberGlossaryTerms: GlossaryTerm[] = [
   { term: "TEE", definition: "Trusted Execution Environment — secure area of a processor protecting code and data.", category: "Cybersecurity" },
   { term: "SGX", definition: "Software Guard Extensions — Intel technology for hardware-based isolation.", category: "Cybersecurity" },
   { term: "MPC", definition: "Multi-Party Computation — jointly computing a function while keeping inputs private.", category: "Cybersecurity" },
+
+  // ===== Additional Cyber Terms - Round 3 =====
+  // --- Threat Intelligence & Hunting ---
+  { term: "OSINT", definition: "Open Source Intelligence — intelligence collected from publicly available sources.", category: "Cybersecurity" },
+  { term: "CTI", definition: "Cyber Threat Intelligence — evidence-based knowledge about existing or emerging threats.", category: "Cybersecurity" },
+  { term: "YARA", definition: "Pattern matching tool for malware researchers to identify and classify malware samples.", category: "Cybersecurity" },
+  { term: "Sigma Rules", definition: "Generic signature format for SIEM systems to describe log events for threat detection.", category: "Cybersecurity" },
+  { term: "Suricata", definition: "Open-source network threat detection engine with IDS, IPS, and network monitoring capabilities.", category: "Cybersecurity" },
+  { term: "Zeek (Bro)", definition: "Open-source network analysis framework for security monitoring and traffic analysis.", category: "Cybersecurity" },
+
+  // --- Identity & Access ---
+  { term: "RBAC", definition: "Role-Based Access Control — restricts system access based on assigned user roles.", category: "Cybersecurity" },
+  { term: "ABAC (Attribute-Based Access Control)", definition: "Access control based on attributes of users, resources, and environment conditions.", category: "Cybersecurity" },
+  { term: "SSO", definition: "Single Sign-On — authentication scheme allowing access to multiple systems with one set of credentials.", category: "Cybersecurity" },
+  { term: "SAML", definition: "Security Assertion Markup Language — XML-based standard for exchanging authentication data.", category: "Cybersecurity" },
+  { term: "OIDC", definition: "OpenID Connect — identity layer on top of OAuth 2.0 for authentication.", category: "Cybersecurity" },
+  { term: "SCIM", definition: "System for Cross-domain Identity Management — standard for automating user provisioning.", category: "Cybersecurity" },
+  { term: "JIT Access", definition: "Just-In-Time Access — granting temporary elevated privileges only when needed.", category: "Cybersecurity" },
+
+  // --- Cloud Security ---
+  { term: "CNAPP", definition: "Cloud-Native Application Protection Platform — unified security for cloud-native applications.", category: "Cybersecurity" },
+  { term: "DSPM", definition: "Data Security Posture Management — discovers, classifies, and protects sensitive data across cloud.", category: "Cybersecurity" },
+  { term: "SSPM", definition: "SaaS Security Posture Management — continuous monitoring of SaaS application security settings.", category: "Cybersecurity" },
+  { term: "CIEM", definition: "Cloud Infrastructure Entitlement Management — manages cloud permissions and access rights.", category: "Cybersecurity" },
+  { term: "KSPM", definition: "Kubernetes Security Posture Management — assessing and improving K8s cluster security.", category: "Cybersecurity" },
+
+  // --- Application Security ---
+  { term: "SAST", definition: "Static Application Security Testing — analyzing source code for vulnerabilities without executing it.", category: "Cybersecurity" },
+  { term: "DAST", definition: "Dynamic Application Security Testing — testing running applications for vulnerabilities.", category: "Cybersecurity" },
+  { term: "IAST", definition: "Interactive Application Security Testing — combines SAST and DAST using runtime instrumentation.", category: "Cybersecurity" },
+  { term: "SCA", definition: "Software Composition Analysis — identifying vulnerabilities in open-source dependencies.", category: "Cybersecurity" },
+  { term: "SBOM", definition: "Software Bill of Materials — formal record of components and dependencies in software.", category: "Cybersecurity" },
+  { term: "RASP", definition: "Runtime Application Self-Protection — security built into an application to detect and block attacks in real-time.", category: "Cybersecurity" },
+  { term: "CSP (Content Security Policy)", definition: "HTTP header that restricts resources a browser can load for a given page, preventing XSS.", category: "Cybersecurity" },
+  { term: "CORS", definition: "Cross-Origin Resource Sharing — mechanism allowing restricted resources on a web page from another domain.", category: "Cybersecurity" },
+
+  // --- Incident Response & Forensics ---
+  { term: "DFIR", definition: "Digital Forensics and Incident Response — investigating and responding to cyber incidents.", category: "Cybersecurity" },
+  { term: "CSIRT", definition: "Computer Security Incident Response Team — group handling security incidents.", category: "Cybersecurity" },
+  { term: "BCP", definition: "Business Continuity Plan — strategy for maintaining business functions during disruptions.", category: "Cybersecurity" },
+  { term: "RPO", definition: "Recovery Point Objective — maximum acceptable amount of data loss measured in time.", category: "Cybersecurity" },
+  { term: "RTO", definition: "Recovery Time Objective — maximum acceptable downtime after a disruption.", category: "Cybersecurity" },
+  { term: "MTTD", definition: "Mean Time to Detect — average time to discover a security incident.", category: "Cybersecurity" },
+  { term: "MTTR", definition: "Mean Time to Respond — average time to contain and remediate an incident.", category: "Cybersecurity" },
+  { term: "Chain of Custody", definition: "Documentation tracking evidence handling from collection to court presentation.", category: "Cybersecurity" },
 ];
