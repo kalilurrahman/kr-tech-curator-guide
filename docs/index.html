@@ -31,6 +31,21 @@
       --res-cert: hsl(280 65% 55%); --res-pdf: hsl(15 85% 55%);
       --res-tweet: hsl(203 89% 53%); --res-free: hsl(160 84% 39%);
     }
+    .light {
+      --bg: hsl(210 20% 98%); --bg-card: hsl(0 0% 100%); --fg: hsl(225 20% 12%);
+      --fg-muted: hsl(220 10% 42%); --fg-secondary: hsl(220 15% 30%);
+      --primary: hsl(210 75% 48%); --primary-fg: hsl(0 0% 100%);
+      --accent: hsl(160 60% 38%); --accent-fg: hsl(0 0% 100%);
+      --border: hsl(220 12% 88%); --secondary: hsl(220 15% 93%);
+      --muted-bg: hsl(220 12% 94%);
+      --gradient-hero: linear-gradient(135deg, hsl(210 20% 98%), hsl(220 25% 94%), hsl(210 20% 98%));
+      --gradient-text: linear-gradient(135deg, var(--primary), var(--accent));
+      --shadow-card: 0 4px 24px -4px hsl(220 15% 50% / 0.12);
+      --res-course: hsl(210 75% 48%); --res-github: hsl(142 70% 35%);
+      --res-youtube: hsl(0 84% 55%); --res-website: hsl(210 80% 50%);
+      --res-cert: hsl(280 65% 50%); --res-pdf: hsl(15 85% 50%);
+      --res-tweet: hsl(203 89% 48%); --res-free: hsl(160 84% 34%);
+    }
     body { background: var(--bg); color: var(--fg); font-family: 'Inter', system-ui, sans-serif; line-height: 1.6; -webkit-font-smoothing: antialiased; }
     h1, h2, h3, h4 { font-family: 'Space Grotesk', system-ui, sans-serif; }
     .container { max-width: 1280px; margin: 0 auto; padding: 0 1rem; }
@@ -106,6 +121,8 @@
     .social-links a { color: var(--fg-muted); text-decoration: none; font-size: 0.8rem; padding: 0.4rem 0.8rem; background: var(--secondary); border-radius: var(--radius); transition: all 0.2s; }
     .social-links a:hover { color: var(--primary); background: hsla(210 75% 52% / 0.1); }
     .hidden { display: none !important; }
+    .theme-btn { background: none; border: 1px solid var(--border); border-radius: 0.5rem; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--fg-muted); transition: all 0.2s; }
+    .theme-btn:hover { color: var(--fg); background: var(--secondary); }
     .scroll-btns { position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 50; display: flex; flex-direction: column; gap: 0.5rem; }
     .scroll-btn { width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--border); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
     .scroll-btn-top { background: var(--primary); color: var(--fg); border: none; }
@@ -129,7 +146,13 @@
 <body>
   <header class="header"><div class="container header-inner">
     <a href="#" class="logo">📑 Tech<span class="text-gradient">Curator</span></a>
-    <div class="header-links"><span>Curated by <a href="https://linktr.ee/kalilur.rahman" target="_blank" rel="noopener">Kalilur Rahman</a></span></div>
+    <div class="header-links">
+      <button class="theme-btn" id="themeToggle" onclick="toggleTheme()" aria-label="Toggle theme">
+        <svg id="sunIcon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+        <svg id="moonIcon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+      <span>Curated by <a href="https://linktr.ee/kalilur.rahman" target="_blank" rel="noopener">Kalilur Rahman</a></span>
+    </div>
   </div></header>
 
   <section class="hero"><div class="container">
@@ -319,7 +342,26 @@ const resources=[
 {id:"sd-r3-1",title:"ByteByteGo — System Design Newsletter",description:"Weekly system design deep-dives by Alex Xu.",url:"https://blog.bytebytego.com",type:"website",category:"System Design",provider:"Community",tags:["system design","newsletter","visual"],isFree:true,difficulty:"Intermediate",rating:4.8},
 {id:"sd-r3-2",title:"Architecture of Open Source Apps",description:"Free book examining architectures of real-world projects.",url:"https://aosabook.org",type:"free",category:"System Design",provider:"Community",tags:["architecture","open source","book"],isFree:true,difficulty:"Intermediate",rating:4.6},
 {id:"pl-r3-1",title:"Exercism — Practice in 70+ Languages",description:"Free code practice with human-reviewed exercises.",url:"https://exercism.org",type:"free",category:"Programming Languages",provider:"Community",tags:["practice","mentorship","exercises"],isFree:true,difficulty:"Beginner",rating:4.7},
-{id:"pl-r3-2",title:"Zig Language — Systems Programming",description:"Modern systems programming with explicit memory management.",url:"https://ziglang.org/learn/",type:"free",category:"Programming Languages",provider:"Community",tags:["zig","systems","performance"],isFree:true,difficulty:"Advanced",rating:4.5}
+{id:"pl-r3-2",title:"Zig Language — Systems Programming",description:"Modern systems programming with explicit memory management.",url:"https://ziglang.org/learn/",type:"free",category:"Programming Languages",provider:"Community",tags:["zig","systems","performance"],isFree:true,difficulty:"Advanced",rating:4.5},
+{id:"agent-1",title:"AutoGen — Multi-Agent Framework",description:"Microsoft's framework for building multi-agent AI systems.",url:"https://github.com/microsoft/autogen",type:"github",category:"AI & Machine Learning",provider:"Microsoft",tags:["AI Agents","multi-agent","LLM"],isFree:true,difficulty:"Advanced",rating:4.8},
+{id:"agent-2",title:"CrewAI — AI Agent Orchestration",description:"Orchestrate role-playing AI agents for complex tasks.",url:"https://github.com/crewAIInc/crewAI",type:"github",category:"AI & Machine Learning",provider:"Community",tags:["AI Agents","orchestration","CrewAI"],isFree:true,difficulty:"Intermediate",rating:4.7},
+{id:"agent-3",title:"AI Agentic Design Patterns — DeepLearning.AI",description:"Andrew Ng's course on agentic AI patterns.",url:"https://www.deeplearning.ai/short-courses/ai-agentic-design-patterns-with-autogen/",type:"course",category:"AI & Machine Learning",provider:"DeepLearning.AI",tags:["AI Agents","patterns","Andrew Ng"],isFree:true,difficulty:"Intermediate",rating:4.9},
+{id:"agent-4",title:"Anthropic Tool Use & Agentic Patterns",description:"Build agentic workflows with Claude tool use.",url:"https://docs.anthropic.com/en/docs/build-with-claude/tool-use",type:"website",category:"AI & Machine Learning",provider:"Anthropic",tags:["Claude","tool use","agentic"],isFree:true,difficulty:"Intermediate",rating:4.8},
+{id:"agent-5",title:"smolagents — Hugging Face Agent Framework",description:"Lightweight AI agents that write and execute code.",url:"https://huggingface.co/docs/smolagents",type:"website",category:"AI & Machine Learning",provider:"Hugging Face",tags:["AI Agents","Hugging Face","code"],isFree:true,difficulty:"Intermediate",rating:4.6},
+{id:"agent-6",title:"DSPy — Programming LLMs",description:"Stanford framework for optimizing LM prompts and weights.",url:"https://github.com/stanfordnlp/dspy",type:"github",category:"AI & Machine Learning",provider:"Stanford",tags:["DSPy","LLM","optimization"],isFree:true,difficulty:"Advanced",rating:4.8},
+{id:"agent-7",title:"Mem0 — Memory Layer for AI Agents",description:"Add persistent memory to AI agents and assistants.",url:"https://github.com/mem0ai/mem0",type:"github",category:"AI & Machine Learning",provider:"Community",tags:["AI memory","agents","context"],isFree:true,difficulty:"Intermediate",rating:4.5},
+{id:"quantum-1",title:"IBM Quantum Learning",description:"Free quantum computing courses with hands-on hardware access.",url:"https://learning.quantum.ibm.com/",type:"course",category:"AI & Machine Learning",provider:"IBM",tags:["quantum","Qiskit","algorithms"],isFree:true,difficulty:"Intermediate",rating:4.7},
+{id:"quantum-2",title:"Qiskit — Open-Source Quantum SDK",description:"IBM's SDK for quantum computing circuits and hardware.",url:"https://github.com/Qiskit/qiskit",type:"github",category:"AI & Machine Learning",provider:"IBM",tags:["Qiskit","quantum","SDK"],isFree:true,difficulty:"Advanced",rating:4.6},
+{id:"quantum-3",title:"Cirq — Google Quantum AI Framework",description:"Google's Python framework for NISQ quantum circuits.",url:"https://quantumai.google/cirq",type:"website",category:"AI & Machine Learning",provider:"Google",tags:["quantum","Cirq","NISQ"],isFree:true,difficulty:"Advanced",rating:4.5},
+{id:"quantum-4",title:"MIT — Quantum Information Science",description:"MIT OCW on quantum computation, qubits, and algorithms.",url:"https://ocw.mit.edu/courses/8-370x-quantum-information-science-i-spring-2018/",type:"course",category:"AI & Machine Learning",provider:"MIT",tags:["quantum","MIT","qubits"],isFree:true,difficulty:"Advanced",rating:4.8},
+{id:"quantum-5",title:"PennyLane — Quantum Machine Learning",description:"Quantum computing and quantum ML library with AutoDiff.",url:"https://pennylane.ai/",type:"website",category:"AI & Machine Learning",provider:"Community",tags:["quantum ML","PennyLane","AutoDiff"],isFree:true,difficulty:"Advanced",rating:4.5},
+{id:"web3-n1",title:"Ethereum Developer Documentation",description:"Official Ethereum docs: smart contracts, Solidity, EVM.",url:"https://ethereum.org/en/developers/docs/",type:"website",category:"Blockchain & Web3",provider:"Community",tags:["Ethereum","Solidity","dApps"],isFree:true,difficulty:"Intermediate",rating:4.7},
+{id:"web3-n2",title:"Solana Cookbook",description:"Developer recipes for building on Solana.",url:"https://solanacookbook.com/",type:"website",category:"Blockchain & Web3",provider:"Community",tags:["Solana","Web3","DeFi"],isFree:true,difficulty:"Intermediate",rating:4.5},
+{id:"web3-n3",title:"Alchemy University — Web3 Development",description:"Free 7-week Ethereum and Solidity development course.",url:"https://www.alchemy.com/university",type:"course",category:"Blockchain & Web3",provider:"Community",tags:["Web3","Ethereum","Solidity"],isFree:true,difficulty:"Beginner",rating:4.7},
+{id:"web3-n4",title:"DeFi Llama — DeFi Analytics",description:"Open-source DeFi analytics with TVL tracking.",url:"https://defillama.com/",type:"website",category:"Blockchain & Web3",provider:"Community",tags:["DeFi","analytics","TVL"],isFree:true,difficulty:"Beginner",rating:4.6},
+{id:"web3-n5",title:"Chainlink Documentation",description:"Decentralized oracles, CCIP, VRF, and price feeds.",url:"https://docs.chain.link/",type:"website",category:"Blockchain & Web3",provider:"Community",tags:["Chainlink","oracles","CCIP"],isFree:true,difficulty:"Intermediate",rating:4.5},
+{id:"web3-n6",title:"Viem — TypeScript Web3 Interface",description:"Type-safe, modular Ethereum interface for TypeScript.",url:"https://viem.sh/",type:"website",category:"Blockchain & Web3",provider:"Community",tags:["Viem","TypeScript","Ethereum"],isFree:true,difficulty:"Intermediate",rating:4.6},
+{id:"web3-n7",title:"Wagmi — React Hooks for Ethereum",description:"React hooks for wallet connection and contract interaction.",url:"https://wagmi.sh/",type:"website",category:"Blockchain & Web3",provider:"Community",tags:["Wagmi","React","Ethereum"],isFree:true,difficulty:"Intermediate",rating:4.6}
 ];
 
 // Glossary - compact format: t=term, d=definition, c=category
@@ -480,7 +522,39 @@ const glossaryTerms=[
 {t:"Agile",d:"An iterative approach to software development.",c:"Software Engineering"},
 {t:"TDD",d:"Test-Driven Development — writing tests before code.",c:"Software Engineering"},
 {t:"GPU",d:"Graphics Processing Unit — specialized for parallel computations.",c:"Hardware & Architecture"},
-{t:"Linux",d:"Open-source Unix-like operating system kernel.",c:"Operating Systems"}
+{t:"Linux",d:"Open-source Unix-like operating system kernel.",c:"Operating Systems"},
+{t:"Qubit",d:"Quantum bit — basic unit of quantum information in superposition.",c:"Hardware & Architecture"},
+{t:"Quantum Entanglement",d:"Particles become correlated so measuring one determines the other.",c:"Hardware & Architecture"},
+{t:"Superposition",d:"Quantum state existing in multiple states simultaneously until measured.",c:"Hardware & Architecture"},
+{t:"Quantum Gate",d:"Basic quantum circuit operation manipulating qubits.",c:"Hardware & Architecture"},
+{t:"NISQ",d:"Noisy Intermediate-Scale Quantum — current era of quantum processors.",c:"Hardware & Architecture"},
+{t:"Post-Quantum Cryptography",d:"Algorithms designed to resist quantum computer attacks.",c:"Cybersecurity"},
+{t:"Shor's Algorithm",d:"Quantum algorithm for integer factorization threatening public-key crypto.",c:"Cybersecurity"},
+{t:"QKD",d:"Quantum Key Distribution — quantum mechanics for provably secure key exchange.",c:"Cybersecurity"},
+{t:"DeFi",d:"Decentralized Finance — financial services on blockchain without intermediaries.",c:"Blockchain & Web3"},
+{t:"DEX",d:"Decentralized Exchange — peer-to-peer crypto trading without custodians.",c:"Blockchain & Web3"},
+{t:"AMM",d:"Automated Market Maker — trading via liquidity pools instead of order books.",c:"Blockchain & Web3"},
+{t:"DAO",d:"Decentralized Autonomous Organization — governed by smart contracts.",c:"Blockchain & Web3"},
+{t:"TVL",d:"Total Value Locked — aggregate value deposited in a DeFi protocol.",c:"Blockchain & Web3"},
+{t:"MEV",d:"Maximal Extractable Value — profit from reordering transactions in a block.",c:"Blockchain & Web3"},
+{t:"Layer 2 (L2)",d:"Scaling solution built on base blockchain for better throughput.",c:"Blockchain & Web3"},
+{t:"ZK-Rollup",d:"Rollup using zero-knowledge proofs for off-chain transaction validation.",c:"Blockchain & Web3"},
+{t:"ERC-20",d:"Ethereum token standard for fungible tokens.",c:"Blockchain & Web3"},
+{t:"ERC-721",d:"Ethereum token standard for non-fungible tokens (NFTs).",c:"Blockchain & Web3"},
+{t:"ERC-4337",d:"Account Abstraction — smart contract wallets with social recovery.",c:"Blockchain & Web3"},
+{t:"Flash Loan",d:"Uncollateralized loan borrowed and repaid in one transaction.",c:"Blockchain & Web3"},
+{t:"AI Agent",d:"Autonomous AI system that perceives, decides, and acts on goals.",c:"AI & Machine Learning"},
+{t:"Agentic AI",d:"AI capable of autonomous goal-directed behavior with planning and tools.",c:"AI & Machine Learning"},
+{t:"ReAct",d:"Reasoning + Acting — LLMs alternate between reasoning and actions.",c:"AI & Machine Learning"},
+{t:"Multi-Agent System",d:"Multiple AI agents collaborating with specialized roles.",c:"AI & Machine Learning"},
+{t:"Chain-of-Thought",d:"Prompting technique showing step-by-step reasoning.",c:"AI & Machine Learning"},
+{t:"Function Calling",d:"LLM capability to generate structured function invocations.",c:"AI & Machine Learning"},
+{t:"MoE",d:"Mixture of Experts — routes inputs to specialized sub-networks.",c:"AI & Machine Learning"},
+{t:"RLHF",d:"Reinforcement Learning from Human Feedback — aligning AI with human preferences.",c:"AI & Machine Learning"},
+{t:"Embedding",d:"Dense vector representation of data for similarity computation.",c:"AI & Machine Learning"},
+{t:"Context Window",d:"Maximum tokens an LLM can process in a single input.",c:"AI & Machine Learning"},
+{t:"Hallucination (AI)",d:"When AI generates confident but factually incorrect information.",c:"AI & Machine Learning"},
+{t:"Guardrails",d:"Safety mechanisms preventing harmful AI outputs.",c:"AI & Machine Learning"}
 ];
 const glossaryCategories=["All","Programming Fundamentals","Web Development","AI & Machine Learning","Cloud Computing","DevOps & CI/CD","Cybersecurity","Data Science","System Design","Databases","Networking","Mobile Development","Blockchain & Web3","Software Engineering","Operating Systems","Hardware & Architecture"];
 
@@ -652,6 +726,25 @@ window.addEventListener('scroll', function() {
   var nearBottom = window.innerHeight + window.scrollY >= document.body.scrollHeight - 200;
   bottomBtn.style.display = nearBottom ? 'none' : 'flex';
 }, { passive: true });
+
+function toggleTheme() {
+  document.documentElement.classList.toggle('light');
+  const isLight = document.documentElement.classList.contains('light');
+  document.getElementById('sunIcon').style.display = isLight ? 'block' : 'none';
+  document.getElementById('moonIcon').style.display = isLight ? 'none' : 'block';
+  try { localStorage.setItem('tc-theme', isLight ? 'light' : 'dark'); } catch(e) {}
+}
+(function() {
+  try {
+    if (localStorage.getItem('tc-theme') === 'light') {
+      document.documentElement.classList.add('light');
+      document.addEventListener('DOMContentLoaded', function() {
+        document.getElementById('sunIcon').style.display = 'block';
+        document.getElementById('moonIcon').style.display = 'none';
+      });
+    }
+  } catch(e) {}
+})();
 
 document.addEventListener('DOMContentLoaded', init);
 </script>
