@@ -249,6 +249,9 @@ export const learningPaths: LearningPath[] = [
       "google-cirq-quantum",        // Google Cirq
       "pennylane-quantum-ml",       // PennyLane QML
       "mit-quantum-computing-course", // MIT Quantum Info Science
+      "amazon-braket",              // Amazon Braket
+      "azure-quantum",              // Microsoft Azure Quantum
+      "qutip-quantum",              // QuTiP
     ],
   },
   {
