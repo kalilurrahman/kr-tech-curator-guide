@@ -1,4 +1,5 @@
 import { useState, useMemo } from "react";
+import { Search, X } from "lucide-react";
 import AppHeader from "@/components/AppHeader";
 import HeroSection from "@/components/HeroSection";
 import StatsBar from "@/components/StatsBar";
@@ -52,6 +53,7 @@ const Index = () => {
   const [sortBy, setSortBy] = useState<SortOption>("default");
   const [showBookmarksOnly, setShowBookmarksOnly] = useState(false);
   const [learningPathFilter, setLearningPathFilter] = useState<string[] | null>(null);
+  const [pathSearchQuery, setPathSearchQuery] = useState("");
 
   const { toggleBookmark, isBookmarked, bookmarkCount, bookmarks } = useBookmarks();
   const { completed, toggleCompleted, isCompleted, getPathProgress, getPathCompletedCount } = useProgress();
@@ -72,12 +74,15 @@ const Index = () => {
       const matchesDifficulty = selectedDifficulty === "all" || resource.difficulty === selectedDifficulty;
       const matchesBookmark = !showBookmarksOnly || bookmarks.has(resource.id);
       const matchesPath = !learningPathFilter || learningPathFilter.includes(resource.id);
+      const matchesPathSearch = !learningPathFilter || pathSearchQuery === "" ||
+        resource.title.toLowerCase().includes(pathSearchQuery.toLowerCase()) ||
+        resource.tags.some((tag) => tag.toLowerCase().includes(pathSearchQuery.toLowerCase()));
 
-      return matchesSearch && matchesCategory && matchesType && matchesFree && matchesDifficulty && matchesBookmark && matchesPath;
+      return matchesSearch && matchesCategory && matchesType && matchesFree && matchesDifficulty && matchesBookmark && matchesPath && matchesPathSearch;
     });
 
     return sortResources(filtered, sortBy);
-  }, [searchQuery, selectedCategory, selectedType, showFreeOnly, selectedDifficulty, sortBy, showBookmarksOnly, bookmarks, learningPathFilter]);
+  }, [searchQuery, selectedCategory, selectedType, showFreeOnly, selectedDifficulty, sortBy, showBookmarksOnly, bookmarks, learningPathFilter, pathSearchQuery]);
 
   const resourceCounts = useMemo(() => {
     const counts: Record<string, number> = { all: resources.length };
@@ -97,6 +102,7 @@ const Index = () => {
 
   const handleSelectPath = (resourceIds: string[]) => {
     setLearningPathFilter(resourceIds);
+    setPathSearchQuery("");
     setSelectedCategory("all");
     setSelectedType("all");
     setSelectedDifficulty("all");
@@ -104,7 +110,10 @@ const Index = () => {
     setShowBookmarksOnly(false);
   };
 
-  const clearPathFilter = () => setLearningPathFilter(null);
+  const clearPathFilter = () => {
+    setLearningPathFilter(null);
+    setPathSearchQuery("");
+  };
 
   const clearAllFilters = () => {
     setSelectedCategory("all");
@@ -185,7 +194,29 @@ const Index = () => {
               )}
             </p>
           </div>
-          <SortDropdown value={sortBy} onChange={setSortBy} />
+          <div className="flex items-center gap-3">
+            {learningPathFilter && (
+              <div className="relative">
+                <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-muted-foreground" />
+                <input
+                  type="text"
+                  placeholder="Filter in path…"
+                  value={pathSearchQuery}
+                  onChange={(e) => setPathSearchQuery(e.target.value)}
+                  className="h-9 w-44 rounded-lg border border-input bg-background pl-8 pr-8 text-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                />
+                {pathSearchQuery && (
+                  <button
+                    onClick={() => setPathSearchQuery("")}
+                    className="absolute right-2 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                  >
+                    <X className="w-3.5 h-3.5" />
+                  </button>
+                )}
+              </div>
+            )}
+            <SortDropdown value={sortBy} onChange={setSortBy} />
+          </div>
         </div>
 
         {/* Resource grid — full width, no sidebar */}
