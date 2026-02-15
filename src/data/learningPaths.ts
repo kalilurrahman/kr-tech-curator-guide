@@ -218,4 +218,56 @@ export const learningPaths: LearningPath[] = [
       "ext-18",   // Made With ML
     ],
   },
+  {
+    id: "ai-agents",
+    title: "AI Agents & Agentic AI",
+    description: "Build autonomous AI agents — multi-agent systems, tool use, planning, and orchestration.",
+    icon: "🤖",
+    color: "from-primary/20 to-resource-cert/20",
+    resourceIds: [
+      "ai-8",                       // LangChain (foundation)
+      "langchain-agents-guide",     // LangChain Agents
+      "autogen-multi-agent",        // AutoGen
+      "crewai-agents",              // CrewAI
+      "ai-agents-course-deeplearning", // Agentic Design Patterns
+      "dspy-programming-llms",      // DSPy
+      "ai-5",                       // OpenAI Cookbook
+      "ai-7",                       // Anthropic Prompt Engineering
+      "tweet-13",                   // Harrison Chase
+      "tweet-2",                    // Jim Fan
+    ],
+  },
+  {
+    id: "quantum-computing",
+    title: "Quantum Computing Path",
+    description: "From qubits to quantum algorithms — explore the next frontier of computation.",
+    icon: "⚛️",
+    color: "from-accent/20 to-resource-cert/20",
+    resourceIds: [
+      "ibm-quantum-learning",       // IBM Quantum Learning
+      "qiskit-github",              // Qiskit SDK
+      "google-cirq-quantum",        // Google Cirq
+      "pennylane-quantum-ml",       // PennyLane QML
+      "mit-quantum-computing-course", // MIT Quantum Info Science
+    ],
+  },
+  {
+    id: "web3-defi",
+    title: "Web3 & DeFi Developer",
+    description: "Build decentralized applications — smart contracts, DeFi protocols, and blockchain development.",
+    icon: "⛓️",
+    color: "from-resource-website/20 to-accent/20",
+    resourceIds: [
+      "web3-1",                 // CryptoZombies
+      "web3-2",                 // Ethereum Docs
+      "alchemy-university",     // Alchemy University
+      "web3-8",                 // Patrick Collins Course
+      "foundry-smart-contracts", // Foundry
+      "solana-cookbook",         // Solana Cookbook
+      "chainlink-docs",         // Chainlink
+      "defi-llama",             // DeFi Llama
+      "viem-web3-typescript",   // Viem
+      "web3-4",                 // Awesome Blockchain
+    ],
+  },
 ];
