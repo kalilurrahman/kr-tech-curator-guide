@@ -1,4 +1,4 @@
-import { useState, useMemo, useCallback } from "react";
+import React, { useState, useMemo, useCallback } from "react";
 import { Search, BookOpen, ArrowLeft, ChevronDown } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
@@ -167,57 +167,57 @@ const GlossaryPage = () => {
             </TableHeader>
             <TableBody>
               {visibleTerms.map((item) => (
-                <TableRow
-                  key={item.term}
-                  className="cursor-pointer hover:bg-primary/5 transition-colors"
-                  onClick={() =>
-                    setExpandedTerm(expandedTerm === item.term ? null : item.term)
-                  }
-                >
-                  <TableCell className="font-display font-semibold text-sm text-foreground align-top py-3">
-                    <div className="flex items-start gap-1.5">
-                      <ChevronDown
-                        className={`w-3.5 h-3.5 text-muted-foreground flex-shrink-0 mt-0.5 transition-transform sm:hidden ${
-                          expandedTerm === item.term ? "rotate-180" : ""
-                        }`}
-                      />
-                      <span>{item.term}</span>
-                    </div>
-                    {/* Mobile: show category below term */}
-                    <span className="block sm:hidden text-[10px] text-muted-foreground uppercase tracking-wider mt-0.5 ml-5">
-                      {item.category}
-                    </span>
-                  </TableCell>
-                  <TableCell className="hidden sm:table-cell text-xs text-muted-foreground align-top py-3">
-                    <span className="px-2 py-0.5 rounded-md bg-secondary text-secondary-foreground text-[10px] font-medium uppercase tracking-wider">
-                      {item.category}
-                    </span>
-                  </TableCell>
-                  <TableCell className="text-sm text-muted-foreground leading-relaxed align-top py-3">
-                    {/* Desktop: always show definition */}
-                    <span className="hidden sm:inline">{item.definition}</span>
-                    {/* Mobile: expandable */}
-                    <span className="sm:hidden">
-                      <AnimatePresence mode="wait">
-                        {expandedTerm === item.term ? (
-                          <motion.span
-                            key="open"
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            exit={{ opacity: 0 }}
-                            transition={{ duration: 0.15 }}
-                          >
-                            {item.definition}
-                          </motion.span>
-                        ) : (
-                          <span className="text-xs text-muted-foreground/60">
-                            Tap to expand
-                          </span>
-                        )}
-                      </AnimatePresence>
-                    </span>
-                  </TableCell>
-                </TableRow>
+                <React.Fragment key={item.term}>
+                  <TableRow
+                    className="cursor-pointer hover:bg-primary/5 transition-colors"
+                    onClick={() =>
+                      setExpandedTerm(expandedTerm === item.term ? null : item.term)
+                    }
+                  >
+                    <TableCell className="font-display font-semibold text-sm text-foreground align-top py-3">
+                      <div className="flex items-start gap-1.5">
+                        <ChevronDown
+                          className={`w-3.5 h-3.5 text-muted-foreground flex-shrink-0 mt-0.5 transition-transform sm:hidden ${
+                            expandedTerm === item.term ? "rotate-180" : ""
+                          }`}
+                        />
+                        <span>{item.term}</span>
+                      </div>
+                      {/* Mobile: show category below term */}
+                      <span className="block sm:hidden text-[10px] text-muted-foreground uppercase tracking-wider mt-0.5 ml-5">
+                        {item.category}
+                      </span>
+                    </TableCell>
+                    <TableCell className="hidden sm:table-cell text-xs text-muted-foreground align-top py-3">
+                      <span className="px-2 py-0.5 rounded-md bg-secondary text-secondary-foreground text-[10px] font-medium uppercase tracking-wider">
+                        {item.category}
+                      </span>
+                    </TableCell>
+                    <TableCell className="text-sm text-muted-foreground leading-relaxed align-top py-3">
+                      {/* Desktop: always show definition */}
+                      <span className="hidden sm:inline">{item.definition}</span>
+                      {/* Mobile: tap hint only */}
+                      <span className="sm:hidden text-xs text-muted-foreground/60">
+                        Tap to expand
+                      </span>
+                    </TableCell>
+                  </TableRow>
+                  {/* Mobile: full-width definition row below */}
+                  {expandedTerm === item.term && (
+                    <tr className="sm:hidden border-b border-border bg-primary/5">
+                      <td colSpan={3} className="px-4 py-3">
+                        <motion.p
+                          initial={{ opacity: 0, y: -4 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ duration: 0.15 }}
+                          className="text-sm text-muted-foreground leading-relaxed"
+                        >
+                          {item.definition}
+                        </motion.p>
+                      </td>
+                    </tr>
+                  )}
+                </React.Fragment>
               ))}
             </TableBody>
           </Table>
